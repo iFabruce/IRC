@@ -1,0 +1,43 @@
+.leaflet-container{
+    width: 100%;
+    height: 100vh;
+    box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+
+}
+.map{
+    margin-top: 10%;
+    padding: 1%;
+}
+.container{
+    /* display: flex; */
+    width: 100%;
+    /* flex-direction: column; */
+}
+#up{
+    background-color: grey;
+    height: 50px;
+    width: 100%;
+    padding-top: 3%;
+    padding-left: 5%;
+    /* flex: 1; */
+    display:inline;
+
+}
+#up ul{
+    display:block;
+    list-style-type: none;
+}
+#up li {
+
+}
+.input{
+    width:100%;
+    height: 100px;
+    margin-left: 2%;
+}
+#down{
+    /* flex: 1; */
+    width: 100%;
+    padding:2%
+}
+

@@ -1,0 +1,151 @@
+
+
+
+#logo img{
+  width: 150px;
+  padding-top: 15%;
+  margin-left: 38%;
+}
+#illustration{
+  margin: 0;
+  padding-top: 16%;
+  width: 100%;
+  height: 100vh;
+  background:  linear-gradient(to bottom right, #5A55AA, #0399BC);
+  box-shadow: 0 2px 6px 2px rgba(9, 9, 9, 0.23);
+
+}
+#content{
+  height: 100vh ;
+}
+@media screen and (max-width: 641px) {
+  body{
+    /* min-height: 10vh; */
+  }
+
+  #illustration{
+    height: 30vh;
+    padding-top: 5%;
+    box-shadow: 0 2px 6px 2px rgba(9, 9, 9, 0.23);
+  }
+  #typo-header{
+    display: none;
+  }
+  #typo{
+    display: none;
+  }
+  
+  #logo img{
+    width: 150px;
+    margin-left: 35%;
+    
+  }
+  .text-field{
+    width: 30%;
+  }
+  #right{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .box{
+    margin-top: 5%;
+    /* padding-top: 10%; */
+  }
+  #connect{
+    margin-top: 5%;
+  }
+}
+.box{
+  padding-left: 30%;  
+  
+}
+#input{
+  padding-top: 5%;
+  margin-left: 25%;
+
+}
+#select{
+  padding-top: 10%;
+  margin-left: 25%;
+  /* background: GREY; */
+  
+}
+
+#connect{
+  padding-top: 10%;
+  margin-left: 25%;
+
+ }
+ 
+.text-field{
+  width: 65%;
+}
+
+
+
+  /* animation: 2s ease-out 0s 1 fade; */
+
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  margin: 0;
+  padding: 0;
+  /* max-height: 100vh; */
+}
+
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    
+  }
+  100% {
+    opacity: 100;
+  }
+  0%{
+    transform: scale(1.1);  
+  }
+}
+#info{
+  font-weight: 400;
+  font-family: Montserrat;
+  font-size: 1.2vw;
+  letter-spacing: 0.3vw;
+}
+#typo-header{
+  /* margin-top: 40%; */
+  font-family: Montserrat;
+  /* border-left: 2px solid white; */
+  font-size: 3vw;
+  font-weight: 600;
+  text-align:  center;
+  /* border-left: 50px solid white; */
+  padding: 10%;
+  /* padding-left: 20% ; */
+}
+#typo{
+  /* margin-top: 5%; */
+  padding:5%;
+  font-family: Montserrat;
+  /* border-left: 2px solid white; */
+  font-size: 1.2vw;
+  letter-spacing: 2px;
+  font-weight: 400;
+  text-align:  center
+
+}
+.button{
+  font-family: Montserrat;
+
+  text-transform: unset !important;
+  font-weight: 600 !important; 
+  background-color:  linear-gradient(to bottom right, #5A55AA, #0399BC);
+}
+
+
+
+
+

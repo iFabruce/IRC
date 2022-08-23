@@ -1,0 +1,57 @@
+
+body,html{
+    font-family: 'Montserrat';
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    /* background: grey */
+    /* padding: 20%; */
+
+    z-index: -1;
+}
+
+.card{
+    width:100%;
+    /* background-color:grey; */
+    padding: 5%;
+    margin: 20%;
+}
+.item{
+    /* padding:2% */
+}
+.cardHeader{
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Montserrat';
+    padding:5%;
+}
+.price{
+    font-weight: 400;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+.details{
+    text-align: center;
+    font-family: 'Montserrat';
+    padding:10%
+}
+#sub {
+    margin-left: 25%;
+    padding-top: 15%;
+
+}
+.subscribe-btn{
+    /* background-color: red; */
+    padding-left: 25%;
+}
+@media screen and (max-width: 641px) {
+    .subscribe-btn{
+        /* margin-left:  1%; */
+    }
+    .card{
+        padding: 1%;
+        width: 350px;
+        margin: 5%;
+    }
+}

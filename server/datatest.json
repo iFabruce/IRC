@@ -1,0 +1,22 @@
+//USER 1
+{
+    "login": "bruce@irc.mg",
+    "mot_de_passe": "bruce",
+    "nom": "Maminiaina",
+    "prenom": "Fabruce",
+    "sexe": "homme",
+    "date_naissance": "07/05/2003",
+    "adresse": "Andoharanofotsy",
+    "situation_matrimonial": "célibataire"
+}
+//USER 2
+{
+    "login": "rakoto@irc.mg",
+    "mot_de_passe": "rakoto",
+    "nom": "Rakoto",
+    "prenom": "Jean",
+    "sexe": "homme",
+    "date_naissance": "01/08/1994",
+    "adresse": "Anosy",
+    "situation_matrimonial": "marié"
+}
