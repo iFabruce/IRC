@@ -1,4 +1,4 @@
-import '../assets/css/Login.css';
+import '../../assets/css/Login.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
@@ -61,7 +61,7 @@ function App() {
         </Grid>
         <Grid item  xs={12} md={6}>
          
-            <div id="logo"><img src={require('../assets/images/LOGO-IRC-PRIMAIRE.png')} alt="" /></div>
+            <div id="logo"><img src={require('../../assets/images/LOGO-IRC-PRIMAIRE.png')} alt="" /></div>
               <div id="select">  
                 <TextField  className="text-field" id="standard-select" select    label="Profil" variant="standard">   
                   <option value='Utilisateur' >Utilisateur</option>     

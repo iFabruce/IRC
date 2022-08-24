@@ -1,5 +1,5 @@
 import React from 'react'
-import '../assets/css/ProfilUtilisateur.css'
+import '../../assets/css/ProfilUtilisateur.css'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
