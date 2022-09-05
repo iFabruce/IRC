@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 
-import { Grid, Paper, TextField } from '@mui/material';
+import { Grid, Paper, TextField, FormControl,MenuItem, Select, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -16,31 +16,33 @@ function App() {
   const [login, setLogin] = useState('')
   const [mot_de_passe, setMot_de_passe] = useState('')
   const [message, setMessage] = useState('')
+  const [profil, setProfil] = useState('')
 
-
- 
   const signin = async () => {
     // e.preventDefault();
     console.log("click")
     const params = {
       login: login,
-      mot_de_passe: mot_de_passe
+      mot_de_passe: mot_de_passe,
+      profil: profil
     }
     console.log(params)
     let axiosConfig = {
       withCredentials: true,
     }
-    //   const headers = {
-    //     'Content-Type': 'text/plain'
-    // };
+ 
+
     const  {data}  = await axios.post(`http://localhost:5000/signin`,params, { 'Access-Control-Allow-Credentials': true});
     console.log(data) 
-    if(data == 'logged in'){
-      console.log("tafiditra e")
-
+    if(data == 'to user'){
+      console.log("tafiditra user")
       navigate('/abonnement')
-      
-    }else{
+    }
+    else if(data == 'to admin'){
+      console.log("tafiditra admin")
+      navigate('/insertionUtilisateur')
+    }
+    else{
       console.log("misy diso e")
       // setMessage(data)
     }
@@ -63,10 +65,20 @@ function App() {
          
             <div id="logo"><img src={require('../../assets/images/LOGO-IRC-PRIMAIRE.png')} alt="" /></div>
               <div id="select">  
-                <TextField  className="text-field" id="standard-select" select    label="Profil" variant="standard">   
-                  <option value='Utilisateur' >Utilisateur</option>     
-                  <option value='Administrateur' >Administrateur</option>   
-                  </TextField> 
+              <FormControl style={{marginTop: '2%', width:'230px'}}>
+                        <InputLabel >Profil</InputLabel>
+                            <Select
+                            id="standard-select"
+                            value={profil}
+                            label="Profil"
+                            onChange={e => {setProfil(e.target.value)}}
+                            style={{height: '50px'}}
+                            >
+                            <MenuItem value={'Utilisateur'}>Utilisateur</MenuItem>
+                            <MenuItem value={'Administrateur'}>Administrateur</MenuItem>
+
+                            </Select>
+                    </FormControl>
               </div>
               <div id="input">   <TextField  className="text-field"  id="standard-basic" label="Identifiant" variant="standard" onChange={(e => (setLogin(e.target.value)))} /></div> 
               <div id="input">   <TextField  className="text-field"  id="standard-basic" type="password" label="Mot de passe" variant="standard"  onChange={(e => (setMot_de_passe(e.target.value)))}/>   </div>

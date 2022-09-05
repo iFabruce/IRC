@@ -1,24 +1,18 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('comptes', {
+    await queryInterface.createTable('backoffices', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      login: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      mot_de_passe: {
-        allowNull: false,
+      nom: {
         type: Sequelize.STRING
       },
-      date_creation: {
-        type: Sequelize.DATE
+      id_compte: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('comptes');
+    await queryInterface.dropTable('backoffices');
   }
 };

@@ -23,43 +23,42 @@ export default function HeaderBackoffice() {
 
   const [isNavExpanded, setIsNavExpanded] = useState(false)
     return (
-      <div>
-        <nav className="navigation">
+      <div className="content" >
           <div className='logo'>
               <a href="/" className="brand-name">
               <img src={require('../assets/images/LOGO-IRC-BLANC.png')} alt="" id='logo'  />
-            </a> <a
-              className="hamburger"
-              onClick={() => {
-                setIsNavExpanded(!isNavExpanded)
-              }}
-            ><MenuOutlinedIcon/></a> 
+            </a>
           </div>
+        <nav className="navigationa">
+
+       
           <div
             className={
-              isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
+              isNavExpanded ? "navigationa-menu expanded" : "navigationa-menu"
             }
-          >
-       
+          > <a
+                  className="hamburger"
+                  onClick={() => {
+                    setIsNavExpanded(!isNavExpanded)
+                  }}
+                ><MenuOutlinedIcon/></a> 
+         
             <ul>
               
               <li>
-                <a href="/profilUtilisateur"><AccountCircleOutlinedIcon /> Tableau de bord</a>
+                <a href="/profilUtilisateur"><span className='icons'> <AccountCircleOutlinedIcon /></span> Tableau de bord</a>
               </li>
               <li>
-                <a href="/home"><PlaceOutlinedIcon /> Inscription utilisateur</a>
+                <a href="/insertionUtilisateur"><span className='icons'><PlaceOutlinedIcon /></span> Insertion utilisateur</a>
               </li>
               <li>
-                <a href="/about">  <HealingOutlinedIcon />Ajout prestataire de soin</a>
+                <a href="/insertionPrestataire"> <span className='icons'><HealingOutlinedIcon /></span> Insertion prestataire</a>
               </li>
               <li>
-                <a href="#">  <HealingOutlinedIcon />Insertion médicament</a>
+                <a href="/insertionMedicament"> <span className='icons'><HealingOutlinedIcon /></span> Insertion médicament</a>
               </li>
               <li>
-                <a href="#">  <HealingOutlinedIcon />Ajout médicament à un prestataire</a>
-              </li>
-              <li>
-                <a href="/logout" id="deco"><LogoutOutlinedIcon /> Se deconnecter </a>
+                <a href="/logout" id="deco"><span className='icons'><LogoutOutlinedIcon /></span> Se deconnecter </a>
               </li>
             </ul>
           </div>

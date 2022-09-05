@@ -17,6 +17,11 @@ import {
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './views/backoffice/Dashboard';
 import HeaderBackoffice from './components/HeaderBackoffice';
+import InsertionUtilisateur from './views/backoffice/InsertionUtilisateur';
+import InsertionMedicament from './views/backoffice/InsertionMedicament';
+import InsertionPrestataire from './views/backoffice/InsertionPrestataire';
+
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,7 +30,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<><HeaderBackoffice /><Dashboard /></>}></Route>
+      <Route exact path="/" element={<Login />}></Route>
+      <Route exact path="/insertionUtilisateur" element={<InsertionUtilisateur />}></Route>
+      <Route exact path="/insertionMedicament" element={<InsertionMedicament />}></Route>
+      <Route exact path="/insertionPrestataire" element={<InsertionPrestataire />}></Route>
 
       {/* <Route exact path="/" element={<Login />}></Route> */}
       <Route path="abonnement" element={<><Header/><Abonnement/></>} />

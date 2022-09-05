@@ -1,24 +1,26 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('comptes', {
+    await queryInterface.createTable('medicaments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      login: {
-        type: Sequelize.STRING,
+      nom: {
         allowNull: false,
+        type: Sequelize.STRING,
         unique: true
       },
-      mot_de_passe: {
-        allowNull: false,
-        type: Sequelize.STRING
+      description: {
+        type: Sequelize.TEXT
       },
-      date_creation: {
-        type: Sequelize.DATE
+      posologie: {
+        type: Sequelize.TEXT
+      },
+      fabriquant: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('comptes');
+    await queryInterface.dropTable('medicaments');
   }
 };

@@ -19,18 +19,21 @@ module.exports = {
       nom: 'SILVER',
       tarif: 10000,
       portefeuille: 80000,
+      description: 'Assitant h24 avec un agent hotline',
       createdAt: date,
       updatedAt: date
     },{
       nom: 'GOLD',
       tarif: 20000,
       portefeuille: 150000,
+      description: 'SILVER + accompagnement psycho-social: offres exclusives naissances,... + cotisations assurances vies',
       createdAt: date,
       updatedAt: date
     },{
       nom: 'PREMIUM',
       tarif: 50000,
       portefeuille: 400000,
+      description: 'Notifications/invitations pour les appels de fonds avec remboursement et intérêts',
       createdAt: date,
       updatedAt: date
     }], {});
