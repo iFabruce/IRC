@@ -81,11 +81,12 @@ module.exports.addMedicament = async(req, res) => {
 module.exports.getAllAvailable = async(req, res) => {
     try {
         const medicaments = req.body
+        console.log(medicaments)
         let qr = "select * from prestataires"
         let conditions = ""
         //Si l'utilisateur ajoute une ou plusieurs médicaments dans son panier
-        if(medicaments.medicament.length > 0){
-            medicaments.medicament.forEach((medoc,i) => {
+        if(medicaments.length > 0){
+            medicaments.forEach((medoc,i) => {
                 console.log("i:"+i)
                 if(i==0){
                     conditions = conditions + ` where id_prestataire in (select id_prestataire from rel_medicament_prestataires where id_medicament=${medoc.id})` 

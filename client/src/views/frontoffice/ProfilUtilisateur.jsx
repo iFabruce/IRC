@@ -9,7 +9,7 @@ import {useState, useEffect} from 'react'
 import Cookies from 'universal-cookie';
 
 export default function ProfilUtilisateur() {
-  const cookies = new Cookies();
+  const cookies = new Cookies();  
   const [user, setUser] = useState([])
   const [token, setToken] = useState(cookies.get('jwt'))
 

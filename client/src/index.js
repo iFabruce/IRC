@@ -21,6 +21,7 @@ import InsertionUtilisateur from './views/backoffice/InsertionUtilisateur';
 import InsertionMedicament from './views/backoffice/InsertionMedicament';
 import InsertionPrestataire from './views/backoffice/InsertionPrestataire';
 import ChoixMedicament from './views/frontoffice/ChoixMedicament';
+import ChoixPrestataire from './views/frontoffice/ChoixPrestataire';
 
 
 
@@ -33,7 +34,8 @@ root.render(
     <Routes>
       {/* <Route exact path="/" element={<Login />}></Route> */}
       {/* <Route exact path="/" element={<><Header/><ChoixMedicament /></>}></Route> */}
-      <Route exact path="/" element={<Map />}></Route>
+      <Route exact path="/" element={<ChoixMedicament />}></Route>
+      <Route exact path="/choixPrestataire" element={<ChoixPrestataire />}></Route>
 
 
       <Route exact path="/insertionUtilisateur" element={<InsertionUtilisateur />}></Route>
