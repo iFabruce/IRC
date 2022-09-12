@@ -72,10 +72,10 @@ export default function Abonnement()  {
                         <Grid item sx={12} md={4} className="item" key={abonnement.id}>
                             <Card className="card">
                                 <CardContent>
-                                    <Typography variant="h4" color="primary" className="cardHeader">{abonnement.nom}</Typography>
-                                    <Typography variant="h3" color="black" className="price">{abonnement.tarif} Ar</Typography><br />
-                                    <Typography variant="body1" color="grey" className="details">Description</Typography>
-                                   <div className="subscribe-btn"> <Button variant="contained" onClick={()=> {console.log("clix"); subscribe(abonnement.id)}} >Se souscrire</Button></div>
+                                    <h2  className="cardHeader">{abonnement.nom}</h2>
+                                    <h1   className="price">{abonnement.tarif} Ar</h1><br />
+                                    <p   className="details">{abonnement.description}</p>
+                                   <div className="subscribe-btn"> <Button  variant="contained" onClick={()=> {console.log("clix"); subscribe(abonnement.id)}} >Se souscrire</Button></div>
                             
                                 </CardContent>
                             </Card>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
-// import Map from './views/frontoffice/Map';
+import Map from './views/frontoffice/Map';
 import Login from './views/frontoffice/Login';
 import Abonnement from './views/frontoffice/Abonnement';
 import ProfilUtilisateur from './views/frontoffice/ProfilUtilisateur';
@@ -20,6 +20,7 @@ import HeaderBackoffice from './components/HeaderBackoffice';
 import InsertionUtilisateur from './views/backoffice/InsertionUtilisateur';
 import InsertionMedicament from './views/backoffice/InsertionMedicament';
 import InsertionPrestataire from './views/backoffice/InsertionPrestataire';
+import ChoixMedicament from './views/frontoffice/ChoixMedicament';
 
 
 
@@ -30,7 +31,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<Login />}></Route>
+      {/* <Route exact path="/" element={<Login />}></Route> */}
+      {/* <Route exact path="/" element={<><Header/><ChoixMedicament /></>}></Route> */}
+      <Route exact path="/" element={<Map />}></Route>
+
+
       <Route exact path="/insertionUtilisateur" element={<InsertionUtilisateur />}></Route>
       <Route exact path="/insertionMedicament" element={<InsertionMedicament />}></Route>
       <Route exact path="/insertionPrestataire" element={<InsertionPrestataire />}></Route>
@@ -43,12 +48,7 @@ root.render(
 
     </Routes>
   </BrowserRouter>
-   {/* */}
-    {/* <Header/> */}
-    {/* <Abonnement/> */}
-  
-    {/* <Header/>
-    <ProfilUtilisateur/> */}
+   
 
 
   </React.StrictMode>

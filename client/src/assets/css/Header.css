@@ -20,8 +20,10 @@ body{
 
 
 }
+
+
 .navigation {
-    height: 10vh;
+    height: 50px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -44,17 +46,19 @@ body{
 }
 .navigation-menu {
     margin-left: auto;
-    padding-top: 1%;
+    /* padding-top: 1%; */
 
 }
 .navigation-menu ul {
     display: flex;
     padding: 0;
-    padding-right: 100px;
+    /* padding-right: 100px; */
 }
 .navigation-menu li {
     list-style-type: none;
-    margin: 0 1rem;
+    margin: 0 2rem;
+    /* background: grey; */
+    /* padding: 10%; */
 }
 .navigation-menu li:hover{
     transform: translateX(2%);
@@ -70,8 +74,8 @@ body{
 }
 .hamburger {
     border: 0;
-    height: 40px;
-    width: 40px;
+    height: 25px;
+    width: 25px;
     padding: 0.5rem;
     /* border-radius: 10%; */
     /* background-color: white; */
@@ -91,11 +95,12 @@ body{
       display: block;
         box-shadow: 0 1px 4px -1px rgba(9, 9, 9, 0.23);
         border-radius: 10%;
+        
 
     }.navigation-menu ul {
         display: none;
         
-      }
+      } 
       .navigation-menu ul {
         margin-top: 30px;
         position: absolute;
@@ -106,12 +111,13 @@ body{
         height: calc(100vh - 77px);
         background-color: white;
         /* border-top: 1px solid black; */
-
+        padding: 2%;
       }
       .navigation-menu li {
         text-align: center;
         margin: 0;
         margin-top: 1%;
+        margin-right: 20%;
       }
       .navigation-menu li a {
         border-radius: 2px;

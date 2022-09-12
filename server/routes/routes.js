@@ -28,6 +28,7 @@ router.post('/prestataire/create', prestataireController.create)
 router.post('/prestataire/update/:id', prestataireController.update)
 router.delete('/prestataire/delete/:id', prestataireController.delete)
 router.get('/prestataire/addMedicament/:id_prestataire/:id_medicament', prestataireController.addMedicament)
+router.post('/prestataire/getAllAvailable', prestataireController.getAllAvailable)
 
 
 /*****MEDICAMENT ROUTES*****/
