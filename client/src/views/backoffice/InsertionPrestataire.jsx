@@ -7,7 +7,7 @@ import '../../assets/css/InsertionUtilisateur.css'
 import axios from 'axios'
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-export default function InsertionUtilisateur()  {
+export default function InsertionPrestataire()  {
     const [alert, setAlert] = useState('')
     const [nom, setNom] = useState('')
     const [description, setDescription] = useState('')
@@ -51,7 +51,7 @@ export default function InsertionUtilisateur()  {
             </Grid>
             <Grid item sx={12} md={9} className="contentRight" style={{marginTop: '50px'}} >
                 <div >
-                    <h2 className='headTitle'>Insertion prestataire</h2><br />
+                    <h2 className='headTitle'>Insertion prestataire</h2>  <br /><a href="/listePrestataire">Voir la liste</a>
                     <div className='form'> <TextField onChange={e => {setNom(e.target.value)}} className="text-field"  id="standard-basic" label="Nom" variant="outlined"  /> </div>
                     <div className='form'> 
                         <InputLabel>Desciption</InputLabel>
@@ -74,9 +74,10 @@ export default function InsertionUtilisateur()  {
 
                   
                     <Button variant="contained" style={{background: '#00988B'}} onClick={newPrestataire}> Ajouter </Button> <br />
-                </div>
                     { alert===false && <AlertError message="Erreur - Ce prestataire est déjà enregistré!"/>}
                     { alert===true && <AlertSuccess message="Succès - Prestataire ajouté."/>}
+                </div>
+                   
             </Grid>
         </Grid>
      </div>

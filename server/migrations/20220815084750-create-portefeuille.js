@@ -8,20 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_utilisateur: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
+      // id_utilisateur: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER
+      // },
       solde: {
-        allowNull: false,
         type: Sequelize.DOUBLE
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

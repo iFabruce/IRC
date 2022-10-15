@@ -7,14 +7,12 @@ import '../../assets/css/InsertionUtilisateur.css'
 import axios from 'axios'
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-export default function InsertionUtilisateur()  {
+export default function InsertionMedicament()  {
     const [alert, setAlert] = useState('')
     const [nom, setNom] = useState('')
     const [description, setDescription] = useState('')
     const [posologie, setPosologie] = useState('')
     const [fabriquant, setFabriquant] = useState('')
-   
-
 
     useEffect(() => {
         setAlert('')
@@ -42,7 +40,8 @@ export default function InsertionUtilisateur()  {
             </Grid>
             <Grid item sx={12} md={9} className="contentRight" style={{marginTop: '50px'}} >
                 <div >
-                    <h2 className='headTitle'>Insertion médicament</h2><br />
+                    <h2 className='headTitle'>Insertion médicament</h2>  <br /><a href="/listeMedicament">Voir la liste</a>
+                
 
                    <div className='form'> <TextField onChange={e => {setNom(e.target.value)}} className="text-field"  id="standard-basic" label="Nom" variant="outlined"  /> </div>
                     <div className='form'> 

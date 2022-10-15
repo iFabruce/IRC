@@ -8,7 +8,7 @@ module.exports = {
      await queryInterface.bulkInsert('prestataires', [{
         nom: 'Pharmacie Nanisana',
         description: 'loremu ipsum dolor sit amet',
-        ouverture: '8:30',
+        ouverture: '08:30',
         fermeture: '19:00',
         statut: 'ouvert',
         adresse: 'Nanisana',
@@ -19,7 +19,7 @@ module.exports = {
      },{
       nom: 'Pharmacie Anosy',
       description: 'loremu ipsum dolor sit amet',
-      ouverture: '8:30',
+      ouverture: '08:30',
       fermeture: '19:00',
       statut: 'ouvert',
       adresse: 'Anosy',
@@ -30,7 +30,7 @@ module.exports = {
      },{
       nom: 'Pharmacie Ankadifotsy',
       description: 'loremu ipsum dolor sit amet',
-      ouverture: '8:30',
+      ouverture: '08:30',
       fermeture: '19:00',
       statut: 'ouvert',
       adresse: 'Ankadifotsy',

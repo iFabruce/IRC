@@ -1,76 +1,64 @@
 const {sequelize, Utilisateur,Backoffice,Compte,Portefeuille} = require('../models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
-module.exports.signup = async(req,res) => {
-    try{
-        //Create 'comptes' first
-        var {login, mot_de_passe, nom, prenom, sexe, date_naissance, adresse, situation_matrimonial} = req.body
-        const salt = await bcrypt.genSalt()
-        mot_de_passe = await bcrypt.hash(mot_de_passe, salt)
-        const compte = await Compte.create({login, mot_de_passe}) 
-        const id_compte = compte.id
-        // Then attribute id of new 'comptes' to create new 'utilisateurs' 
-        const utilisateur = await Utilisateur.create({nom, prenom, sexe, date_naissance, adresse, situation_matrimonial, id_compte})
-        const portfeuille = await Portefeuille.create({id_utilisateur: utilisateur.id, solde: 0.0 })
-        res.json(true)
-    }
-    catch(err){
-        console.log(err)
-        res.json(false)
-    }
-}
+const { QueryTypes } = require('sequelize');
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+ "-"+today.getHours()+ ":"+today.getMinutes()+ ":" + today.getSeconds();
 
 module.exports.signin = async(req,res) => {
     try {
         var {login,mot_de_passe,profil} = req.body
-        const compte = await Compte.findOne(
-            {
-                where: {login}            
-            }
-        )
-        const id_compte = compte.dataValues.id
-        console.log("ID COMPTE:"+id_compte)
-        if(compte){
-            var user
-            const compare = await bcrypt.compare(mot_de_passe,compte.dataValues.mot_de_passe)
-            var message
-            console.log("aaa:"+profil)
-            if(compare){
+        console.log("login:"+login + "mot_de_passe:"+mot_de_passe + " profil:"+profil)
+        if(login=='' || mot_de_passe== '' || profil==''){
+           res.json("Veuillez remplir tous les champs.") 
+        }else{
+            let request = `select * from comptes where login = '${login}' and id in (select id_compte from ${profil})`
+            console.log(request)
+            const compte = await sequelize.query(request, { type: QueryTypes.SELECT })
+            console.log(compte)
+            if(compte.length > 0){
+                const id_compte = compte[0].id
+                console.log("ID COMPTE:"+id_compte)
+                var user
+                const compare = await bcrypt.compare(mot_de_passe,compte[0].mot_de_passe)
+                if(compare){
+                    if(profil == 'utilisateurs'){
+                        console.log("to user")
+                        user = await Utilisateur.findOne({
+                            where: {id_compte}
+                        })
+                    }else if(profil == 'backoffices'){
+                        console.log("to admin")
+                        user = await Backoffice.findOne({
+                            where: {id_compte}
+                        })
+                    }
+                    console.log(user)
 
-                if(profil == 'Utilisateur'){
-                    console.log("to user")
-                    user = await Utilisateur.findOne({
-                        where: {id_compte}
-                    })
-                    message = "to user"
-                }else if(profil == 'Administrateur'){
-                    console.log("to admin")
+                    console.log("xx")
+                    const id = user.dataValues.id
+                    console.log("yy")
 
-                    user = await Backoffice.findOne({
-                        where: {id_compte}
-                    })
-                    message = "to admin"
+                    const max = 1000 * 60 * 60 * 24
+                    const token = jwt.sign({id}, 'irc secret' , {expiresIn: max })
+                    res.cookie('jwt',token,{maxAge: max, HttpOnly: false})
+                    console.log("COOKIE:"+req.cookies.jwt)
+                    res.json({profil, token})
+                }else{
+                    res.json('Vérifier votre mot de passe.')
                 }
-                    
-                console.log("xx")
-                const id = user.dataValues.id
-                console.log("yy")
-
-                const max = 1000 * 60 * 60 * 24
-                const token = jwt.sign({id}, 'irc secret' , {expiresIn: max })
-                res.cookie('jwt',token,{maxAge: max, HttpOnly: false})
-                res.json(message)
-            }else{
-                res.json('password incorrect')
+        
+            }
+            else{//Si le compte n'existe pas dans le profil choisi
+                res.json("Ce compte n'existe pas.")
             }
         }
-        else{
-            res.json("Ce compte n'existe pas")
-        }
+        
     } catch (error) {
         console.log(error)
-        res.status(400).json(error)
+        // res.status(400).json(error)
+        res.json("Errora")
+
     }
 }
 module.exports.logout = async(req,res) => {

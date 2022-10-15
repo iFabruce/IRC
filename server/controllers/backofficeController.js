@@ -27,5 +27,4 @@ module.exports.create = async(req,res) => {
         console.log(error)
         res.json(false)
     }
-    
 }

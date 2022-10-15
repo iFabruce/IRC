@@ -20,8 +20,14 @@ import HeaderBackoffice from './components/HeaderBackoffice';
 import InsertionUtilisateur from './views/backoffice/InsertionUtilisateur';
 import InsertionMedicament from './views/backoffice/InsertionMedicament';
 import InsertionPrestataire from './views/backoffice/InsertionPrestataire';
+import ListePrestataire from './views/backoffice/ListePrestataire';
+import ListeMedicament from './views/backoffice/ListeMedicament';
+import ListeUtilisateur from './views/backoffice/ListeUtilisateur';
+import MedicamentPrestataire from './views/backoffice/MedicamentPrestataire';
+import Paiement from './views/frontoffice/Paiement';
 import ChoixMedicament from './views/frontoffice/ChoixMedicament';
 import ChoixPrestataire from './views/frontoffice/ChoixPrestataire';
+import Accueil from './views/frontoffice/Accueil';
 
 
 
@@ -32,21 +38,27 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
-      {/* <Route exact path="/" element={<Login />}></Route> */}
-      {/* <Route exact path="/" element={<><Header/><ChoixMedicament /></>}></Route> */}
-      <Route exact path="/" element={<ChoixMedicament />}></Route>
-      <Route exact path="/choixPrestataire" element={<ChoixPrestataire />}></Route>
+      <Route exact path="/" element={<Login />}></Route>
+      {/* <Route exact path="/" element={<Accueil/>}></Route> */}
 
+      <Route exact path="/medicamentPrestataire" element={<MedicamentPrestataire />}></Route>
+
+      <Route exact path="/paiement" element={<><Header/><Paiement/></>}></Route>
+
+      <Route exact path="/choixMedicament" element={<ChoixMedicament />}></Route>
+      <Route exact path="/choixPrestataire" element={<ChoixPrestataire />}></Route>
 
       <Route exact path="/insertionUtilisateur" element={<InsertionUtilisateur />}></Route>
       <Route exact path="/insertionMedicament" element={<InsertionMedicament />}></Route>
       <Route exact path="/insertionPrestataire" element={<InsertionPrestataire />}></Route>
 
-      {/* <Route exact path="/" element={<Login />}></Route> */}
+      <Route exact path="/listePrestataire" element={<ListePrestataire />}></Route>
+      <Route exact path="/listeMedicament" element={<ListeMedicament />}></Route>
+      <Route exact path="/listeUtilisateur" element={<ListeUtilisateur />}></Route>
+
       <Route path="abonnement" element={<><Header/><Abonnement/></>} />
       <Route path="logout" element={<><Login/></>} />
       <Route path="profilUtilisateur" element={<><Header/><ProfilUtilisateur/></>} />
-
 
     </Routes>
   </BrowserRouter>

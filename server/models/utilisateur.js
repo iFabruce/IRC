@@ -17,11 +17,14 @@ module.exports = (sequelize, DataTypes) => {
   Utilisateur.init({
     nom: DataTypes.STRING,
     prenom: DataTypes.STRING,
+    telephone: DataTypes.INTEGER,
+    reference: DataTypes.INTEGER,
     sexe: DataTypes.STRING,
     date_naissance: DataTypes.DATEONLY,
     adresse: DataTypes.STRING,
     situation_matrimonial: DataTypes.STRING,
-    id_compte: DataTypes.INTEGER
+    id_compte: DataTypes.INTEGER,
+    id_portefeuille: DataTypes.INTEGER
   }, {
     sequelize,
     tableName: 'utilisateurs',

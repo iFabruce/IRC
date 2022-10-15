@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({Utilisateur}) {
+      this.hasMany(Utilisateur, {foreignKey: 'id_portefeuille'})
     }
   }
   Portefeuille.init({
-    id_utilisateur: DataTypes.INTEGER,
+    // id_utilisateur: DataTypes.INTEGER,
     solde: DataTypes.DOUBLE
   }, {
     sequelize,

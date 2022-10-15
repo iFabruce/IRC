@@ -1,7 +1,6 @@
 'use strict';
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
 module.exports = {
   async up (queryInterface, Sequelize) {
    
@@ -27,6 +26,21 @@ module.exports = {
       createdAt: date,
       updatedAt: date
      }], {});
+    await queryInterface.bulkInsert('prix_medicaments', [{
+      id_prestataire: 46,
+      id_medicament: 37,
+      prix: 4000,
+      date: date,
+      createdAt: date,
+      updatedAt: date 
+    },{
+      id_prestataire: 46,
+      id_medicament: 37,
+      prix: 4500,
+      date: date,
+      createdAt: date,
+      updatedAt: date 
+    }],{})
   },
 
   async down (queryInterface, Sequelize) {

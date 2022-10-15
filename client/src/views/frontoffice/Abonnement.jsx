@@ -42,20 +42,12 @@ export default function Abonnement()  {
     }, [])
     
     const subscribe  = async (id_abonnement) => {
-        console.log("id_abonnement:"+id_abonnement + " and  id_user:"+token)
-        const  {data}  = await axios.get(`http://localhost:5000/subscribe/${token}/${id_abonnement}`);
+        const  {data}  = await axios.post(`http://localhost:5000/subscribe`, {id_abonnement , token: localStorage.getItem('session')});
         console.log(data)
         if(data){
-            console.log(data)
             setAlert(true)
-            console.log("alert:"+data)
-
         }else{
-            console.log(data)
-
             setAlert(false)
-            console.log("alert:"+data)
-
         }
     }
     
@@ -63,7 +55,6 @@ export default function Abonnement()  {
     return (
         <div>
             <Grid container spacing={2} disableElevation className='container'>
-                
                 {
                     
                     abonnements.map( abonnement =>
@@ -83,8 +74,7 @@ export default function Abonnement()  {
                         </Grid>
                   )                
                 }
- 
-                { alert===false && <AlertError message="Erreur - Vous avez déjà un abonnement valable"/>}
+                { alert===false && <AlertError message="Erreur - Vous avez encore un abonnement valable"/>}
                 { alert===true && <AlertSuccess message="Succès - Votre abonnement a été effectué avec succès" />}
             
             </Grid>

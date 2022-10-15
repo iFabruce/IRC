@@ -18,9 +18,20 @@ export default function ChoixMedicament() {
     const [suggests, setSuggests] = useState('')
     const [panier, setPanier] = useState([])
     const [increment, setIncrement] = useState(1)
+    const [prix, setPrix] = useState(0)
 
     const submit = () => {
-      localStorage.setItem('panier', JSON.stringify(panier))
+      console.log(panier);
+      // const panierClone = [...panier]
+      // panierClone.forEach(element => {
+      //   getPriceMedicament(element.id_medicament)
+      //   console.log("VIDINY:"+prix);
+      //   element.prix = prix
+      // });
+      // setPanier([...panierClone])
+      // localStorage.clear();
+      localStorage.setItem('card', JSON.stringify(panier))
+      console.log("CARDSESS:"+localStorage.getItem('card'))
       navigate('/choixPrestataire')   
     }
     useEffect(() => {
@@ -33,33 +44,37 @@ export default function ChoixMedicament() {
         setIncrement(1)
     }, [])
 
-
+    // const getPriceMedicament = async (id_medicament) =>{
+    //   const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+    //     {
+    //       id_medicament: id_medicament,
+    //       id_prestataire: 46
+    //     })
+    //     setPrix(data[0].prix)
+    //     // return data[0].prix
+    // } 
     const changeValue = (id,value) =>{
       const panierClone = [...panier]
-      console.log("length:"+panierClone.length)
-      // panierClone.map(ps => {console.log(ps.id)})
       let itemFind = panierClone.findIndex( pp => pp.id === id)
-      console.log("itemFIND:"+itemFind)
       panierClone[itemFind].quantite = value
-      setPanier(panierClone)
-      
+      setPanier([...panierClone])
       panier.map( px => console.log("nom:"+px.nom+ " quantite:"+px.quantite))
     }
 
-    const onSuggestHandler = (id_medicament, nom_medicament) => {
-      // setText(text)
-      let item = {id: increment ,id_medicament: id_medicament,nom: nom_medicament, quantite: 1}
+    const onSuggestHandler = async(id_medicament, nom_medicament) => {
+      let item = {id: increment ,id_medicament: id_medicament,nom: nom_medicament,prix: prix ,quantite: 1} //Obtenir prix du médicament
+      console.log("item:"+item.prix)
       const panierCopy = [...panier]
-      //Si le produit sélectionné est déjà dans le panier
-      let indexFind = panierCopy.findIndex( pp => pp.nom === nom_medicament)
+      let indexFind = panierCopy.findIndex( pp => pp.nom === nom_medicament) //Si le produit sélectionné est déjà dans le panier
       if(indexFind != -1){
         panierCopy[indexFind].quantite++
       }else{
         panierCopy.push(item)
       }
-      setPanier(panierCopy)
+      setPanier([...panierCopy])
       setIncrement(increment+1)
-      console.log(panier)
+      setSuggests('')
+
     }
 
     const onChangeHandler = (text) =>{
@@ -68,11 +83,9 @@ export default function ChoixMedicament() {
       if(text.length > 0){
           matches = medicaments.filter( medicament => {
           const regex = new RegExp( `${text}`, 'gi')
-          // console.log("regex:"+regex)
           return medicament.nom.match(regex)
         })        
       }
-      // console.log(matches.map(match => console.log(match.nom)))
       setSuggests(matches)
       setText(text)
     }
@@ -114,8 +127,9 @@ export default function ChoixMedicament() {
           <li key={pp.id}>  <div id="item-name"><p> {pp.nom}</p></div> <div id="item-quantity"><p>Quantite</p>  <Input style={{background:'white',width:'70px', padding:'3%', height: '25px', marginTop:'5%'}} type="number" min="1"  value={pp.quantite} onChange={(e) => {changeValue(pp.id,e.target.value)} } /></div></li>  
         )}
       </ul>
-      <Button variant="contained" className="button" onClick={submit} > Valider </Button>
           </div>
+      <div className="button"><Button variant="contained"  onClick={submit} style={{width: '500px'}}> Valider </Button></div>
+
         </Grid>
       </Grid>
     </div>

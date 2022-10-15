@@ -1,6 +1,9 @@
 body{
     overflow-y: hidden;
 }
+a{
+    text-decoration: none;
+}
 .navLeft{
     width: 100%;
     height: 100vh;
@@ -10,9 +13,7 @@ body{
     overflow-y: scroll;
     height: 100vh;
 }
-#cont{
-    height: 100vh;
-}
+
 .headTitle{
     font-weight: 600;
     font-size: 2vw;
@@ -24,4 +25,7 @@ body{
 }
 .form-date{
     margin-top: 3%;
+}
+.table{
+    padding-right: 10%;
 }

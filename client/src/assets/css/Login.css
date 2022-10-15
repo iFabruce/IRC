@@ -53,7 +53,7 @@
     /* padding-top: 10%; */
   }
   #connect{
-    margin-top: 5%;
+    margin-top: 2%;
   }
 }
 .box{
@@ -139,7 +139,6 @@ body{
 }
 .button{
   font-family: Montserrat;
-
   text-transform: unset !important;
   font-weight: 600 !important; 
   background-color:  linear-gradient(to bottom right, #5A55AA, #0399BC);

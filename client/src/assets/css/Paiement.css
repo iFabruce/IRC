@@ -1,0 +1,30 @@
+.body{
+    overflow-y: scroll;
+}
+#content{
+    padding: 4%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+#leftPaiement{
+    /* background: gold; */
+}
+#rightPaiement{
+    /* background: green; */
+
+}
+#totalPaiement{
+    font-size: 40px;
+    font-weight: 400;
+}
+.lightText{
+    color: lightgrey;
+    font-size: 20px;
+    font-weight: 200;
+}
+.buttonPaiement{
+    background:  linear-gradient(to bottom right, #5A55AA, #0399BC);
+}
+#btn{
+    margin-top: 5%;
+}

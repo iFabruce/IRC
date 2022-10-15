@@ -16,6 +16,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      telephone: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      reference: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       sexe: {
         allowNull: false,
         type: Sequelize.STRING
@@ -36,12 +44,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      id_portefeuille: {
         allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      createdAt: {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

@@ -11,6 +11,8 @@ export default function InsertionUtilisateur()  {
     const [alert, setAlert] = useState('')
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
+    const [telephone, setTelephone] = useState('')
+    const [reference, setReference] = useState('')
     const [date_naissance, setDate_naissance] = useState('')
     const [sexe, setSexe] = useState('')
     const [adresse, setAdresse] = useState('')
@@ -24,12 +26,14 @@ export default function InsertionUtilisateur()  {
     }, [])
     const signup = async() =>{
        console.log("go")
-        const {data} = await axios.post('http://localhost:5000/signup',
+        const {data} = await axios.post('http://localhost:5000/utilisateur/signup',
         {
             login,
             mot_de_passe,
             nom,
             prenom,
+            telephone,
+            reference,
             sexe,
             date_naissance,
             situation_matrimonial,
@@ -41,7 +45,7 @@ export default function InsertionUtilisateur()  {
     }
     return (
       <div>
-        <Grid container id="cont" spacing={10}>
+        <Grid container spacing={10}>
             <Grid item sx={12} md={3}>
            <div className="navLeft">
                     <HeaderBackoffice/>
@@ -49,11 +53,14 @@ export default function InsertionUtilisateur()  {
             </Grid>
             <Grid item sx={12} md={9} className="contentRight" style={{marginTop: '20px'}}>
                 <div>
-                    <h2 className='headTitle'>Insertion utilisateur</h2><br /><br />
+                    <h2 className='headTitle'>Insertion utilisateur</h2><br /><a href="/listeUtilisateur">Voir la liste</a> <br /><br />
                     <h4  style={{paddingBottom: '1%',borderBottom: '1px solid grey',color:'grey',opacity: '.8'}}>Informations personnelles</h4> 
 
                    <div className='form'> <TextField onChange={e => {setNom(e.target.value)}} className="text-field"  id="standard-basic" label="Nom" variant="outlined"  /> </div>
                    <div className='form'> <TextField onChange={e => {setPrenom(e.target.value)}} className="text-field"  id="standard-basic" label="Prénom" variant="outlined"  /></div>
+                   <div className='form'> <TextField onChange={e => {setTelephone(e.target.value)}} className="text-field"  id="standard-basic" label="Telephone" variant="outlined"  /></div><br />
+
+                  
                    <div className='form-date'>  <InputLabel >Date de naissance</InputLabel> <TextField    onChange={e => {setDate_naissance(e.target.value)}} id="standard-basic"  variant="outlined" type="date" /></div>
                    <div style={{marginTop: '2%'}}>  
                     <FormControl style={{marginTop: '2%', width:'230px'}}>
@@ -80,16 +87,21 @@ export default function InsertionUtilisateur()  {
                             label="Situation matrimonial"
                             onChange={e => {setSituation_matrimonial(e.target.value)}}
                             >
-                            <MenuItem value={'C'}>Célibataire</MenuItem>
-                            <MenuItem value={'M'}>Marié(e)</MenuItem>
-                            <MenuItem value={'D'}>Divorcé(e)</MenuItem>
-                            <MenuItem value={'V'}>Veuf(ve)</MenuItem>
+                            <MenuItem value={'Célibataire'}>Célibataire</MenuItem>
+                            <MenuItem value={'Marié(e)'}>Marié(e)</MenuItem>
+                            <MenuItem value={'Divorcé(e)'}>Divorcé(e)</MenuItem>
+                            <MenuItem value={'Veuf(ve)'}>Veuf(ve)</MenuItem>
                             </Select>
                         </FormControl>
                         <div className='form'>  <br /> <br />
                         <h4 style={{paddingBottom: '1%',borderBottom: '1px solid grey',color:'grey',opacity: '.8'}}>Informations du compte</h4> 
                         <div className='form'> <TextField onChange={e => {setLogin(e.target.value)}}  id="standard-basic" label="Identifiant (numéro CIN)" variant="outlined"  /> </div>
                         <div className='form'> <TextField onChange={e => {setMot_de_passe(e.target.value)}} type="password" id="standard-basic" label="Mot de passe" variant="outlined"  /></div> <br />
+                       
+                        <h4  style={{paddingBottom: '1%',borderBottom: '1px solid grey',color:'grey',opacity: '.8'}}>Portefeuille</h4> <br />
+                        <p>Créer votre propre portefeuille ou se lier avec un autre utilisateur</p> 
+                        <div className='form'> <TextField onChange={e => {setReference(e.target.value)}} value={reference} className="text-field"  id="standard-basic" label="Reference" variant="outlined"  /></div> <Button style={{textTransform: 'unset'}} onClick={ () => { console.log(telephone); setReference(telephone)}}>Créer mon propre portefeuille</Button> <br />
+                   <br />
                         <Button variant="contained" style={{background: '#00988B'}} onClick={signup}> Ajouter </Button>
                         { alert===false && <AlertError message="Erreur - Ce numéro CIN est déjà inscrit!"/>}
                         { alert===true && <AlertSuccess message="Succès - Votre compté a été crée."/>}

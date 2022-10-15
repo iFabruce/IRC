@@ -17,40 +17,35 @@ function App() {
   const [profil, setProfil] = useState('')
 
   const signin = async () => {
-    // e.preventDefault();
-    console.log("click")
-    const params = {
-      login: login,
-      mot_de_passe: mot_de_passe,
-      profil: profil
-    }
-    console.log(params)
-    let axiosConfig = {
-      withCredentials: true,
-    }
- 
+    try {
+      const params = {login: login, mot_de_passe, profil}
+      let {data} = await axios.post(`http://localhost:5000/signin`, params, { 'Access-Control-Allow-Credentials': true});
+      console.log("token:"+data.token);
+      localStorage.setItem('session',data.token) //Création session
+      console.log("SESSION:"+localStorage.getItem('session'))
+      //Redirection
+      if(data.profil === 'utilisateurs'){
+        const {data} = await axios.post(`http://localhost:5000/utilisateur/getCurrentUserInfo`, { token: localStorage.getItem('session')});
+        console.log("id:"+data)
+        localStorage.setItem('id_utilisateur', data) 
+        navigate('/abonnement')
+      }
+      else if(data.profil === 'backoffices'){
+        // console.log("SESSION:"+localStorage.getItem('session'))
 
-    const  {data}  = await axios.post(`http://localhost:5000/signin`,params, { 'Access-Control-Allow-Credentials': true});
-    console.log(data) 
-    if(data == 'to user'){
-      console.log("tafiditra user")
-      navigate('/abonnement')
+        navigate('/insertionUtilisateur')
+      }
+      else{//Affichage message
+        setMessage(data)
+      }
+    } catch (error) {
+      console.log(error)
     }
-    else if(data == 'to admin'){
-      console.log("tafiditra admin")
-      navigate('/insertionUtilisateur')
-    }
-    else{
-      console.log("misy diso e")
-      // setMessage(data)
-    }
-    setMessage(data)
-    console.log(message)
   };
+
   return (
-    
     <div>
-      <Grid container id="content" >
+      <Grid container >
         <Grid item xs={12} md={6} >
           <Paper>
             <div id="illustration">
@@ -72,16 +67,16 @@ function App() {
                             onChange={e => {setProfil(e.target.value)}}
                             style={{height: '50px'}}
                             >
-                            <MenuItem value={'Utilisateur'}>Utilisateur</MenuItem>
-                            <MenuItem value={'Administrateur'}>Administrateur</MenuItem>
+                            <MenuItem value='utilisateurs'>Utilisateur</MenuItem>
+                            <MenuItem value='backoffices'>Administrateur</MenuItem>
 
                             </Select>
                     </FormControl>
               </div>
               <div id="input">   <TextField  className="text-field"  id="standard-basic" label="Identifiant" variant="standard" onChange={(e => (setLogin(e.target.value)))} /></div> 
               <div id="input">   <TextField  className="text-field"  id="standard-basic" type="password" label="Mot de passe" variant="standard"  onChange={(e => (setMot_de_passe(e.target.value)))}/>   </div>
-              <div id="connect"> <Button  variant="contained" className="button" onClick={signin} > Se connecter </Button></div>
-              <p>{message}</p>
+              <div id="input"> <Button  variant="contained" className="button" onClick={signin} > Se connecter </Button></div>
+              <div id="input">  <p style={{color: 'red'}}>{message}</p> </div>
 
          
         </Grid>

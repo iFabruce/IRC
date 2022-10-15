@@ -25,6 +25,7 @@ const {sequelize, Utilisateur, Compte, Abonnement} = require('./models');    //M
 app.get('/utilisateurs', async (req,res) =>{
     try {
         const users = await Utilisateur.findAll({include: 'comptes'})
+        
         return res.json(users)
     } catch (error) {
         return res.json(error)
@@ -44,6 +45,6 @@ app.get('/comptes', async (req,res) =>{
 app.listen(5000,async () =>{
     console.log("loading...")
     await sequelize.authenticate()
-    console.log("database connected!")
+    console.log("sequelize!")
 })
 

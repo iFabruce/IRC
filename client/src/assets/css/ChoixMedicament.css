@@ -1,6 +1,10 @@
 body{
 
 }
+.button{
+    margin: 10%;
+   
+}
 .autocompletion{
     /* background: gray; */
     height: 100vh;
@@ -15,6 +19,9 @@ body{
     box-shadow: 0px 2px 10px -2px rgba(9, 9, 9, 0.23);
     height: 50%;
     border-radius: 5px;
+    max-height: 500px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 #title{
     font-weight: 700;
