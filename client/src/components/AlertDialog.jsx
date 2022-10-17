@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog() {
+export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,7 +20,7 @@ export default function AlertDialog() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
+        {props.text}
       </Button>
       <Dialog
         open={open}
@@ -29,18 +29,16 @@ export default function AlertDialog() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {props.header}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+            {props.description}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            {props.button}
           </Button>
         </DialogActions>
       </Dialog>

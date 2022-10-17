@@ -8,6 +8,8 @@
 }
 #leftPaiement{
     /* background: gold; */
+    /* overflow-y: scroll;
+    scrollbar-width: thin; */
 }
 #rightPaiement{
     /* background: green; */
@@ -27,4 +29,10 @@
 }
 #btn{
     margin-top: 5%;
+}
+@media screen and (max-width: 641px) {
+    #leftPaiement{
+        /* height: 200px;
+        background: green; */
+    }
 }

@@ -2,10 +2,18 @@ import {useEffect, useState} from 'react'
 import { Grid, Paper, TextField, FormControl,MenuItem, Select, InputLabel,TextareaAutosize,Button } from '@mui/material';
 import '../../assets/css/Paiement.css'
 import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow} from '@mui/material';
+import {Accordion, AccordionSummary, AccordionDetails} from '@mui/material'
 import axios from 'axios'
 import { SettingsRemoteSharp } from '@material-ui/icons';
 import AlertSuccess from '../../components/AlertSuccess'
 import AlertError from '../../components/AlertError'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AlertDialog from '../../components/AlertDialog';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function Paiement(){
     const [prix, setPrix] = useState(0)
@@ -15,12 +23,21 @@ export default function Paiement(){
     const [echeances, setEcheances] = useState()
     const [alert, setAlert] = useState('')
     const [userInfo, setUserInfo] = useState()
+    const [open, setOpen] = useState(false)
 
+   
     
+    const handleClose = () => {
+    setOpen(false);
+    };
+
     const cashout =  async(amount) => {
         console.log("USERA:"+localStorage.getItem('id_utilisateur'))
         const {data} = await axios.post('http://localhost:5000/achat/debit',{panier: JSON.parse(localStorage.getItem('card')),id_utilisateur: localStorage.getItem('id_utilisateur'), amount})
         console.log("data:"+data)
+        if(!data){
+            setOpen(true)
+        }
         setAlert(data)
     }
 
@@ -86,8 +103,8 @@ export default function Paiement(){
     return (
     <div>
         <Grid container spacing={10} id="content">
-            <Grid item xs={12} md={6}>
-                <div id="leftPaiement">
+            <Grid item xs={12} md={6} id="leftPaiement">
+                <div >
                 <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 50 }} >
                             <TableHead>
@@ -114,16 +131,45 @@ export default function Paiement(){
                     </TableContainer>
                 </div> 
                 <br/>
-                <Button onClick={showTotal}>Afficher</Button>
+               
+
 
             </Grid>
             <Grid item xs={12} md={6}>
                <div id="rightPaiement">
+               <Accordion onClick={showTotal}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                        <p>Voir plus</p>
+                    </AccordionSummary>
+                    <AccordionDetails>
                     <h1>Details paiement</h1> <br /> <br />
                     <p>Total à payer:</p><br />
                     <p id="totalPaiement">{montant} Ar <span class="lightText">/ mois</span> </p> 
                     <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = { () => {cashout(montant)}} > Confirmer votre paiement </Button></div> <br /> <br />
-                    { alert===false && <AlertError message="Votre solde est insuffisant pour effectuer ce transaction."/>}
+                    { alert===false &&  <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Procédez à une co-débitation"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Votre solde est actuellement insuffisant pour effectuer ce paiement.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Co-débiter
+          </Button>
+        </DialogActions>
+      </Dialog>}
                 { alert===true && <AlertSuccess message="Transaction réussi." />}
             <br />
                     <p>Echéance (en mois)</p><br />
@@ -156,6 +202,10 @@ export default function Paiement(){
                             
                         </Table>
                     </TableContainer>
+                
+                    </AccordionDetails>
+                </Accordion>
+
                </div>
             </Grid>
         </Grid>
