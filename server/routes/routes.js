@@ -56,6 +56,8 @@ router.delete('/utilisateur/delete/:id', utilisateurController.delete)
 router.post('/utilisateur/signup', utilisateurController.signup)
 router.post('/utilisateur/getCurrentUserInfo', utilisateurController.getCurrentUserInfo)
 router.post('/utilisateur/cashout/:id', utilisateurController.cashout)
+router.get('/utilisateur/getUserProfile/:id', utilisateurController.getUserProfile)
+
 
 
 

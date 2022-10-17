@@ -6,6 +6,15 @@ const bcrypt = require('bcrypt')
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+ "-"+today.getHours()+ ":"+today.getMinutes()+ ":" + today.getSeconds();
 
+module.exports.getUserProfile = async(req,res) => {
+    try {
+        const results= await sequelize.query(`select * from profil_utilisateurs where id=${req  .params.id}`, { type: QueryTypes.SELECT })
+        return res.json(results)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports.getCurrentUserInfo = async(req,res) => {
     try {
         console.log("go")
@@ -157,13 +166,4 @@ module.exports.delete = async(req, res) => {
 
 
 
-// module.exports.getUserProfile = async(req,res) => {
-//     try {
-//         this.getCurrentUser()
-//         console.log("userId:"+res.locals.userId)
-//         const results= await sequelize.query(`select * from profil_utilisateurs where id=${res.locals.userId}`, { type: QueryTypes.SELECT })
-//         res.json(results)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+

@@ -43,7 +43,7 @@ function Header() {
               <a href="/profilUtilisateur"><AccountCircleOutlinedIcon /> Mon profil</a>
             </li>
             <li>
-              <a href="/home"><PlaceOutlinedIcon /> Trouver un prestataire</a>
+              <a href="/choixMedicament"><PlaceOutlinedIcon /> Trouver un prestataire</a>
             </li>
             <li>
               <a href="/about">  <HealingOutlinedIcon />  Mes soins</a>
