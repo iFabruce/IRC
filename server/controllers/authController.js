@@ -2,8 +2,8 @@ const {sequelize, Utilisateur,Backoffice,Compte,Portefeuille} = require('../mode
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const { QueryTypes } = require('sequelize');
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+ "-"+today.getHours()+ ":"+today.getMinutes()+ ":" + today.getSeconds();
+var date = new Date();
+date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') ;
 
 module.exports.signin = async(req,res) => {
     try {

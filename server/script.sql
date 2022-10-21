@@ -32,5 +32,18 @@ CREATE VIEW detail_medicaments AS (
                         AND ppm.id_medicament = pm.id_medicament 
                     )
         GROUP BY ps.id,ps.nom,md.id,md.nom,pm.prix
-        
+)
+
+---DETAIL CODEBIT--
+CREATE VIEW detail_codebits AS (
+    SELECT 
+        id_achat,
+        us.nom nom,
+        us.prenom prenom,
+        us.telephone telephone,
+        us.adresse adresse,
+        montant,
+        date
+        FROM codebits cd
+        JOIN utilisateurs as us ON cd.demandeur = us.id 
 )

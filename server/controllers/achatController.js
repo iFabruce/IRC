@@ -1,8 +1,76 @@
-const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur} = require('../models')
-var today = new Date();
-var date = today.getFullYear()+'-'+today.getMonth()+1+'-'+today.getDate();
+const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur, Codebit} = require('../models')
+const { QueryTypes } = require('sequelize');
+
+var date = new Date();
+date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
 
 
+module.exports.validation_codebit = async(req,res) => {
+    try {
+        const {id_achat, id_utilisateur, decision, amount} = req.body
+        const utilisateur = await Utilisateur.findOne({id: id_utilisateur})
+        const wallet = await Portefeuille.findOne({id: utilisateur.id_portefeuille})
+        const achatToValidate = await Achat.findOne({id: id_achat})
+        if(decision){
+            if(wallet.solde >= amount){
+                wallet.solde = wallet.solde-amount
+                wallet.save()
+                achatToValidate.status = "payé"
+                achatToValidate.save()
+                return res.json("payé")
+            }else{
+                return res.json("solde insuffisant")
+            }
+        }else{
+            achatToValidate.status = "suspendu"
+            achatToValidate.save()
+            return res.json("suspendu")
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+module.exports.demande_codebit = async(req,res) => {
+    try {
+        const {id_demandeur, telephone_validateur, panier , montant} = req.body
+        const demandeur = await Utilisateur.findOne({id: id_demandeur})
+        const validateur= await sequelize.query(`select * from utilisateurs where id_portefeuille!=${demandeur.id_portefeuille} and telephone='${telephone_validateur}'`, { type: QueryTypes.SELECT })
+        // const wallet = await Portefeuille.findOne({id: demandeur.id , id_portefeuille: validateur.id_portefeuille})
+        // if(wallet.solde >= amount){
+        //     wallet.solde = wallet.solde-amount
+        //     wallet.save()
+        console.log("VALIDATEUR:"+validateur.length)
+        if(validateur.length > 0){
+            const achat = await Achat.create({
+                id_utilisateur: id_demandeur,
+                status: "en attente de validation",
+                date
+            })
+            panier.forEach( async(element) => {
+                await Detail_achat.create({
+                    id_achat: achat.id,
+                    id_medicament: element.id_medicament,
+                    prix: element.prix,
+                    quantite: element.quantite
+                })
+            });
+            const new_codebit = await Codebit.create({
+                demandeur: id_demandeur,
+                validateur: validateur[0].id,
+                id_achat: achat.id,
+                montant: montant,
+                date
+            })
+            return res.json(true)    
+        }else{
+            return res.json(null)    
+        }
+        // }  
+    } catch (error) {
+        console.log(error)
+        return res.json(false)
+    }
+}
 module.exports.findAndCountAll = async(req,res) => {
     var page = req.params.page
     if(page<=0) page = 0

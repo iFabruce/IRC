@@ -3,8 +3,8 @@ const { QueryTypes } = require('sequelize');
 const jwt = require('jsonwebtoken')
 const { query } = require('express')
 const bcrypt = require('bcrypt')
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+ "-"+today.getHours()+ ":"+today.getMinutes()+ ":" + today.getSeconds();
+var date = new Date();
+date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') ;
 
 module.exports.getUserProfile = async(req,res) => {
     try {
@@ -109,6 +109,14 @@ module.exports.signup = async(req,res) => {
 }
 
 /***********CRUD FUNCTIONS*************/
+async function findByNumero(numero){
+    try {
+        const utilisateur = await Utilisateur.findOne({where: {numero}})
+        return utilisateur
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports.findOne = async(req,res) => {
     const user = await Utilisateur.findOne({
         where: { id: req.params.id}

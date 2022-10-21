@@ -5,6 +5,8 @@ const prestataireController = require('../controllers/prestataireController')
 const utilisateurController = require('../controllers/utilisateurController')
 const medicamentController = require('../controllers/medicamentController')
 const achatController = require('../controllers/achatController')
+const codebitController = require('../controllers/codebitController')
+
 
 const {Router} = require('express')
 const router = Router()
@@ -16,8 +18,13 @@ router.get('/abonnement/findAll', abonnementController.findAll)
 router.post('/backoffice/create', backofficeController.create)
 
 
+/*********CODEBIT**********/
+router.get('/codebit/getAllWithDetails', codebitController.getAllWithDetails)
 /*********ACHAT**********/
 router.post('/achat/debit', achatController.debit)
+router.post('/achat/demande_codebit', achatController.demande_codebit)
+router.post('/achat/validation_codebit', achatController.validation_codebit)
+
 
 /*****PRESTATAIRE ROUTES*****/
 router.get('/prestataire/findOne/:id', prestataireController.findOne)
@@ -57,9 +64,6 @@ router.post('/utilisateur/signup', utilisateurController.signup)
 router.post('/utilisateur/getCurrentUserInfo', utilisateurController.getCurrentUserInfo)
 router.post('/utilisateur/cashout/:id', utilisateurController.cashout)
 router.get('/utilisateur/getUserProfile/:id', utilisateurController.getUserProfile)
-
-
-
 
 
 module.exports = router

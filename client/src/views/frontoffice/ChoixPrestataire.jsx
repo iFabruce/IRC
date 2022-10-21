@@ -60,7 +60,7 @@ export default function ChoixPrestataire() {
     }
     return (
         <div>
-            <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={18} scrollWheelZoom={true} id="map">
+            {/* <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={18} scrollWheelZoom={true} id="map">
             <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -76,15 +76,15 @@ export default function ChoixPrestataire() {
                 </div>
             )
             }
-        </MapContainer> 
-        {/* {prestataires && prestataires.map(px => 
+        </MapContainer>  */}
+        {prestataires && prestataires.map(px => 
             <ul key={px.id}>
                 <li>
                     <h1>{px.nom}</h1>
                     <a href="#" onClick={ () => versPaiement(px.id)}>Choisir</a>
                 </li>
             </ul>
-        )} */}
+        )}
 
         </div>
     )

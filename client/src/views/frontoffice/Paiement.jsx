@@ -5,7 +5,9 @@ import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow} from '@mui/
 import {Accordion, AccordionSummary, AccordionDetails} from '@mui/material'
 import axios from 'axios'
 import { SettingsRemoteSharp } from '@material-ui/icons';
-import AlertSuccess from '../../components/AlertSuccess'
+import AlertSuccess from '../../components/AlertSuccess';
+import FormDialog from '../../components/FormDialog';
+
 import AlertError from '../../components/AlertError'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AlertDialog from '../../components/AlertDialog';
@@ -21,22 +23,43 @@ export default function Paiement(){
     const [montant, setMontant] = useState()
     const [panier, setPanier] = useState()
     const [echeances, setEcheances] = useState()
-    const [alert, setAlert] = useState('')
-    const [userInfo, setUserInfo] = useState()
-    const [open, setOpen] = useState(false)
-
    
+    const [userInfo, setUserInfo] = useState()
+    const [openDialogMessage, setOpenDialogMessage] = useState(false)
+    const [openDialogForm, setOpenDialogForm] = useState(false)
+
+    const [numeroCodebiteur, setNumeroCodebiteur] = useState()
+
+    const [alert, setAlert] = useState('')
+    const [codebitAlert, setCodebitAlert] = useState('a')
+
+
+    const handleCloseDialogForm = () => {
+        setOpenDialogForm(false);
+    };
     
     const handleClose = () => {
-    setOpen(false);
+        setOpenDialogMessage(false);
     };
 
+    const codebiter =  async(amount) => {
+        console.log("USERA:"+localStorage.getItem('id_utilisateur'))
+        const {data} = await axios.post('http://localhost:5000/achat/demande_codebit',
+            {
+                id_demandeur: localStorage.getItem('id_utilisateur'),
+                telephone_validateur: numeroCodebiteur,
+                panier: JSON.parse(localStorage.getItem('card')),
+                montant
+            })
+        setCodebitAlert(data)
+      
+    }
     const cashout =  async(amount) => {
         console.log("USERA:"+localStorage.getItem('id_utilisateur'))
         const {data} = await axios.post('http://localhost:5000/achat/debit',{panier: JSON.parse(localStorage.getItem('card')),id_utilisateur: localStorage.getItem('id_utilisateur'), amount})
         console.log("data:"+data)
         if(!data){
-            setOpen(true)
+            setOpenDialogMessage(true)
         }
         setAlert(data)
     }
@@ -150,26 +173,46 @@ export default function Paiement(){
                     <p>Total à payer:</p><br />
                     <p id="totalPaiement">{montant} Ar <span class="lightText">/ mois</span> </p> 
                     <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = { () => {cashout(montant)}} > Confirmer votre paiement </Button></div> <br /> <br />
-                    { alert===false &&  <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Procédez à une co-débitation"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Votre solde est actuellement insuffisant pour effectuer ce paiement.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Co-débiter
-          </Button>
-        </DialogActions>
-      </Dialog>}
+                   
+                   
+                   { alert===false &&  <Dialog
+                        open={openDialogMessage}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                        {"Procédez à une co-débitation"}
+                        </DialogTitle>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Votre solde est actuellement insuffisant pour effectuer ce paiement.
+                            Veuillez entrer le numero de téléphone d'un utilisateur pour demander un co-débit.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={ (e) => { setNumeroCodebiteur(e.target.value) } }
+                        />
+                        { codebitAlert===true && <AlertSuccess message="Demande de co-debit envoyée." /> }
+                        { codebitAlert===null && <AlertError message="Cet utilisateur n'existe pas ou est lié à votre portefeuille." /> }
+
+
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={codebiter} >
+                                Demander un co-debit
+                            </Button>
+                            <Button onClick={handleClose} autoFocus>
+                                Fermer
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    }
                 { alert===true && <AlertSuccess message="Transaction réussi." />}
             <br />
                     <p>Echéance (en mois)</p><br />
@@ -204,6 +247,7 @@ export default function Paiement(){
                     </TableContainer>
                 
                     </AccordionDetails>
+
                 </Accordion>
 
                </div>

@@ -28,6 +28,8 @@ import Paiement from './views/frontoffice/Paiement';
 import ChoixMedicament from './views/frontoffice/ChoixMedicament';
 import ChoixPrestataire from './views/frontoffice/ChoixPrestataire';
 import Accueil from './views/frontoffice/Accueil';
+import ValidationCoDebit from './views/frontoffice/ValidationCoDebit';
+
 
 
 
@@ -39,6 +41,8 @@ root.render(
     <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<Login />}></Route>
+      <Route exact path="/validationCoDebit" element={<><Header/><ValidationCoDebit/></>}></Route>
+
       {/* <Route exact path="/" element={<Accueil/>}></Route> */}
 
       <Route exact path="/medicamentPrestataire" element={<MedicamentPrestataire />}></Route>
