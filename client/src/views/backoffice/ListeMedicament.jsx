@@ -120,7 +120,7 @@ export default function ListeMedicament()  {
                         { alertDelete===false && <AlertError message="Erreur lors du suppression"/>}
                         { alertDelete===true && <AlertSuccess message="Suppression terminé."/>}
                     </TableContainer> <br />
-                                     {numation>=0 &&  <h5>PAGE {numation+1}</h5> }
+                    <h5>PAGE {numation+1}</h5> 
                             <br />
                             <a href="#" onClick={ () => {
                                     if(numation >= 0){

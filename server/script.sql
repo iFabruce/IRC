@@ -47,3 +47,15 @@ CREATE VIEW detail_codebits AS (
         FROM codebits cd
         JOIN utilisateurs as us ON cd.demandeur = us.id 
 )
+---STAT MEDICAMENT--
+CREATE VIEW stat_medicaments AS (
+    SELECT 
+        da.id_medicament id_medicament,
+        md.nom nom_medicament,
+        count(id_achat) quantite,
+        achat.date date
+    FROM detail_achats da
+        JOIN medicaments md ON md.id = da.id_medicament   
+        JOIN achats ON achat.id = da.id_achat 
+    GROUP BY id_medicament,nom_medicament
+)

@@ -10,20 +10,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpenForm = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleCloseForm = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpenForm}>
+      <Button variant="outlined" onClick={handleClickOpen}>
         Open form dialog
       </Button>
-      <Dialog open={open} onClose={handleCloseForm}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -41,8 +41,8 @@ export default function FormDialog() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseForm}>Fermer</Button>
-          <Button onClick={handleCloseForm}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </div>

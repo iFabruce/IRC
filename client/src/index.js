@@ -15,8 +15,8 @@ import {
 } from "react-router-dom";
 
 import reportWebVitals from './reportWebVitals';
-import Dashboard from './views/backoffice/Dashboard';
 import HeaderBackoffice from './components/HeaderBackoffice';
+import Statistique from './views/backoffice/Statistique';
 import InsertionUtilisateur from './views/backoffice/InsertionUtilisateur';
 import InsertionMedicament from './views/backoffice/InsertionMedicament';
 import InsertionPrestataire from './views/backoffice/InsertionPrestataire';
@@ -44,6 +44,7 @@ root.render(
       <Route exact path="/validationCoDebit" element={<><Header/><ValidationCoDebit/></>}></Route>
 
       {/* <Route exact path="/" element={<Accueil/>}></Route> */}
+      <Route exact path="/statistique" element={<Statistique />}></Route>
 
       <Route exact path="/medicamentPrestataire" element={<MedicamentPrestataire />}></Route>
 
