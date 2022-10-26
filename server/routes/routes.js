@@ -24,6 +24,8 @@ router.get('/codebit/getAllWithDetails', codebitController.getAllWithDetails)
 router.post('/achat/debit', achatController.debit)
 router.post('/achat/demande_codebit', achatController.demande_codebit)
 router.post('/achat/validation_codebit', achatController.validation_codebit)
+router.post('/achat/export_pdf', achatController.export_pdf)
+
 
 
 /*****PRESTATAIRE ROUTES*****/
@@ -44,6 +46,7 @@ router.post('/prestataire/deleteMedicament', prestataireController.deleteMedicam
 router.post('/prestataire/uploader', prestataireController.uploader) //UPLOAD
 
 /*****MEDICAMENT ROUTES*****/
+router.post('/medicament/stat', medicamentController.stat)
 router.get('/medicament/findOne/:id', medicamentController.findOne)
 router.get('/medicament/findAll', medicamentController.findAll)
 router.get('/medicament/findAndCountAll/:page', medicamentController.findAndCountAll)

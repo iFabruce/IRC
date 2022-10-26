@@ -34,6 +34,16 @@ export default function Paiement(){
     const [codebitAlert, setCodebitAlert] = useState('a')
 
 
+    const export_pdf = async() => {
+        localStorage.setItem('id_panier',Number(localStorage.getItem('id_panier')) + 1 )
+        const {data} = await axios.post('http://localhost:5000/achat/export_pdf',
+        {
+            panier: JSON.parse(localStorage.getItem('card')),
+            id: localStorage.getItem('id_panier')
+        })
+
+    }
+
     const handleCloseDialogForm = () => {
         setOpenDialogForm(false);
     };
@@ -52,11 +62,15 @@ export default function Paiement(){
                 montant
             })
         setCodebitAlert(data)
-      
     }
     const cashout =  async(amount) => {
         console.log("USERA:"+localStorage.getItem('id_utilisateur'))
-        const {data} = await axios.post('http://localhost:5000/achat/debit',{panier: JSON.parse(localStorage.getItem('card')),id_utilisateur: localStorage.getItem('id_utilisateur'), amount})
+        const {data} = await axios.post('http://localhost:5000/achat/debit',
+        {
+            panier: JSON.parse(localStorage.getItem('card')),
+            id_utilisateur: localStorage.getItem('id_utilisateur'), 
+            amount
+        })
         console.log("data:"+data)
         if(!data){
             setOpenDialogMessage(true)
@@ -172,8 +186,9 @@ export default function Paiement(){
                     <h1>Details paiement</h1> <br /> <br />
                     <p>Total à payer:</p><br />
                     <p id="totalPaiement">{montant} Ar <span class="lightText">/ mois</span> </p> 
-                    <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = { () => {cashout(montant)}} > Confirmer votre paiement </Button></div> <br /> <br />
-                   
+                    <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = { () => {cashout(montant)}} > Confirmer votre paiement </Button></div> <br />
+                    <a href="#" onClick={export_pdf}>Recevoir une facture</a> <br />
+                    
                    
                    { alert===false &&  <Dialog
                         open={openDialogMessage}

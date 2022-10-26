@@ -89,6 +89,11 @@ export default function ChoixMedicament() {
       setSuggests(matches)
       setText(text)
     }
+    const removeElement = (id) =>{
+      var panierCopy = [...panier]
+      panierCopy = panierCopy.filter( item => item.id !== id)
+      setPanier([...panierCopy])
+    }
     
   return (
     <div>
@@ -124,7 +129,11 @@ export default function ChoixMedicament() {
             <h4>Panier</h4>
           <ul >
         {panier && panier.map( pp => 
-          <li key={pp.id}>  <div id="item-name"><p> {pp.nom}</p></div> <div id="item-quantity"><p>Quantite</p>  <Input style={{background:'white',width:'70px', padding:'3%', height: '25px', marginTop:'5%'}} type="number" min="1"  value={pp.quantite} onChange={(e) => {changeValue(pp.id,e.target.value)} } /></div></li>  
+          <li key={pp.id}>  <div id="item-name"><p> {pp.nom}</p></div> <div id="item-quantity"><p>Quantite</p>  <Input style={{background:'white',width:'70px', padding:'3%', height: '25px', marginTop:'5%'}} type="number" min="1"  value={pp.quantite} onChange={(e) => {changeValue(pp.id,e.target.value)} } />
+          <a href="#" onClick={ () => removeElement(pp.id)} style={{color: 'white'}}>Supprimer</a>
+          </div>
+
+          </li>  
         )}
       </ul>
           </div>

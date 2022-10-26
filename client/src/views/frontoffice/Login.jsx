@@ -23,6 +23,7 @@ function App() {
       console.log("token:"+data.token);
       localStorage.setItem('session',data.token) //Création session
       console.log("SESSION:"+localStorage.getItem('session'))
+      localStorage.setItem('id_panier',0)
       //Redirection
       if(data.profil === 'utilisateurs'){
         const {data} = await axios.post(`http://localhost:5000/utilisateur/getCurrentUserInfo`, { token: localStorage.getItem('session')});

@@ -1,23 +1,17 @@
 const {sequelize, Medicament} = require('../models')
 const { QueryTypes } = require('sequelize');
 
-// module.exports.getMontantPanier = async(req,res) => {
-//     try {
-//         const {medicaments} = req.body
-//         localStorage.setItem('total',0)
-//         medicaments.forEach(async(medicament) => {
-//             const qr = `SELECT prix FROM detail_medicaments WHERE id_medicament = ${medicament.id_medicament} AND id_prestataire = ${medicament.id_prestataire}`            
-//             let data = await sequelize.query(qr, { type: QueryTypes.SELECT })
-//             console.log("prix:"+data[0].prix)
-//             localStorage.setItem('total', localStorage.getItem('total') + data[0].prix)
-//             console.log("TOTAL:"+localStorage.getItem('total'))
-//         });
-//         return res.json(localStorage.getItem('total'))
-//     } catch (error) {
-//         console.log(error)
-//         return res.json(false)      
-//     }
-// }
+module.exports.stat = async(req,res) => {
+    try {
+        const {type, order, limit} = req.body 
+        var query = `SELECT * FROM stat_medicaments order by ${type} ${order} limit ${limit}`
+        const val = await sequelize.query(query, { type: QueryTypes.SELECT })
+        return res.json(val)  
+    } catch (error) {
+        console.log(error)
+        return res.json(false)      
+    }
+}
 module.exports.getPrice = async(req,res) => {
     try {
         const {id_medicament, id_prestataire} = req.body

@@ -1,10 +1,49 @@
 const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur, Codebit} = require('../models')
 const { QueryTypes } = require('sequelize');
+var pdf = require('html-pdf');
 
 var date = new Date();
 date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
 
 
+module.exports.export_pdf = async(req,res) => {
+  
+        const {panier, id} = req.body
+        let table=""
+        table += "<table border='1' style='width:100%;word-break:break-word;border-collapse: collapse;padding:5px;border-spacing:30px'>";
+        table += "<tr style='background: #FF4E50'>";
+        table += "<th >Medicament</th>";
+        table += "<th >Quantité</th>";
+        table += "</tr>";
+      
+        
+        panier.map(row =>{
+            table+='<tr>'
+            table += `<td>${row.nom}</td>`
+            table += `<td>${row.quantite}</td>`
+            table+='<td>'
+        })
+    
+        
+        var options = {
+          "format": "A4",
+          "orientation": "landscape",
+          "border": {
+            "top": "0.1in",
+        },
+        "timeout": "120000"
+        };
+        pdf.create(table, options).toFile(`./downloads/facture-${id}.pdf`, async function(err, result) {
+            if (err) {
+                 console.log(err);
+                 return false
+            }else{
+                console.log("pdf create");
+                return true
+            }
+        });
+    
+}
 module.exports.validation_codebit = async(req,res) => {
     try {
         const {id_achat, id_utilisateur, decision, amount} = req.body
