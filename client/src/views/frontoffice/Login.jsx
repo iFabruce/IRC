@@ -1,6 +1,6 @@
 import '../../assets/css/Login.css';
 import {useState, useEffect} from 'react'
-import axios from 'axios'
+import app from '../../app'
 
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -19,17 +19,17 @@ function App() {
   const signin = async () => {
     try {
       const params = {login: login, mot_de_passe, profil}
-      let {data} = await axios.post(`http://localhost:5000/signin`, params, { 'Access-Control-Allow-Credentials': true});
+      let {data} = await app.post(`signin`, params);
       console.log("token:"+data.token);
       localStorage.setItem('session',data.token) //Création session
       console.log("SESSION:"+localStorage.getItem('session'))
       localStorage.setItem('id_panier',0)
       //Redirection
       if(data.profil === 'utilisateurs'){
-        const {data} = await axios.post(`http://localhost:5000/utilisateur/getCurrentUserInfo`, { token: localStorage.getItem('session')});
+        const {data} = await app.post(`utilisateur/getCurrentUserInfo`, { token: localStorage.getItem('session')});
         console.log("id:"+data)
         localStorage.setItem('id_utilisateur', data) 
-        navigate('/abonnement')
+        navigate('/accueil')
       }
       else if(data.profil === 'backoffices'){
         // console.log("SESSION:"+localStorage.getItem('session'))

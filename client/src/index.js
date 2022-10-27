@@ -38,12 +38,13 @@ import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Login />}></Route>
+          <Route exact path="/accueil" element={<Accueil />}></Route>
+
           <Route exact path="/stat" element={<Statistique />}></Route>
 
           <Route exact path="/validationCoDebit" element={<><Header/><ValidationCoDebit/></>}></Route>

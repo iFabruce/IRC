@@ -7,14 +7,26 @@ app.use(cookieParser())
 
 app.use(express.json())
 
-var cors = require('cors')
-//Cors
-const corsConfig = {
-    origin: '*',
+// var cors = require('cors')
+// //Cors
+// const corsConfig = {
+//     origin: '*',
+//     credentials: false,
+// };  
+// app.use(cors());
+// app.options('*', cors(corsConfig));
+
+const cors = require('cors');
+const origin = process.env.NODE_ENV === "development" 
+  ? "http://localhost:3000" 
+  : "http://localhost:3000"
+
+app.use(
+  cors({
     credentials: true,
-};  
-app.use(cors());
-app.options('*', cors(corsConfig));
+    origin
+  }),
+);
 
 //Routes
 const route = require('./routes/routes')

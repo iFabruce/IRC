@@ -3,8 +3,16 @@ import '../../assets/css/Accueil.css'
 import { Grid, Card, Button } from '@mui/material';
 import Header from '../../components/Header';
 
-
+import Cookies from 'universal-cookie';
+import { useEffect } from 'react';
+const cookies = new Cookies();
 export default function Accueil() {
+  useEffect(() => {
+    console.log("COOKIES:"+cookies.get('jwt')) 
+   
+  }, [])
+  
+
   return (
     <div>
         <Header/>
@@ -20,7 +28,7 @@ export default function Accueil() {
         >
             
             <Grid item sx={12} md={7} className="item-left">
-                <h1>Un accès simplifié à vos soins médicaux</h1> <br />
+                <h1>Un accès simplifié à vos soins médicaux: {cookies.get('jwt')}</h1> <br />
                 <Button disableElevation={true} variant="contained" className="button"  > Commencez maintenant </Button>
             </Grid> 
             <Grid item sx={12} md ={5}>

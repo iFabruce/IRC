@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import medicamentSlide from "./features/medicamentSlice";
+import medicamentSlice from "./features/medicamentSlice";
 
 export default configureStore({
   reducer: {
-    medicament: medicamentSlide
+    medicament: medicamentSlice
   }
 });

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const axios = require("axios");
 
-export const medicamentSlide = createSlice({
+export const medicamentSlice = createSlice({
   name: "medicament",
   initialState: {
     data: []
@@ -25,6 +25,6 @@ export const getMedicamentsAsync = (url) => async (dispatch) => {
 
 
 
-export const { getMedicaments } = medicamentSlide.actions;
+export const { getMedicaments } = medicamentSlice.actions;
 export const showMedicament = (state) => state.medicament.data;
-export default medicamentSlide.reducer;
+export default medicamentSlice.reducer;
