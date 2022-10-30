@@ -1,23 +1,29 @@
 .item-left{
     margin-top: 5%;
-    padding: 10%;
+    padding-top: 10%;
+    padding-left: 12%;
 
 }
 .item-left h1{
     color: white;
-    font-weight: 600;
-    font-size: 50px;
+    font-weight: 700;
+    font-size: 3.5vw;
+    letter-spacing: 0.5vw;
+    width: 500px;
+}
+#txt{
+    color: white;
     letter-spacing: 0.3vw;
 
 }
-
 .button{
     font-family: Montserrat;
-    text-transform: unset !important;
-    font-weight: 400 !important; 
+    /* text-transform: uppercase !important; */
+    font-weight: 600 !important; 
+    letter-spacing: 0.2vw !important;
     background-color:  linear-gradient(to bottom right, #5A55AA, #0399BC);
-    margin-top: 5%;
     height: 50px;
+    margin-top: 3% !important;
 }
  .item-right{
     width: 100%;

@@ -9,10 +9,14 @@ import InputLabel from '@mui/material/InputLabel'
 import { Input } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button'
+import { useSelector, useDispatch} from 'react-redux';
 
 
 export default function ChoixMedicament() {
-    const navigate = useNavigate();
+  const userId = useSelector((state) => state.utilisateur.userId)
+  const session = useSelector((state) => state.utilisateur.session)
+    
+  const navigate = useNavigate();
     const [medicaments, setMedicaments] = useState([])
     const [text, setText] = useState('')
     const [suggests, setSuggests] = useState('')
@@ -35,6 +39,7 @@ export default function ChoixMedicament() {
       navigate('/choixPrestataire')   
     }
     useEffect(() => {
+      console.log("session:"+session)
         const loadMedicaments = async () =>{
             const {data} = await axios.get('http://localhost:5000/medicament/findAll')
             // console.log(data)
@@ -110,7 +115,7 @@ export default function ChoixMedicament() {
       <Grid container spacing={0}>
         <Grid item sx={12} md={6} >
           <div className='autocompletion'>
-          <h2 id="title">Achat médicament(s)</h2> <br />
+          <h2 id="title">Achat médicament(s): {userId}</h2> <br />
           <div id="search"><InputLabel >Recherchez ici le(s) médicaments:</InputLabel><br /> <TextField className="text-field"
               placeholder='ex: amoxycline...'
               value={text} 

@@ -8,28 +8,35 @@ export const utilisateurSlice = createSlice({
     userId: null,
   },
   reducers: {
-    setSession: async(state, action) => {
+    updateSession: (state, action) => {
       state.session = action.payload;
     },
-    setUserId: async(state, action) => {
+    updateUserId: (state, action) => {
       state.userId = action.payload;
     },
 
   }
 });
 
-// export const getUtilisateursAsync = (url) => async (dispatch) => {
-//   try {
-//     dispatch(getUtilisateurs(url));
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
+export const setSession = (data) =>  (dispatch) => {
+  try {
+    dispatch(updateSession(data));
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+export const setUserId = (data) =>  (dispatch) => {
+  try {
+    dispatch(updateUserId(data));
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 
 
 //Action
-export const { getUtilisateurs } = utilisateurSlice.actions;
+export const { updateSession, updateUserId } = utilisateurSlice.actions;
 
 //State
 export const showSession = (state) => state.utilisateur.session;

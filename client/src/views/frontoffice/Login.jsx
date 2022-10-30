@@ -5,16 +5,21 @@ import app from '../../app'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
+import Cookies from 'universal-cookie';
+import {setSession, setUserId} from '../../features/utilisateurSlice'
+import { useSelector, useDispatch} from 'react-redux';
 
 import { Grid, Paper, TextField, FormControl,MenuItem, Select, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function App() {
+function Login() {
   const navigate = useNavigate();
   const [login, setLogin] = useState('')
   const [mot_de_passe, setMot_de_passe] = useState('')
   const [message, setMessage] = useState('')
   const [profil, setProfil] = useState('')
+  const cookies = new Cookies()
+  const dispatch = useDispatch()
 
   const signin = async () => {
     try {
@@ -22,13 +27,15 @@ function App() {
       let {data} = await app.post(`signin`, params);
       console.log("token:"+data.token);
       localStorage.setItem('session',data.token) //Création session
-      console.log("SESSION:"+localStorage.getItem('session'))
+      // console.log("SESSION:"+localStorage.getItem('session'))
+      dispatch(setSession(cookies.get('jwt')))
       localStorage.setItem('id_panier',0)
       //Redirection
       if(data.profil === 'utilisateurs'){
         const {data} = await app.post(`utilisateur/getCurrentUserInfo`, { token: localStorage.getItem('session')});
         console.log("id:"+data)
-        localStorage.setItem('id_utilisateur', data) 
+        // localStorage.setItem('id_utilisateur', data) 
+        dispatch(setUserId(data))
         navigate('/accueil')
       }
       else if(data.profil === 'backoffices'){
@@ -87,4 +94,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

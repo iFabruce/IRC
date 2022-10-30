@@ -16,8 +16,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useSelector, useDispatch} from 'react-redux';
 
 export default function Paiement(){
+    const userId = useSelector((state) => state.utilisateur.userId)
     const [prix, setPrix] = useState(0)
     const [nombreMois, setNombreMois] = useState(1)
     const [montant, setMontant] = useState()
@@ -53,10 +55,10 @@ export default function Paiement(){
     };
 
     const codebiter =  async(amount) => {
-        console.log("USERA:"+localStorage.getItem('id_utilisateur'))
+        console.log("USERA:"+userId)
         const {data} = await axios.post('http://localhost:5000/achat/demande_codebit',
             {
-                id_demandeur: localStorage.getItem('id_utilisateur'),
+                id_demandeur: userId,
                 telephone_validateur: numeroCodebiteur,
                 panier: JSON.parse(localStorage.getItem('card')),
                 montant
@@ -64,11 +66,11 @@ export default function Paiement(){
         setCodebitAlert(data)
     }
     const cashout =  async(amount) => {
-        console.log("USERA:"+localStorage.getItem('id_utilisateur'))
+        console.log("USERA:"+userId)
         const {data} = await axios.post('http://localhost:5000/achat/debit',
         {
             panier: JSON.parse(localStorage.getItem('card')),
-            id_utilisateur: localStorage.getItem('id_utilisateur'), 
+            id_utilisateur: userId, 
             amount
         })
         console.log("data:"+data)

@@ -4,8 +4,10 @@ import axios from 'axios'
 import { MapContainer, TileLayer,Marker,Popup } from 'react-leaflet'
 import '../../assets/css/Map.css'
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch} from 'react-redux';
 
 export default function ChoixPrestataire() {
+    const userId = useSelector((state) => state.utilisateur.userId)
     const navigate = useNavigate()
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
@@ -16,6 +18,8 @@ export default function ChoixPrestataire() {
         navigate('/paiement')
     }
     useEffect(() => {
+      console.log("userID:"+userId)
+
         const getAvailablePrestataire = async() =>{
             try {
                 const medicaments = JSON.parse(localStorage.getItem('card'))
@@ -77,6 +81,7 @@ export default function ChoixPrestataire() {
             )
             }
         </MapContainer>  */}
+        <h1>userID: {userId}</h1>
         {prestataires && prestataires.map(px => 
             <ul key={px.id}>
                 <li>
