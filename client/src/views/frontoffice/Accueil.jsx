@@ -34,7 +34,7 @@ export default function Accueil() {
         >
             
             <Grid item sx={12} md={12} className="item-left">
-                <h1>Un accès simplifié à vos soins médicaux: {userId}</h1> <br /><p id="txt">Effectuer l'achat de vos médicaments en seulement 3 étapes</p> <br />
+                <h1>Un accès simplifié à vos soins médicaux</h1> <br /><p id="txt">Effectuer l'achat de vos médicaments en seulement 3 étapes</p> <br />
                 <Button disableElevation={true} variant="contained" className="button"  > Commencez maintenant</Button>
             </Grid> 
            

@@ -17,9 +17,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector, useDispatch} from 'react-redux';
+import {showUserId, showSession} from '../../features/utilisateurSlice'
 
 export default function Paiement(){
-    const userId = useSelector((state) => state.utilisateur.userId)
+    const userId = useSelector(showUserId)
     const [prix, setPrix] = useState(0)
     const [nombreMois, setNombreMois] = useState(1)
     const [montant, setMontant] = useState()

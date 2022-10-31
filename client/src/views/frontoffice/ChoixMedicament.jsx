@@ -10,11 +10,12 @@ import { Input } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button'
 import { useSelector, useDispatch} from 'react-redux';
+import {showUserId, showSession} from '../../features/utilisateurSlice'
 
 
 export default function ChoixMedicament() {
-  const userId = useSelector((state) => state.utilisateur.userId)
-  const session = useSelector((state) => state.utilisateur.session)
+  const userId = useSelector(showUserId)
+  const session = useSelector(showSession)
     
   const navigate = useNavigate();
     const [medicaments, setMedicaments] = useState([])

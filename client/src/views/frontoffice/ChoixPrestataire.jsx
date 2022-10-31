@@ -5,9 +5,10 @@ import { MapContainer, TileLayer,Marker,Popup } from 'react-leaflet'
 import '../../assets/css/Map.css'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
+import {showUserId, showSession} from '../../features/utilisateurSlice'
 
 export default function ChoixPrestataire() {
-    const userId = useSelector((state) => state.utilisateur.userId)
+    const userId = useSelector(showUserId)
     const navigate = useNavigate()
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
