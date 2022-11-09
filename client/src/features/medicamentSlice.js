@@ -25,6 +25,8 @@ export const getMedicamentsAsync = (url) => async (dispatch) => {
 
 
 
+
+
 export const { getMedicaments } = medicamentSlice.actions;
 export const showMedicament = (state) => state.medicament.data;
 export default medicamentSlice.reducer;

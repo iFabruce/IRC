@@ -6,9 +6,14 @@ import '../../assets/css/Map.css'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import {showUserId, showSession} from '../../features/utilisateurSlice'
+import {showPanier} from '../../features/panierSlice'
+
 
 export default function ChoixPrestataire() {
     const userId = useSelector(showUserId)
+    const session = useSelector(showSession)
+    
+    const panier = useSelector(showPanier)
     const navigate = useNavigate()
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
@@ -19,13 +24,12 @@ export default function ChoixPrestataire() {
         navigate('/paiement')
     }
     useEffect(() => {
-      console.log("userID:"+userId)
+        if(session === null) navigate('/')
+        console.log("userID:"+userId)
 
         const getAvailablePrestataire = async() =>{
             try {
-                const medicaments = JSON.parse(localStorage.getItem('card'))
-                console.log("MEDICAMENTS:"+medicaments)
-                const {data} = await axios.post(`http://localhost:5000/prestataire/getAllAvailable`,medicaments)
+                const {data} = await axios.post(`http://localhost:5000/prestataire/getAllAvailable`,panier)
                 console.log(data)
                 setPrestataires(data)
             } catch (error) {

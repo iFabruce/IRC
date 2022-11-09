@@ -3,9 +3,36 @@ const { QueryTypes } = require('sequelize');
 var pdf = require('html-pdf');
 
 var date = new Date();
-date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
+date = date.getFullYear() + '/' + String(date.getMonth() + 2).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
 
 
+module.exports.historique_achat = async(req,res) => {
+    try {
+        const {userId, dateMin, dateMax, status} = req.body
+        let query = `select * from historique_achats where id_utilisateur = ${userId}`
+        if(dateMin !== '' && dateMax === ''){
+            query += ` and date >= '${dateMin}' `
+        }
+        else if(dateMax !== '' && dateMin === ''){
+            query += ` and date <= '${dateMax}' `
+        }
+        else if(dateMax !== '' && dateMin !== ''){
+            query += ` and date between '${dateMin}' and '${dateMax}'`
+        }
+        //status
+        if(status !== 'tous'){
+            query += ` and status = '${status}'`
+        }
+      
+        console.log("query:"+query)
+        const data = await sequelize.query(query, { type: QueryTypes.SELECT })
+        return res.json(data)
+
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
 module.exports.export_pdf = async(req,res) => {
   
         const {panier, id} = req.body

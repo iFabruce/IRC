@@ -4,14 +4,21 @@ import '../../assets/css/ValidationCoDebit.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+import {showSession} from '../../features/utilisateurSlice'
+import { useSelector } from 'react-redux';
 
 export default function ValidationCoDebit() {
+    const navigate = useNavigate();
+    const session = useSelector(showSession)
     const [list, setList] = useState([])
+    
     const loadData = async() => {
         const {data} = await axios.get(`http://localhost:5000/codebit/getAllWithDetails`);
         setList(data)
     }
     useEffect(() => {
+        if(session === null) navigate('/')
         loadData()
     }, [])
 

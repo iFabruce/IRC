@@ -18,13 +18,20 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector, useDispatch} from 'react-redux';
 import {showUserId, showSession} from '../../features/utilisateurSlice'
+import {showPanier, setPanier} from '../../features/panierSlice'
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Paiement(){
+    const navigate = useNavigate();
+
+    const session = useSelector(showSession)
     const userId = useSelector(showUserId)
+    const panier = useSelector(showPanier)
+
     const [prix, setPrix] = useState(0)
     const [nombreMois, setNombreMois] = useState(1)
     const [montant, setMontant] = useState()
-    const [panier, setPanier] = useState()
     const [echeances, setEcheances] = useState()
    
     const [userInfo, setUserInfo] = useState()
@@ -41,7 +48,7 @@ export default function Paiement(){
         localStorage.setItem('id_panier',Number(localStorage.getItem('id_panier')) + 1 )
         const {data} = await axios.post('http://localhost:5000/achat/export_pdf',
         {
-            panier: JSON.parse(localStorage.getItem('card')),
+            panier,
             id: localStorage.getItem('id_panier')
         })
 
@@ -61,7 +68,7 @@ export default function Paiement(){
             {
                 id_demandeur: userId,
                 telephone_validateur: numeroCodebiteur,
-                panier: JSON.parse(localStorage.getItem('card')),
+                panier,
                 montant
             })
         setCodebitAlert(data)
@@ -70,7 +77,7 @@ export default function Paiement(){
         console.log("USERA:"+userId)
         const {data} = await axios.post('http://localhost:5000/achat/debit',
         {
-            panier: JSON.parse(localStorage.getItem('card')),
+            panier,
             id_utilisateur: userId, 
             amount
         })
@@ -115,15 +122,12 @@ export default function Paiement(){
         }
     }  
     useEffect(() => {
+        if(session === null) navigate('/')
+
         const loadData =  () => {
             let somme = 0
             try {
-               
-                const temp = [...JSON.parse(localStorage.getItem('card'))]
-                console.log("temp:"+temp)
-                // console.log("prix:"+prix)
-                
-                // setPanier(temp)
+                var temp = [...panier]
                 temp.forEach(async(element) => {
                     element.prix = await getPriceMedicament(element.id_medicament)
                     console.log(element);

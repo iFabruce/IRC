@@ -11,9 +11,9 @@ CREATE VIEW profil_utilisateurs AS (
             rau.date_expiration date_expiration,
             pf.solde  solde 
         FROM utilisateurs users
-            JOIN portefeuilles pf ON pf.id = users.id_portefeuille
-            JOIN rel_abonnement_utilisateurs rau on rau.id_utilisateur = users.id
-            JOIN abonnements abo ON abo.id = rau.id_abonnement
+            FULL JOIN portefeuilles pf ON pf.id = users.id_portefeuille
+            FULL JOIN rel_abonnement_utilisateurs rau on rau.id_utilisateur = users.id
+            FULL JOIN abonnements abo ON abo.id = rau.id_abonnement
    
 );
 
@@ -57,4 +57,17 @@ CREATE VIEW stat_medicaments AS (
         JOIN medicaments md ON md.id = da.id_medicament   
         JOIN achats ON achats.id = da.id_achat 
     GROUP BY id_medicament,nom_medicament
+)
+---HISTORIQUE ACHAT---
+CREATE OR REPLACE VIEW historique_achats AS (
+    SELECT 
+        achats.id,
+        id_utilisateur,
+        sum(da.prix) as total,
+        status,
+        date
+    FROM achats
+        JOIN detail_achats as da ON da.id_achat = achats.id
+    GROUP BY achats.id
+    ORDER BY achats.id DESC
 )

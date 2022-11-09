@@ -11,7 +11,8 @@
     letter-spacing: 0.5vw;
     width: 500px;
 }
-#txt{
+
+.item-left p{
     color: white;
     letter-spacing: 0.3vw;
 
@@ -30,6 +31,34 @@
     height: 100vh;
     background: white;
     box-shadow: 0px 10px 12px 8px rgba(9, 9, 9, 0.23);
+ }
 
+ @media screen and (max-width: 677px) {
+    body{
+        /* background: gold; */
+        overflow-x: hidden;
+        height: 100vh !important;
+
+    }
+  
+    .item-left{
+        width: 90% !important;
+        /* background: red; */
+        margin-top: 30% !important;
+        /* padding: 10%; */
+    }
+    .item-left h1{
+        font-size: 1.4em;
+        letter-spacing: .2em;
+        width: 90% !important;
+
+    }
+    .item-left p{
+        font-size: 0.8em    ;
+    }
+    .button{
+        margin-top: 10% !important;
+    }
+  
  }
   

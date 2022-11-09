@@ -25,6 +25,7 @@ router.post('/achat/debit', achatController.debit)
 router.post('/achat/demande_codebit', achatController.demande_codebit)
 router.post('/achat/validation_codebit', achatController.validation_codebit)
 router.post('/achat/export_pdf', achatController.export_pdf)
+router.post('/achat/historique_achat', achatController.historique_achat)
 
 
 
@@ -67,6 +68,5 @@ router.post('/utilisateur/signup', utilisateurController.signup)
 router.post('/utilisateur/getCurrentUserInfo', utilisateurController.getCurrentUserInfo)
 router.post('/utilisateur/cashout/:id', utilisateurController.cashout)
 router.get('/utilisateur/getUserProfile/:id', utilisateurController.getUserProfile)
-
 
 module.exports = router

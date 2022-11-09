@@ -93,23 +93,24 @@ body{
   @media screen and (max-width: 768px) {
     .hamburger {
       display: block;
-        box-shadow: 0 1px 4px -1px rgba(9, 9, 9, 0.23);
-        border-radius: 10%;
-        
+      box-shadow: 0 1px 4px -1px rgba(9, 9, 9, 0.23);
+      border-radius: 10%;
+      margin-top: 8%;  
 
     }.navigation-menu ul {
         display: none;
         
       } 
       .navigation-menu ul {
-        margin-top: 30px;
+        margin-top: 2%;
         position: absolute;
         top: 60px;
         left: 0;
         flex-direction: column;
         width: 100%;
         height: calc(100vh - 77px);
-        background-color: white;
+        background:rgba(255, 255, 255, 0.25);
+    
         /* border-top: 1px solid black; */
         padding: 2%;
       }
@@ -121,9 +122,8 @@ body{
       }
       .navigation-menu li a {
         border-radius: 2px;
-
         color: white;       
-         width: 120%;
+        width: 120%;
         padding: 1.5rem 0;
         background-color:#0399BC;
         box-shadow: 0 1px 4px -1px rgba(9, 9, 9, 0.50);

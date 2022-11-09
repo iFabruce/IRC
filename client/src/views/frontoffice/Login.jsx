@@ -11,8 +11,10 @@ import { useSelector, useDispatch} from 'react-redux';
 
 import { Grid, Paper, TextField, FormControl,MenuItem, Select, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {showUserId, showSession} from '../../features/utilisateurSlice'
 
 function Login() {
+  const session = useSelector(showSession)
   const navigate = useNavigate();
   const [login, setLogin] = useState('')
   const [mot_de_passe, setMot_de_passe] = useState('')
@@ -21,6 +23,10 @@ function Login() {
   const cookies = new Cookies()
   const dispatch = useDispatch()
 
+  useEffect(() => {
+   
+  }, [])
+  
   const signin = async () => {
     try {
       const params = {login: login, mot_de_passe, profil}
@@ -81,12 +87,10 @@ function Login() {
                             </Select>
                     </FormControl>
               </div>
-              <div id="input">   <TextField  className="text-field"  id="standard-basic" label="Identifiant" variant="standard" onChange={(e => (setLogin(e.target.value)))} /></div> 
-              <div id="input">   <TextField  className="text-field"  id="standard-basic" type="password" label="Mot de passe" variant="standard"  onChange={(e => (setMot_de_passe(e.target.value)))}/>   </div>
+              <div id="input">   <TextField  className="text-field" label="Identifiant" variant="standard" onChange={(e => (setLogin(e.target.value)))} /></div> 
+              <div id="input">   <TextField  className="text-field" type="password" label="Mot de passe" variant="standard"  onChange={(e => (setMot_de_passe(e.target.value)))}/>   </div>
               <div id="input"> <Button  variant="contained" className="button" onClick={signin} > Se connecter </Button></div>
               <div id="input">  <p style={{color: 'red'}}>{message}</p> </div>
-
-         
         </Grid>
       
     </Grid>

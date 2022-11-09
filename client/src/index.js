@@ -73,6 +73,7 @@ root.render(
             <Route path="profilUtilisateur" element={<><Header/><ProfilUtilisateur/></>} />
           </Routes>
         </BrowserRouter>
+        
       </PersistGate>
     </Provider>
   </React.StrictMode>

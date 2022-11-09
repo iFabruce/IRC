@@ -1,8 +1,9 @@
 body{
-
+    overflow-y: scroll;
 }
 .button{
     margin: 10%;
+    
    
 }
 .autocompletion{
@@ -24,7 +25,10 @@ body{
     scrollbar-width: thin;
 }
 #title{
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: .6vw;
+
+
 }
 .text-field{
     width: 430px;
@@ -51,7 +55,6 @@ body{
     list-style-type: none;
     width: 90%;
     padding: 5%;
-    
 }
 .panier li{
     background-image: linear-gradient(to right,#0399BC, #5A55AA);
@@ -78,4 +81,20 @@ body{
 #item-quantity{
     flex: 1;
     color: white;
+}
+@media screen and (max-width: 768px) {
+    .autocompletion{
+        max-height: 50vh;
+    }
+    .panier{
+        width: 325px;
+    }
+    #btn{
+        width: 325px !important;
+    }
+    .panier h4{
+        letter-spacing: 1vw;
+        font-weight: 600;
+        font-size: 6vw;
+    }
 }

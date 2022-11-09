@@ -11,14 +11,20 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import {setSession} from '../features/utilisateurSlice'
+import {setPanier} from '../features/panierSlice'
+import { useSelector, useDispatch} from 'react-redux';
 
-import { Navigate } from "react-router-dom";
 
 function Header() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const logout = async () => {
     await axios.get(`http://localhost:5000/logout`)
-    navigate('/logout')
+    dispatch(setSession(null))
+    dispatch(setPanier(null))
+
+    navigate('/')
   }
 
   const [isNavExpanded, setIsNavExpanded] = useState(false)
@@ -49,7 +55,7 @@ function Header() {
               <a href="/about">  <HealingOutlinedIcon />  Mes soins</a>
             </li>
             <li>
-              <a href="/logout" id="deco"><LogoutOutlinedIcon /> Se deconnecter </a>
+              <a href="#" onClick={logout} id="deco"><LogoutOutlinedIcon /> Se deconnecter </a>
             </li>
           </ul>
         </div>
