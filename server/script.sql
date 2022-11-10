@@ -32,7 +32,7 @@ CREATE VIEW detail_medicaments AS (
                         AND ppm.id_medicament = pm.id_medicament 
                     )
         GROUP BY ps.id,ps.nom,md.id,md.nom,pm.prix
-)
+);
 
 ---DETAIL CODEBIT--
 CREATE VIEW detail_codebits AS (
@@ -42,11 +42,12 @@ CREATE VIEW detail_codebits AS (
         us.prenom prenom,
         us.telephone telephone,
         us.adresse adresse,
+        status,
         montant,
         date
         FROM codebits cd
         JOIN utilisateurs as us ON cd.demandeur = us.id 
-)
+);
 ---STAT MEDICAMENT--
 CREATE VIEW stat_medicaments AS (
     SELECT 
@@ -57,7 +58,7 @@ CREATE VIEW stat_medicaments AS (
         JOIN medicaments md ON md.id = da.id_medicament   
         JOIN achats ON achats.id = da.id_achat 
     GROUP BY id_medicament,nom_medicament
-)
+);
 ---HISTORIQUE ACHAT---
 CREATE OR REPLACE VIEW historique_achats AS (
     SELECT 
@@ -70,4 +71,4 @@ CREATE OR REPLACE VIEW historique_achats AS (
         JOIN detail_achats as da ON da.id_achat = achats.id
     GROUP BY achats.id
     ORDER BY achats.id DESC
-)
+);

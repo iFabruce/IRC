@@ -26,6 +26,7 @@ module.exports = {
       createdAt: date,
       updatedAt: date
      }], {});
+     
     await queryInterface.bulkInsert('prix_medicaments', [{
       id_prestataire: 46,
       id_medicament: 37,

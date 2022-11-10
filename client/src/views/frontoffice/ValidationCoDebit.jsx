@@ -23,11 +23,11 @@ export default function ValidationCoDebit() {
     }, [])
 
     const submit = async(id_achat,montant,decision) => {
-        console.log("c");
+        console.log("id_achat:"+id_achat);
         const {data} = await axios.post(`http://localhost:5000/achat/validation_codebit`,
         {
             id_utilisateur: localStorage.getItem('id_utilisateur'),
-            achat: id_achat,
+            id_achat: id_achat,
             amount: montant,
             decision
         })
@@ -51,12 +51,11 @@ export default function ValidationCoDebit() {
                             </div>
                             <div className="right">
                                 <p>20 Oct 2022</p> <br />
-                                <p style={{fontWeight:'600'}}>{element.montant} Ar</p> <br />
-
-                                <div className='btn'>
-                                    <Button variant="contained" disableElevation style={{background: '#00B862'}} onClick={() => submit(element.id_achat,element.montant,true)}>Valider</Button>
-                                    <Button variant="contained" disableElevation style={{background: '#FFD500', marginLeft: '10%'}} onClick={() => submit(element.id_achat,element.montant,false)}>Ignorer</Button>
-                                </div>
+                                <p style={{fontWeight:'600'}}>{element.montant} Ar</p> 
+                                
+                                    <Button className="btn-choice1" variant="contained" disableElevation style={{background: '#00B862'}} onClick={() => submit(element.id_achat,element.montant,true)}>Valider</Button>
+                                    <Button className="btn-choice2" variant="contained" disableElevation style={{background: '#FFD500'}} onClick={() => submit(element.id_achat,element.montant,false)}>Ignorer</Button>
+                           
                             </div>
                         </div>
                     )}

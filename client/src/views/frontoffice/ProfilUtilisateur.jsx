@@ -107,7 +107,7 @@ export default function ProfilUtilisateur() {
                     <MenuItem value='tous'>Tous</MenuItem>
                     <MenuItem value='payé'>Payé</MenuItem>
                     <MenuItem value='suspendu'>Suspendu</MenuItem>
-                    <MenuItem value='en cours de validation'>en cours de validation</MenuItem>
+                    <MenuItem value='en attente de validation'>en attente de validation</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

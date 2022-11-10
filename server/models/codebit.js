@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     validateur: DataTypes.INTEGER,
     id_achat: DataTypes.INTEGER,
     montant: DataTypes.DOUBLE,
+    status: DataTypes.STRING,
     date: DataTypes.DATEONLY
   }, {
     sequelize,

@@ -58,6 +58,9 @@ export default function HeaderBackoffice() {
                 <a href="/insertionMedicament"> <span className='icons'><HealingOutlinedIcon /></span> Insertion médicament</a>
               </li>
               <li>
+                <a href="/medicamentPrestataire"> <span className='icons'><HealingOutlinedIcon /></span> Ajout médicament à un prestataire</a>
+              </li>
+              <li>
                 <a href="/logout" id="deco"><span className='icons'><LogoutOutlinedIcon /></span> Se deconnecter </a>
               </li>
             </ul>

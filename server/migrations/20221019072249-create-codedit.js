@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       date: {
         type: Sequelize.DATEONLY,
         allowNull: false,

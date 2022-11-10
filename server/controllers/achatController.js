@@ -74,26 +74,36 @@ module.exports.export_pdf = async(req,res) => {
 module.exports.validation_codebit = async(req,res) => {
     try {
         const {id_achat, id_utilisateur, decision, amount} = req.body
-        const utilisateur = await Utilisateur.findOne({id: id_utilisateur})
-        const wallet = await Portefeuille.findOne({id: utilisateur.id_portefeuille})
-        const achatToValidate = await Achat.findOne({id: id_achat})
+        console.log("id_achat:"+id_achat)
+        console.log("id_utilisateur:"+id_utilisateur)
+        console.log("decision:"+decision)
+        console.log("amount:"+amount)
+
+
+        const utilisateur = await Utilisateur.findOne({ where: {id: id_utilisateur}})
+        const wallet = await Portefeuille.findOne({where: {id: utilisateur.id_portefeuille}})
+        const achatToValidate = await Achat.findOne({where:{id: id_achat}})
         if(decision){
             if(wallet.solde >= amount){
                 wallet.solde = wallet.solde-amount
                 wallet.save()
                 achatToValidate.status = "payé"
                 achatToValidate.save()
+                console.log("payé")
                 return res.json("payé")
             }else{
+                console.log("solde insuffisant")
                 return res.json("solde insuffisant")
             }
         }else{
             achatToValidate.status = "suspendu"
             achatToValidate.save()
+            console.log("suspendu")
             return res.json("suspendu")
         }
     } catch (error) {
         console.log(error)
+        return res.json("error")
     }
 }
 module.exports.demande_codebit = async(req,res) => {
@@ -125,6 +135,7 @@ module.exports.demande_codebit = async(req,res) => {
                 validateur: validateur[0].id,
                 id_achat: achat.id,
                 montant: montant,
+                status: 'en attente de validation',
                 date
             })
             return res.json(true)    
