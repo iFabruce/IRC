@@ -30,7 +30,7 @@ module.exports.deleteMedicament = async(req, res) => {
 
 module.exports.getAddedMedicaments = async(req, res) => {
     try {    
-        const qr= `SELECT * FROM detail_medicaments  where id_prestataire = ${req.params.id_prestataire} `
+        const qr= `SELECT * FROM detail_medicaments  where id_prestataire = ${req.params.id_prestataire} order by  nom_medicament asc`
         console.log("REQ"+qr)
         const results = await sequelize.query(qr, { type: QueryTypes.SELECT })
         res.json(results)
@@ -40,7 +40,7 @@ module.exports.getAddedMedicaments = async(req, res) => {
 
 module.exports.getNonAddedMedicaments = async(req, res) => {
     try {
-        const qr= `SELECT * FROM medicaments where id not in (SELECT id_medicament from detail_medicaments where id_prestataire = ${req.params.id_prestataire}) `
+        const qr= `SELECT * FROM medicaments where id not in (SELECT id_medicament from detail_medicaments where id_prestataire = ${req.params.id_prestataire} order by nom_medicament asc) `
         console.log("REQ"+qr)
         const results = await sequelize.query(qr, { type: QueryTypes.SELECT })
         res.json(results)
@@ -93,9 +93,9 @@ module.exports.getAllAvailable = async(req, res) => {
 }
 module.exports.create = async(req,res) => {
     try {
-        var {nom, description, ouverture, fermeture, statut, adresse, longitude, latitude, photo} = req.body
+        var {nom, description, ouverture, fermeture, telephone, adresse, longitude, latitude} = req.body
         const prestataire = await Prestataire.create({
-            nom, description, ouverture, fermeture, statut, adresse, longitude, latitude, photo
+            nom, description, ouverture, fermeture, telephone, adresse, longitude, latitude
         })
         return res.json(true)
     } catch (error) {
@@ -127,15 +127,15 @@ module.exports.findAndCountAll = async(req,res) => {
     var page = req.params.page
     if(page<0) page = 0
     const users = await Prestataire.findAndCountAll({
-        limit:2,
-        offset: page * 2
+        limit:10,
+        offset: page * 10
     })
     return res.json({users, total: Math.ceil(users.count / 2)})
 }
 
 module.exports.update = async(req, res) => {
     try {
-        var {nom, description, ouverture, fermeture, statut, adresse, longitude, latitude, photo} = req.body
+        var {nom, description, ouverture, fermeture, telephone, adresse, longitude, latitude} = req.body
         const prestataire = await Prestataire.findOne({
             where: {id: req.params.id}
         })
@@ -143,11 +143,10 @@ module.exports.update = async(req, res) => {
         prestataire.description = description  
         prestataire.ouverture = ouverture  
         prestataire.fermeture = fermeture  
-        prestataire.statut = statut  
+        prestataire.telephone = telephone  
         prestataire.adresse = adresse  
         prestataire.longitude = longitude 
         prestataire.latitude = latitude  
-        prestataire.photo = photo  
         await prestataire.save()
         return res.json(true)
     } catch (error) {

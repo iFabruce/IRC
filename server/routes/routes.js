@@ -19,13 +19,16 @@ router.post('/backoffice/create', backofficeController.create)
 
 
 /*********CODEBIT**********/
-router.get('/codebit/getAllWithDetails', codebitController.getAllWithDetails)
+router.get('/codebit/getAllWithDetails/:id_utilisateur', codebitController.getAllWithDetails)
 /*********ACHAT**********/
 router.post('/achat/debit', achatController.debit)
 router.post('/achat/demande_codebit', achatController.demande_codebit)
 router.post('/achat/validation_codebit', achatController.validation_codebit)
 router.post('/achat/export_pdf', achatController.export_pdf)
 router.post('/achat/historique_achat', achatController.historique_achat)
+router.get('/achat/getDetail_achat/:id_achat', achatController.getDetail_achat)
+router.get('/achat/info_achat/:id_achat', achatController.info_achat)
+
 
 
 

@@ -17,22 +17,30 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector, useDispatch} from 'react-redux';
-import {showUserId, showSession} from '../../features/utilisateurSlice'
-import {showPanier, setPanier} from '../../features/panierSlice'
+import {showUserId, showSession, showTotalPanier} from '../../features/utilisateurSlice'
+import {showPanier} from '../../features/panierSlice'
 import { useNavigate } from 'react-router-dom';
+
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 
 export default function Paiement(){
+    
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const session = useSelector(showSession)
     const userId = useSelector(showUserId)
     const panier = useSelector(showPanier)
+    const totalPanier = useSelector(showTotalPanier)
 
     const [prix, setPrix] = useState(0)
     const [nombreMois, setNombreMois] = useState(1)
-    const [montant, setMontant] = useState()
+    // const [montant, setMontant] = useState()
     const [echeances, setEcheances] = useState()
+    const [mois_echeance, setMois_Echeance] = useState()
+
    
     const [userInfo, setUserInfo] = useState()
     const [openDialogMessage, setOpenDialogMessage] = useState(false)
@@ -42,16 +50,25 @@ export default function Paiement(){
 
     const [alert, setAlert] = useState('')
     const [codebitAlert, setCodebitAlert] = useState('a')
+    
+    // panier.forEach(element => console.log("prix:"+element.prix))
+    
+    useEffect(() => {
+        if(session === null) navigate('/')
+        panier.forEach(i => console.log("prix:"+i.prix))
+    }, [])
 
 
     const export_pdf = async() => {
         localStorage.setItem('id_panier',Number(localStorage.getItem('id_panier')) + 1 )
-        const {data} = await axios.post('http://localhost:5000/achat/export_pdf',
+        await axios.post('http://localhost:5000/achat/export_pdf',
         {
             panier,
-            id: localStorage.getItem('id_panier')
+            num_facture: localStorage.getItem('id_panier'),
+            id_utilisateur: userId,
+            totalPanier,
+            id_prestataire: localStorage.getItem('id_prestataire')
         })
-
     }
 
     const handleCloseDialogForm = () => {
@@ -69,17 +86,19 @@ export default function Paiement(){
                 id_demandeur: userId,
                 telephone_validateur: numeroCodebiteur,
                 panier,
-                montant
+                montant: totalPanier
             })
         setCodebitAlert(data)
     }
     const cashout =  async(amount) => {
+       
         console.log("USERA:"+userId)
         const {data} = await axios.post('http://localhost:5000/achat/debit',
         {
             panier,
             id_utilisateur: userId, 
-            amount
+            amount,
+            echeance: mois_echeance
         })
         console.log("data:"+data)
         if(!data){
@@ -88,62 +107,40 @@ export default function Paiement(){
         setAlert(data)
     }
 
-    const showTotal =  () => {
-        let somme = 0
-
-        panier.forEach(px => {
-            somme += px.prix * px.quantite 
-            console.log("Produit:"+px.nom + " Montant :"+px.prix * px.quantite)
-        });
-        
-        setMontant(somme)
+    const onConfirm = () =>{
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className='custom-ui' >
+                  <h1>Confirmer votre paiement.</h1>
+                  <p>Etes-vous sûr de vouloir procéder au paiement?</p>
+                  <Button disableElevation variant="contained"  
+                    onClick={() => {
+                      cashout(totalPanier);
+                      onClose();
+                    }}
+                  >
+                    Oui
+                  </Button> 
+                  
+                  <Button disableElevation variant="outlined" onClick={onClose}>Non</Button> 
+                </div>
+              );
+            }
+          });
     }
+
     const extendEcheance = (value) => {
-        if(montant > 1){
+        setMois_Echeance(value)
+        if(totalPanier > 1){
             let tab = []
             for(let i=1 ; i <= value;i++){
-                tab.push({mois: i, montant: Math.floor(montant/value)})
+                tab.push({mois: i, montant: Math.ceil(totalPanier/value)})
             }
             setEcheances(tab)
         }
     }
-    const getPriceMedicament = async(id_medicament) => {
-        try {
-            const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
-              {
-                id_medicament: id_medicament,
-                id_prestataire: localStorage.getItem('id_prestataire')
-              })
-              return data[0].prix
-            //   console.log("PRICE:"+data[0].prix)
-            //   setPrix(data[0].prix)
-        } catch (error) {
-            console.log(error)
-        }
-    }  
-    useEffect(() => {
-        if(session === null) navigate('/')
 
-        const loadData =  () => {
-            let somme = 0
-            try {
-                var temp = [...panier]
-                temp.forEach(async(element) => {
-                    element.prix = await getPriceMedicament(element.id_medicament)
-                    console.log(element);
-                });
-                setPanier(temp)
-                // console.log("PX:"+panier)
-                // console.log("LL:"+panier.length)
-                setMontant(somme)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        loadData()
-        
-    }, [])
-    
     return (
     <div>
         <Grid container spacing={10} id="content">
@@ -181,7 +178,7 @@ export default function Paiement(){
             </Grid>
             <Grid item xs={12} md={6}>
                <div id="rightPaiement">
-               <Accordion onClick={showTotal}>
+               <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -192,8 +189,8 @@ export default function Paiement(){
                     <AccordionDetails>
                     <h1>Details paiement</h1> <br /> <br />
                     <p>Total à payer:</p><br />
-                    <p id="totalPaiement">{montant} Ar <span class="lightText">/ mois</span> </p> 
-                    <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = { () => {cashout(montant)}} > Confirmer votre paiement </Button></div> <br />
+                    <p id="totalPaiement">{totalPanier} Ar <span className="lightText">/ mois</span> </p> 
+                    <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = {onConfirm} > Confirmer votre paiement </Button></div> <br />
                     <a href="#" onClick={export_pdf}>Recevoir une facture</a> <br />
                     
                    

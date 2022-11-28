@@ -1,9 +1,12 @@
 --VIEWS--
 --Profil utilisateur-----
-CREATE VIEW profil_utilisateurs AS (
+CREATE OR REPLACE VIEW profil_utilisateurs AS (
     SELECT  users.id,
             users.nom nom, 
             users.prenom prenom, 
+            users.telephone telephone,
+            users.reference reference,
+            users.sexe sexe,
             users.date_naissance date_naissance, 
             users.situation_matrimonial situation_matrimonial,
             users.adresse adresse,
@@ -62,13 +65,25 @@ CREATE VIEW stat_medicaments AS (
 ---HISTORIQUE ACHAT---
 CREATE OR REPLACE VIEW historique_achats AS (
     SELECT 
-        achats.id,
+        achats.id as id_achat,
         id_utilisateur,
-        sum(da.prix) as total,
+        sum(da.prix * da.quantite) as total,
         status,
+        echeance,
         date
     FROM achats
         JOIN detail_achats as da ON da.id_achat = achats.id
     GROUP BY achats.id
     ORDER BY achats.id DESC
+);
+
+----VUE DETAIL ACHAT---
+CREATE OR REPLACE VIEW vue_detail_achats AS(
+    SELECT
+        id_achat, 
+        med.nom nom_medicament,
+        prix,
+        quantite
+    FROM detail_achats
+        JOIN medicaments med ON med.id = detail_achats.id_medicament    
 );

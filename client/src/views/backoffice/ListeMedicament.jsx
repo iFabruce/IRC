@@ -145,7 +145,7 @@ export default function ListeMedicament()  {
                             onChange={e => {setDescription(e.target.value)}}
                             minRows={4}
                             value={description}
-                            style={{ width: 500, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
                    
@@ -155,7 +155,7 @@ export default function ListeMedicament()  {
                             onChange={e => {setPosologie(e.target.value)}}
                             minRows={3}
                             value={posologie}
-                            style={{ width: 300, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 300, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
                    <div className='form'> <InputLabel>Fabriquant</InputLabel> <TextField onChange={e => {setFabriquant(e.target.value)}}  type="text" id="standard-basic"  variant="outlined"   value={fabriquant} /> </div> 

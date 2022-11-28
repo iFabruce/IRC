@@ -5,7 +5,8 @@ export const utilisateurSlice = createSlice({
   name: "utilisateur",
   initialState: {
     session: null,
-    userId: null
+    userId: null,
+    totalPanier: 0
   },
   reducers: {
     setSession: (state, action) => {
@@ -13,33 +14,21 @@ export const utilisateurSlice = createSlice({
     },
     setUserId: (state, action) => {
       state.userId = action.payload;
+    },
+    setTotalPanier: (state, action) => {
+      state.totalPanier = action.payload;
     }
   }
 });
 
-// export const setSession = (data) =>  (dispatch) => {
-//   try {
-//     dispatch(updateSession(data));
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
-// export const setUserId = (data) =>  (dispatch) => {
-//   try {
-//     dispatch(updateUserId(data));
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
-
-
-
 //Action
-export const { setSession, setUserId } = utilisateurSlice.actions;
+export const { setSession, setUserId, setTotalPanier } = utilisateurSlice.actions;
 
 //State
 export const showSession = (state) => state.utilisateur.session;
 export const showUserId = (state) => state.utilisateur.userId;
+export const showTotalPanier = (state) => state.utilisateur.totalPanier;
+
 
 
 //Reducer

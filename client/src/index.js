@@ -30,6 +30,7 @@ import ChoixPrestataire from './views/frontoffice/ChoixPrestataire';
 import Accueil from './views/frontoffice/Accueil';
 import App from './views/frontoffice/App';
 import ValidationCoDebit from './views/frontoffice/ValidationCoDebit';
+import FicheAchat from './views/frontoffice/FicheAchat';
 
 import { Provider } from "react-redux";
 import { persistor, store } from './store';
@@ -45,6 +46,7 @@ root.render(
           <Routes>
             <Route exact path="/" element={<Login />}></Route>
             <Route exact path="/accueil" element={<Accueil />}></Route>
+            <Route exact path="/ficheAchat" element={<FicheAchat />}></Route>
 
             <Route exact path="/stat" element={<Statistique />}></Route>
 

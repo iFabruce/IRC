@@ -1,11 +1,138 @@
-const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur, Codebit} = require('../models')
+const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur, Codebit, Prestataire} = require('../models')
 const { QueryTypes } = require('sequelize');
 var pdf = require('html-pdf');
 
 var date = new Date();
-date = date.getFullYear() + '/' + String(date.getMonth() + 2).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
+date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
 
+//Required package
+var pdf_create = require("pdf-creator-node");
+var fs = require("fs");
 
+// Read HTML Template
+var html = fs.readFileSync("./facture_template.html", "utf8");
+
+function base64_encode(file) {
+    return "data:image/gif;base64,"+fs.readFileSync(file, 'base64');
+}
+var base64str = base64_encode('logo.png');
+
+module.exports.pdf_creator = async(req,res) => {
+    const {panier, id} = req.body
+    var options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "10mm",
+        header: {
+            height: "45mm",
+            contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+        },
+        footer: {
+            height: "28mm",
+            contents: {
+                first: 'Cover page',
+                2: 'Second page', // Any page number is working. 1-based index
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                last: 'Last Page'
+            }
+        }
+    };
+
+    var document = {
+    html: html,
+    data: {
+        panier,
+        id
+    },
+    path: "./downloads/output.pdf",
+    type: "",
+    };
+
+    pdf_create
+    .create(document, options)
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+}
+
+module.exports.export_pdf = async(req,res) => {
+    const {panier, num_facture, id_utilisateur, totalPanier, id_prestataire} = req.body
+    const prestataire = await Prestataire.findOne({where : { id: id_prestataire}})
+    const utilisateur= await sequelize.query(`select * from profil_utilisateurs where id=${id_utilisateur}`, { type: QueryTypes.SELECT })
+    console.log("usero:"+utilisateur[0])
+    let table=""
+    table += `
+    <div style='padding: 5%'>
+        <img src=${base64str}/> <br>
+        <p>Numero facture: <strong>REF-${num_facture}</strong></p>
+        <p>Nom et prénom du bénéficiaire: <strong>${utilisateur[0].nom} ${utilisateur[0].prenom}</strong></p>
+        <p>Adresse du bénéficiaire: <strong>${utilisateur[0].adresse}</strong></p>
+        <p>Nom du prestataire de soin: <strong>${prestataire.nom}</strong></p>
+        <p>Adresse du prestataire de soin: <strong>${prestataire.adresse}</strong></p>
+        <p>Date de la facture: <strong>${date}</strong></p>
+    `
+    table += "<table border='1' style='width:100%;word-break:break-word;border-collapse: collapse;padding:5px;border-spacing:30px'>";
+    table += "<tr style='background: #0399BC'>";
+    table += "<th >Medicament</th>";
+    table += "<th  style='width: 100px' >Quantité</th>";
+    table += "</tr> <br>";
+   
+    
+    panier.map(row => {
+        table+='<tr>'
+        table += `<td>${row.nom}</td>`
+        table += `<td align='center'>${row.quantite}</td>`
+        table+='<tr>'
+    })
+    table += ` 
+    </table>
+    <h4>Total: ${totalPanier} Ar</h4>
+    </div>
+`
+    var options = {
+        "format": "A4",
+        "orientation": "portrait",
+        "border": {
+       
+    },
+    "timeout": "120000"
+    };
+    pdf.create(table, options).toFile(`./downloads/facture-n${num_facture}.pdf`, async function(err, result) {
+        if (err) {
+                console.log(err);
+                return false
+        }else{
+            console.log("pdf create");
+            return true
+        }
+    });
+    
+}
+
+module.exports.getDetail_achat = async(req,res) => {
+    try {
+        console.log("params:"+req.params.id_achat)
+        const data = await sequelize.query(`select * from vue_detail_achats where id_achat = ${req.params.id_achat}`, { type: QueryTypes.SELECT })
+        console.log("detail:"+data)
+        return res.json(data)
+    } catch (error) {
+        console.log(error)
+        return res.json("error")
+    }
+}
+module.exports.info_achat = async(req,res) => {
+    try {
+        let query = `select * from historique_achats where id_achat = ${req.params.id_achat}`
+        const data = await sequelize.query(query, { type: QueryTypes.SELECT })
+        return res.json(data[0])
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
 module.exports.historique_achat = async(req,res) => {
     try {
         const {userId, dateMin, dateMax, status} = req.body
@@ -33,44 +160,8 @@ module.exports.historique_achat = async(req,res) => {
         return false
     }
 }
-module.exports.export_pdf = async(req,res) => {
-  
-        const {panier, id} = req.body
-        let table=""
-        table += "<table border='1' style='width:100%;word-break:break-word;border-collapse: collapse;padding:5px;border-spacing:30px'>";
-        table += "<tr style='background: #FF4E50'>";
-        table += "<th >Medicament</th>";
-        table += "<th >Quantité</th>";
-        table += "</tr>";
-      
-        
-        panier.map(row =>{
-            table+='<tr>'
-            table += `<td>${row.nom}</td>`
-            table += `<td>${row.quantite}</td>`
-            table+='<td>'
-        })
-    
-        
-        var options = {
-          "format": "A4",
-          "orientation": "landscape",
-          "border": {
-            "top": "0.1in",
-        },
-        "timeout": "120000"
-        };
-        pdf.create(table, options).toFile(`./downloads/facture-${id}.pdf`, async function(err, result) {
-            if (err) {
-                 console.log(err);
-                 return false
-            }else{
-                console.log("pdf create");
-                return true
-            }
-        });
-    
-}
+
+
 module.exports.validation_codebit = async(req,res) => {
     try {
         const {id_achat, id_utilisateur, decision, amount} = req.body
@@ -83,12 +174,16 @@ module.exports.validation_codebit = async(req,res) => {
         const utilisateur = await Utilisateur.findOne({ where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({where: {id: utilisateur.id_portefeuille}})
         const achatToValidate = await Achat.findOne({where:{id: id_achat}})
+        const codebitToValidate = await Codebit.findOne({where:{id: id_achat}})
+
         if(decision){
             if(wallet.solde >= amount){
                 wallet.solde = wallet.solde-amount
                 wallet.save()
                 achatToValidate.status = "payé"
+                codebitToValidate.status = "payé"
                 achatToValidate.save()
+                codebitToValidate.save()
                 console.log("payé")
                 return res.json("payé")
             }else{
@@ -96,8 +191,10 @@ module.exports.validation_codebit = async(req,res) => {
                 return res.json("solde insuffisant")
             }
         }else{
-            achatToValidate.status = "suspendu"
+            achatToValidate.status = 'suspendu'
+            codebitToValidate.status = 'suspendu'
             achatToValidate.save()
+            codebitToValidate.save()
             console.log("suspendu")
             return res.json("suspendu")
         }
@@ -160,7 +257,7 @@ module.exports.findAndCountAll = async(req,res) => {
 module.exports.debit = async(req,res) => {
     try {
         console.log("DATE:"+date)
-        const {panier, id_utilisateur, amount} = req.body
+        const {panier, id_utilisateur, amount, echeance} = req.body
         const utilisateur = await Utilisateur.findOne({where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({ where: {id: utilisateur.id_portefeuille} })
         if(wallet.solde >= amount){
@@ -170,6 +267,7 @@ module.exports.debit = async(req,res) => {
                 id_utilisateur,
                 date: "2022-10-12",
                 status: "payé",
+                echeance
             })
             console.log("panierLENGTH:"+panier.length)
         

@@ -109,13 +109,14 @@ export default function ListeUtilisateur()  {
       <div>
         <Grid container id="cont" spacing={10}>
             <Grid item sx={12} md={3}>
-           <div className="navLeft">
+            <div className="navLeft">
                     <HeaderBackoffice/>
                 </div>
             </Grid>
             <Grid item sx={12} md={9} className="contentRight" style={{marginTop: '50px'}} >
                
                {page == 'liste' && <div className='table'>
+               <h2 className='headTitle'>Liste utilisateur</h2><br /><br />
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 100 }} >
                             <TableHead>
@@ -191,8 +192,8 @@ export default function ListeUtilisateur()  {
                             label="Sexe"
                             onChange={e => {setSexe(e.target.value)}}
                             >
-                            <MenuItem value={'homme'}>homme</MenuItem>
-                            <MenuItem value={'femme'}>femme</MenuItem>
+                            <MenuItem value={'H'}>homme</MenuItem>
+                            <MenuItem value={'F'}>femme</MenuItem>
 
                             </Select>
                     </FormControl>
@@ -208,13 +209,13 @@ export default function ListeUtilisateur()  {
                         onChange={e => {setSituation_matrimonial(e.target.value)}}
                     >
                         <MenuItem value={'célibataire'}>célibataire</MenuItem>
-                        <MenuItem value={'marié(e)'}>marié(e)</MenuItem>
-                        <MenuItem value={'divorcé(e)'}>divorcé(e)</MenuItem>
-                        <MenuItem value={'veuf(ve)'}>veuf(ve)</MenuItem>
+                        <MenuItem value={'Marié(e)'}>marié(e)</MenuItem>
+                        <MenuItem value={'Divorcé(e)'}>divorcé(e)</MenuItem>
+                        <MenuItem value={'Veuf(ve)'}>veuf(ve)</MenuItem>
                     </Select>
                 </FormControl>
                       
-<br />
+<br /> <br />
 
                   
                     <Button variant="contained" style={{background: '#00988B'}} onClick={modifierUtilisateur}> Modifier </Button> <br />

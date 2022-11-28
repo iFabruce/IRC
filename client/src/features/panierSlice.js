@@ -8,7 +8,12 @@ export const panierSlice = createSlice({
   initialState: [],
   reducers: {
     setPanier: (state, action) => {
+      console.log("set")
       state = action.payload;
+      state.forEach(element => {
+        console.log("pstate:"+element.prix)
+      });
+      return state
     },
     addToPanier: (state, action) =>{
       let indexFind = state.findIndex(i => i.id_medicament === action.payload.id_medicament)
@@ -27,29 +32,26 @@ export const panierSlice = createSlice({
       state = state.filter(p => p.id !== action.payload)
       return state
     },
-    // setPriceItems: (state, action) => {
-    //   var id_prestataire = action.payload.id_prestataire
-    //   state.forEach( async(item) => {
-    //     const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
-    //     {
-    //       id_medicament: item.id_medicament,
-    //       id_prestataire
-    //     })
-    //     state = state.find(s=> s.id === item.id)
-    //     state.prix = data[0].prix
-    //   });
-    // }
+    setPriceItems: (state, action) => {
+      var id_prestataire = action.payload.id_prestataire
+      state.forEach( async(item) => {
+        const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+        {
+          id_medicament: item.id_medicament,
+          id_prestataire
+        })
+        // state = state.find(s=> s.id === item.id)
+        item.prix = data[0].prix
+        console.log("item.prix:"+item.prix)
+      });
+      return state
+    }
   }
 });
 
-export const onChangeHandler = (id_medicament, id_prestataire) =>  (dispatch) => {
+export const setAllPrice = (id_prestataire) =>  async(dispatch) => {
   try {
-    let panier = useSelector(showPanier)
-    panier.forEach( async(item) => {
-     
-      // dispatch(setPriceItem(data[0].price))
-    });
-      
+      dispatch(setPriceItems(id_prestataire))
   } catch (err) {
     throw new Error(err);
   }
@@ -59,7 +61,7 @@ export const onChangeHandler = (id_medicament, id_prestataire) =>  (dispatch) =>
 
 
 //Action
-export const { setPanier,addToPanier,changeItemValue,deleteItem } = panierSlice.actions;
+export const { setPanier,addToPanier,changeItemValue,deleteItem,setPriceItems } = panierSlice.actions;
 
 //State
 export const showPanier = (state) => state.panier;

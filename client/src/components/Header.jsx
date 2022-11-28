@@ -14,7 +14,12 @@ import axios from 'axios'
 import {setSession} from '../features/utilisateurSlice'
 import {setPanier} from '../features/panierSlice'
 import { useSelector, useDispatch} from 'react-redux';
-
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import SellIcon from '@mui/icons-material/Sell';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import PaidIcon from '@mui/icons-material/Paid';
 
 function Header() {
   const dispatch = useDispatch()
@@ -46,16 +51,19 @@ function Header() {
         >
           <ul>
             <li>
-              <a href="/profilUtilisateur"><AccountCircleOutlinedIcon /> Mon profil</a>
+              <a href="/profilUtilisateur"><AccountCircleOutlinedIcon /> Profil</a>
             </li>
             <li>
-              <a href="/choixMedicament "><PlaceOutlinedIcon /> Trouver un prestataire</a>
+              <a href="/choixMedicament"><LocalGroceryStoreIcon /> Achat</a>
             </li>
             <li>
-              <a href="/about">  <HealingOutlinedIcon />  Mes soins</a>
+              <a href="/abonnement"><CreditCardIcon /> <span> Abonnement</span> </a>
             </li>
             <li>
-              <a href="#" onClick={logout} id="deco"><LogoutOutlinedIcon /> Se deconnecter </a>
+              <a href="/validationCodebit">  <PaidIcon /> Co-débit</a>
+            </li>
+            <li>
+              <a href="#" onClick={logout} id="deco"><LogoutOutlinedIcon /></a>
             </li>
           </ul>
         </div>

@@ -131,8 +131,8 @@ module.exports.findAndCountAll = async(req,res) => {
     var page = req.params.page
     if(page<0) page = 0
     const users = await Utilisateur.findAndCountAll({
-        limit:2,
-        offset: page * 2
+        limit:10,
+        offset: page * 10
     })
     return res.json({users, total: Math.ceil(users.count / 2)})
 }

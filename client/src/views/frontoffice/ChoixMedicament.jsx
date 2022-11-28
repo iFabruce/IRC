@@ -70,7 +70,20 @@ export default function ChoixMedicament() {
     setPanier([...panierClone])
   }
 
-  const onSuggestHandler = (id_medicament, nom_medicament) => {
+  // const getPriceMedicament = async(id_medicament) => {
+  //   try {
+  //       const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+  //         {
+  //           id_medicament: id_medicament,
+  //           id_prestataire: localStorage.getItem('id_prestataire')
+  //         })
+  //         return data[0].prix
+  //   } catch (error) {
+  //       console.log(error)
+  //   }
+  // } 
+  const onSuggestHandler = async(id_medicament, nom_medicament) => {
+    // const price = await getPriceMedicament(id_medicament)
     let item = {id: increment ,id_medicament: id_medicament,nom: nom_medicament,prix: 0 ,quantite: 1} //Obtenir prix du médicament
     // const panierCopy = [...panier]
     // panierCopy.push(item)
@@ -113,7 +126,7 @@ export default function ChoixMedicament() {
       </ul> */}
        <Header/> 
       <Grid container spacing={0}>
-        <Grid item sx={12} md={6} >
+        <Grid item xs={12} md={6} >
           <div className='autocompletion'>
           <h2 id="title">Achat médicament(s):</h2> <br />
           <div id="search"><InputLabel >Recherchez ici le(s) médicaments:</InputLabel><br /> <TextField className="text-field"
@@ -129,7 +142,7 @@ export default function ChoixMedicament() {
             </div>
           </div>
         </Grid>
-        <Grid item sx={12} md={6} >
+        <Grid item xs={12} md={6} >
           <div className='panier'>
             <h4>Panier</h4>
           <ul >

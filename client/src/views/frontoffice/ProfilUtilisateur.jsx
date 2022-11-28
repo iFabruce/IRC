@@ -61,7 +61,7 @@ export default function ProfilUtilisateur() {
         <Grid item md={12}>
           <Grid item md={8} xs={12} id="left">
             <h4 style={{fontWeight: 800,borderLeft: '3px solid #0399BC', padding: '2%',color: '#0399BC'}}>Mon profil</h4><br />
-            <Typography style={{fontFamily: 'Montserrat',fontWeight: 600}} variant="h6" color="initial">{user.nom} {user.prenom}</Typography><br /><br />
+            <Typography style={{fontFamily: 'Poppins',fontWeight: 600}} variant="h6" color="initial">{user.nom} {user.prenom}</Typography><br /><br />
             <h6 style={{fontWeight: 600}}>Adresse</h6>
             <p>{user.adresse}</p><br />
             <h6 style={{fontWeight: 600}}>Date de naissance</h6>
@@ -119,26 +119,30 @@ export default function ProfilUtilisateur() {
           </Grid>
           </div>
           <div>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{margin:'2%'}}>
               <Table sx={{ minWidth: 100 }} >
                 <TableHead>
                   <TableRow >
-                    <TableCell style={{fontWeight: 'bold'}}>Id</TableCell>
+                    <TableCell style={{fontWeight: 'bold'}}>Ref</TableCell>
                     <TableCell style={{fontWeight: 'bold'}}>Total</TableCell>
                     <TableCell style={{fontWeight: 'bold'}}>Status</TableCell>
+                    <TableCell style={{fontWeight: 'bold'}}>Echeance</TableCell>
                     <TableCell style={{fontWeight: 'bold'}}>Date</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                 {achats && achats.map((row) => (
                   <TableRow
-                    key={row.id}
+                    key={row.id_achat}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">{row.id}</TableCell>
+                    <TableCell component="th" scope="row">REF-{row.id_achat}</TableCell>
                     <TableCell  component="th" scope="row">{row.total}</TableCell>
                     <TableCell  component="th" scope="row">{row.status}</TableCell>
+                    <TableCell  component="th" scope="row">{row.echeance} mois</TableCell>
                     <TableCell  component="th" scope="row">{row.date}</TableCell>
+                    <TableCell  component="th" scope="row"> <a href="#" onClick={ () => {localStorage.setItem('id_achat_detail', row.id_achat); navigate('/ficheAchat') }}>Voir plus</a> </TableCell>
+
                   </TableRow>
                 ))}
                 </TableBody>

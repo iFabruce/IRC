@@ -5,16 +5,18 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import {showSession} from '../../features/utilisateurSlice'
+import {showSession, showUserId} from '../../features/utilisateurSlice'
 import { useSelector } from 'react-redux';
 
 export default function ValidationCoDebit() {
     const navigate = useNavigate();
     const session = useSelector(showSession)
+    const userId = useSelector(showUserId) 
+
     const [list, setList] = useState([])
     
     const loadData = async() => {
-        const {data} = await axios.get(`http://localhost:5000/codebit/getAllWithDetails`);
+        const {data} = await axios.get(`http://localhost:5000/codebit/getAllWithDetails/${userId}`);
         setList(data)
     }
     useEffect(() => {
@@ -26,7 +28,7 @@ export default function ValidationCoDebit() {
         console.log("id_achat:"+id_achat);
         const {data} = await axios.post(`http://localhost:5000/achat/validation_codebit`,
         {
-            id_utilisateur: localStorage.getItem('id_utilisateur'),
+            id_utilisateur: userId,
             id_achat: id_achat,
             amount: montant,
             decision

@@ -160,7 +160,7 @@ export default function ListePrestataire()  {
                             onChange={e => {setDescription(e.target.value)}}
                             minRows={4}
                             value={description}
-                            style={{ width: 500, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
                    

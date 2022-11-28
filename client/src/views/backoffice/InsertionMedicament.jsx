@@ -50,7 +50,7 @@ export default function InsertionMedicament()  {
                             onChange={e => {setDescription(e.target.value)}}
                             minRows={4}
                             defaultValue=""
-                            style={{ width: 500, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
                     <div className='form'> 
@@ -59,7 +59,7 @@ export default function InsertionMedicament()  {
                             onChange={e => {setPosologie(e.target.value)}}
                             minRows={3}
                             defaultValue=""
-                            style={{ width: 500, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
                    <div className='form'> <TextField onChange={e => {setFabriquant(e.target.value)}} className="text-field"  id="standard-basic" label="Fabriquant" variant="outlined"  /> </div> <br /><br />

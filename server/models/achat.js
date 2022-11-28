@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Achat.init({
     id_utilisateur: DataTypes.INTEGER,
     status: DataTypes.STRING,
+    echeance: DataTypes.INTEGER,
     date: DataTypes.DATEONLY
   }, {
     sequelize,

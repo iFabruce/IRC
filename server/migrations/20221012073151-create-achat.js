@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      echeance: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       date: {
         allowNull: false,
         type: Sequelize.DATEONLY

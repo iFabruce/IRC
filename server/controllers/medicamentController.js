@@ -17,7 +17,7 @@ module.exports.getPrice = async(req,res) => {
         const {id_medicament, id_prestataire} = req.body
         const qr = `SELECT prix FROM detail_medicaments WHERE id_medicament = ${id_medicament} AND id_prestataire = ${id_prestataire}`
         const val = await sequelize.query(qr, { type: QueryTypes.SELECT })
-        return res.json(val)
+        return res.json(val[0].prix)
     } catch (error) {
         console.log(error)
         return res.json(false)      

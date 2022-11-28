@@ -46,7 +46,7 @@ export default function HeaderBackoffice() {
             <ul>
               
               <li>
-                <a href="/profilUtilisateur"><span className='icons'> <AccountCircleOutlinedIcon /></span> Tableau de bord</a>
+                <a href="/statistique"><span className='icons'> <AccountCircleOutlinedIcon /></span> Statistique</a>
               </li>
               <li>
                 <a href="/insertionUtilisateur"><span className='icons'><PlaceOutlinedIcon /></span> Insertion utilisateur</a>

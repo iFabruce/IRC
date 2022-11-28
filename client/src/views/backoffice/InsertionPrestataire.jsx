@@ -11,12 +11,12 @@ export default function InsertionPrestataire()  {
     const [alert, setAlert] = useState('')
     const [nom, setNom] = useState('')
     const [description, setDescription] = useState('')
+    const [telephone, setTelephone] = useState('')
     const [ouverture, setOuverture] = useState('')
     const [fermeture, setFermeture] = useState('')
     const [adresse, setAdresse] = useState('')
     const [longitude, setLongitude] = useState('')
     const [latitude, setLatitude] = useState('')
-    const [photo, setPhoto] = useState('')
 
 
 
@@ -30,12 +30,13 @@ export default function InsertionPrestataire()  {
         {
             nom,
             description,
+            telephone,
             ouverture,
             fermeture,
             adresse,
             longitude,
             latitude,
-            photo,
+        
         })
         console.log("newPrestataire:"+data)
         setAlert(data)
@@ -59,9 +60,10 @@ export default function InsertionPrestataire()  {
                             onChange={e => {setDescription(e.target.value)}}
                             minRows={4}
                             defaultValue=""
-                            style={{ width: 500, opacity: '.8', fontFamily: 'Montserrat', padding: '5px' }}
+                            style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
+                    <div className='form'> <TextField onChange={e => {setTelephone(e.target.value)}} className="text-field" placeholder="0381234567" id="standard-basic" label="Nom" variant="outlined"  /> </div>
                    
                    <div className='form'> <InputLabel>Heure d'ouverture</InputLabel> <TextField onChange={e => {setOuverture(e.target.value)}}  type="time" id="standard-basic"  variant="outlined"  /> </div>
                    <div className='form'> <InputLabel>Heure de fermeture</InputLabel> <TextField onChange={e => {setFermeture(e.target.value)}}  type="time" id="standard-basic"  variant="outlined"  /> </div> 

@@ -19,11 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     ouverture: DataTypes.STRING,
     fermeture: DataTypes.STRING,
-    statut: DataTypes.STRING,
+    telephone: DataTypes.STRING,
     adresse: DataTypes.STRING,
     longitude: DataTypes.DOUBLE,
-    latitude: DataTypes.DOUBLE,
-    photo: DataTypes.STRING
+    latitude: DataTypes.DOUBLE
   }, {
     sequelize,
     tableName: 'prestataires',

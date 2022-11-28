@@ -54,29 +54,30 @@ export default function Abonnement()  {
     
     return (
         <div>
-            <Grid container spacing={2} disableElevation className='container'>
+            <Grid container spacing={1} disableElevation >
+            
                 {
-                    
                     abonnements.map( abonnement =>
-             
 
-                        <Grid item sx={12} md={4} className="item" key={abonnement.id}>
-                            <Card className="card">
-                                <CardContent>
-                                    <h2  className="cardHeader">{abonnement.nom}</h2>
-                                    <h1   className="price">{abonnement.tarif} Ar</h1><br />
-                                    <p   className="details">{abonnement.description}</p>
-                                   <div className="subscribe-btn"> <Button  variant="contained" onClick={()=> {console.log("clix"); subscribe(abonnement.id)}} >Se souscrire</Button></div>
+                        <Grid item xs={12} md={4}  key={abonnement.id} >
                             
-                                </CardContent>
-                            </Card>
+                                <Card className="card">
+                                    <CardContent>
+                                        <h2  className="cardHeader">{abonnement.nom}</h2>
+                                        <h1   className="price">{abonnement.tarif} Ar</h1><br />
+                                        <p   className="details">{abonnement.description}</p>
+                                    <div className="subscribe-btn"> <Button  variant="contained" onClick={()=> {console.log("clix"); subscribe(abonnement.id)}} >Se souscrire</Button></div>
+                                
+                                    </CardContent>
+                                </Card>
+                       
                       
                         </Grid>
                   )                
                 }
                 { alert===false && <AlertError message="Erreur - Vous avez encore un abonnement valable"/>}
                 { alert===true && <AlertSuccess message="Succès - Votre abonnement a été effectué avec succès" />}
-            
+              
             </Grid>
         </div>
     );

@@ -12,6 +12,7 @@ export const medicamentSlice = createSlice({
       console.log(data)
       state.data = [...data];
     }
+   
   }
 });
 

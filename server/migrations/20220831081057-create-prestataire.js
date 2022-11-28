@@ -22,7 +22,7 @@ module.exports = {
       fermeture: {
         type: Sequelize.STRING
       },
-      statut: {
+      telephone: {
         type: Sequelize.STRING
       },
       adresse: {
@@ -34,15 +34,12 @@ module.exports = {
       latitude: {
         type: Sequelize.DOUBLE
       },
-      photo: {
-        type: Sequelize.STRING
-      },
       createdAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE
       }
     });

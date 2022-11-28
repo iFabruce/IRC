@@ -18,11 +18,11 @@ module.exports = {
       },
       telephone: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       reference: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       sexe: {
         allowNull: false,
