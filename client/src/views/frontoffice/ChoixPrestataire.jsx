@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import {showUserId, showSession, setTotalPanier} from '../../features/utilisateurSlice'
 import {showPanier,setPanier} from '../../features/panierSlice'
-
+import * as L from "leaflet";
+import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
 
 export default function ChoixPrestataire() {
     const userId = useSelector(showUserId)
@@ -19,6 +20,24 @@ export default function ChoixPrestataire() {
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
     const [prestataires, setPrestataires] = useState([])
+    
+    const LeafIcon = L.Icon.extend({
+        options: {}
+      });
+
+    const pharmacy = new LeafIcon({
+        iconUrl:  require('../../assets/icons/pharmacy.png'),
+        iconSize:     [30, 30],
+      });
+    const  myLocation = new LeafIcon({
+        iconUrl:  require('../../assets/icons/focus.png'),
+        iconSize:     [30, 30], // size of the icon
+        
+        
+      });
+
+    const [iconUser, setIconUser] = useState(myLocation);
+    const [iconPrestataire, setIconPrestataire] = useState(pharmacy);
     
     const getPriceMedicament = async(id_medicament, id_prestataire) => {
         try {
@@ -105,27 +124,27 @@ export default function ChoixPrestataire() {
     return (
         <div>
             
-            <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={18} scrollWheelZoom={true} id="map">
+            <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={16} scrollWheelZoom={true} id="map">
             <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
                 {prestataires && prestataires.map(px => 
                     <div key={px.id}>
-                        <Marker position={[px.latitude, px.longitude]}>
+                        <Marker position={[px.latitude, px.longitude]} icon={iconPrestataire}>
                             <Popup>
                                 <h4 style={{letterSpacing:'.2vw'}}>{px.nom}</h4>
                                 <p>Adresse: <strong>{px.adresse}</strong></p>
                                 <p>Ouverture: <strong style={{color:'green'}}>{px.ouverture}</strong></p>
                                 <p>Fermeture: <strong style={{color:'red'}}>{px.fermeture}</strong></p>
-                                    <a href="/paiement">Choisir</a>  
+                                <a href="#" onClick={ () => versPaiement(px.id)}>Choisir</a>
                             </Popup>
                         </Marker>
                     </div>
                 )
                 }
-                <Marker position={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} style={{color: 'blue', background: 'red' , borderRadius: '50px'}}>
-                    
+                <Marker position={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} icon={iconUser}>
+                <Popup>Votre position actuelle</Popup>
                 </Marker>
             </MapContainer> 
 

@@ -50,15 +50,9 @@ module.exports.getNonAddedMedicaments = async(req, res) => {
 module.exports.addOrChangePriceMedicament = async(req, res) => {
     try {
         const {id_medicament, id_prestataire, prix} = req.body
-        // const qr= "INSERT INTO prix_medicaments"+
-        //     '(id_medicament, id_prestataire, prix, date,"createdAt", "updatedAt") values'+
-        // `(${id_medicament}, ${id_prestataire}, ${prix}, now(), now(), now())`
-        // console.log("REQ"+qr)
-        console.log(date)
         await Prix_medicament.create({id_prestataire, id_medicament, prix, date})
         return res.json(true)
     } catch (error) {
-        console.log(error)
         return res.json(false)      
     }
 }
@@ -66,13 +60,11 @@ module.exports.addOrChangePriceMedicament = async(req, res) => {
 module.exports.getAllAvailable = async(req, res) => {
     try {
         const medicaments = req.body
-        console.log(medicaments)
         let qr = "select * from prestataires"
         let conditions = ""
         //Si l'utilisateur ajoute une ou plusieurs médicaments dans son panier
         if(medicaments.length > 0){
             medicaments.forEach((medoc,i) => {
-                console.log("i:"+i)
                 if(i==0){
                     conditions = conditions + ` where id_prestataire in (select id_prestataire from detail_medicaments where id_medicament=${medoc.id})` 
                 }
@@ -80,14 +72,11 @@ module.exports.getAllAvailable = async(req, res) => {
                     conditions = conditions + ` and id_prestataire in (select id_prestataire from detail_medicaments where id_medicament=${medoc.id})` 
                 }
             });
-            //Nouvelle requête
             qr= "select * from prestataires where id in (select id_prestataire from detail_medicaments " + conditions + ")"
         }
-        console.log("REQ"+qr)
         const val = await sequelize.query(qr, { type: QueryTypes.SELECT })
         return res.json(val)
     } catch (error) {
-        console.log(error)
         return res.json("error")      
     }
 }

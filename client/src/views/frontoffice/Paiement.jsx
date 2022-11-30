@@ -39,7 +39,7 @@ export default function Paiement(){
     const [nombreMois, setNombreMois] = useState(1)
     // const [montant, setMontant] = useState()
     const [echeances, setEcheances] = useState()
-    const [mois_echeance, setMois_Echeance] = useState()
+    const [mois_echeance, setMois_Echeance] = useState(1)
 
    
     const [userInfo, setUserInfo] = useState()
@@ -86,7 +86,8 @@ export default function Paiement(){
                 id_demandeur: userId,
                 telephone_validateur: numeroCodebiteur,
                 panier,
-                montant: totalPanier
+                montant: totalPanier,
+                echeance: mois_echeance
             })
         setCodebitAlert(data)
     }

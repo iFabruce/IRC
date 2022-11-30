@@ -165,12 +165,6 @@ module.exports.historique_achat = async(req,res) => {
 module.exports.validation_codebit = async(req,res) => {
     try {
         const {id_achat, id_utilisateur, decision, amount} = req.body
-        console.log("id_achat:"+id_achat)
-        console.log("id_utilisateur:"+id_utilisateur)
-        console.log("decision:"+decision)
-        console.log("amount:"+amount)
-
-
         const utilisateur = await Utilisateur.findOne({ where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({where: {id: utilisateur.id_portefeuille}})
         const achatToValidate = await Achat.findOne({where:{id: id_achat}})
@@ -184,10 +178,8 @@ module.exports.validation_codebit = async(req,res) => {
                 codebitToValidate.status = "payé"
                 achatToValidate.save()
                 codebitToValidate.save()
-                console.log("payé")
                 return res.json("payé")
             }else{
-                console.log("solde insuffisant")
                 return res.json("solde insuffisant")
             }
         }else{
@@ -195,7 +187,6 @@ module.exports.validation_codebit = async(req,res) => {
             codebitToValidate.status = 'suspendu'
             achatToValidate.save()
             codebitToValidate.save()
-            console.log("suspendu")
             return res.json("suspendu")
         }
     } catch (error) {
@@ -205,8 +196,8 @@ module.exports.validation_codebit = async(req,res) => {
 }
 module.exports.demande_codebit = async(req,res) => {
     try {
-        const {id_demandeur, telephone_validateur, panier , montant} = req.body
-        const demandeur = await Utilisateur.findOne({id: id_demandeur})
+        const {id_demandeur, telephone_validateur, panier , montant,echeance} = req.body
+        const demandeur = await Utilisateur.findOne({where: {id: id_demandeur}})
         const validateur= await sequelize.query(`select * from utilisateurs where id_portefeuille!=${demandeur.id_portefeuille} and telephone='${telephone_validateur}'`, { type: QueryTypes.SELECT })
         // const wallet = await Portefeuille.findOne({id: demandeur.id , id_portefeuille: validateur.id_portefeuille})
         // if(wallet.solde >= amount){
@@ -217,7 +208,8 @@ module.exports.demande_codebit = async(req,res) => {
             const achat = await Achat.create({
                 id_utilisateur: id_demandeur,
                 status: "en attente de validation",
-                date
+                date,
+                echeance
             })
             panier.forEach( async(element) => {
                 await Detail_achat.create({
@@ -256,7 +248,6 @@ module.exports.findAndCountAll = async(req,res) => {
 }
 module.exports.debit = async(req,res) => {
     try {
-        console.log("DATE:"+date)
         const {panier, id_utilisateur, amount, echeance} = req.body
         const utilisateur = await Utilisateur.findOne({where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({ where: {id: utilisateur.id_portefeuille} })
@@ -269,8 +260,6 @@ module.exports.debit = async(req,res) => {
                 status: "payé",
                 echeance
             })
-            console.log("panierLENGTH:"+panier.length)
-        
             panier.forEach( async(element) => {
                 await Detail_achat.create({
                     id_achat: achat.id,
@@ -284,7 +273,6 @@ module.exports.debit = async(req,res) => {
             return res.json(false)
         }
     } catch (error) {
-        console.log(error)
         return res.json("error")
     }
 }

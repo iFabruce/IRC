@@ -70,7 +70,6 @@ module.exports.subscribe = async(req,res) => {
             await sequelize.query(qr);
             const utilisateur = await Utilisateur.findOne({where: {id: id_user}})
             const portefeuille = await Portefeuille.findOne({ where: {id: utilisateur.id_portefeuille} })
-            console.log(portefeuille)
             portefeuille.solde = abonnement.portefeuille
             portefeuille.save()
             return res.json(true)

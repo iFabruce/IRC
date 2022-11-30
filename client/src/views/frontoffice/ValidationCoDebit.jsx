@@ -42,7 +42,7 @@ export default function ValidationCoDebit() {
             <Grid item xs={12} md={12}>
                 <div id="center">
                     <h2>Validation co-débit</h2>
-                    <p style={{color:'grey'}}>En attente: 3</p>
+                    <p style={{color:'grey'}}>En attente: {list.length}</p>
                     
                     {list.length!=0 && list.map( element => 
                         <div className="item" key={element.id_achat}>
