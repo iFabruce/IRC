@@ -8,7 +8,14 @@ import axios from 'axios'
 import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow} from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+
 export default function ListeUtilisateur()  {
+    const navigate = useNavigate()
     const [alertUpdate, setAlertUpdate] = useState('')
     const [alertDelete, setAlertDelete] = useState('')
     const [id, setId] = useState('')
@@ -20,6 +27,9 @@ export default function ListeUtilisateur()  {
     const [situation_matrimonial, setSituation_matrimonial] = useState('')
     const [login, setLogin] = useState('')
     const [mot_de_passe, setMot_de_passe] = useState('')
+    const [telephone, setTelephone] = useState('')
+    const [reference, setReference] = useState('')
+
 
     const [utilisateur, setUtilisateur] = useState()
     const [utilisateurs, setUtilisateurs] = useState('')
@@ -54,7 +64,6 @@ export default function ListeUtilisateur()  {
     }
     useEffect(() => {
         setPage('liste')
-        
         getAllUtilisateurs(0)
        
     }, [])
@@ -69,6 +78,12 @@ export default function ListeUtilisateur()  {
 
     //     }
     // }
+    const onDelete = async(id) =>{
+         await axios.get(`http://localhost:5000/utilisateur/delete/${id}`)
+        getAllUtilisateurs(0)
+        // navigate('/listeUtilisateur')
+        
+    }
     const onUpdate = async(id) =>{
         console.log('clix')
         setUtilisateur({})
@@ -83,6 +98,8 @@ export default function ListeUtilisateur()  {
             setAdresse(utilisateur.adresse)
             setSexe(utilisateur.sexe)
             setSituation_matrimonial(utilisateur.situation_matrimonial)
+            setTelephone(utilisateur.telephone)
+            setReference(utilisateur.reference)
             
             setPage('modification'); 
 
@@ -100,11 +117,62 @@ export default function ListeUtilisateur()  {
             adresse,
             sexe,
             date_naissance,
-            situation_matrimonial
+            situation_matrimonial,
+            telephone,
+            reference
            
         })
         setAlertUpdate(data)
+        getAllUtilisateurs(0)
+        setPage('liste')
+        
     }
+    /************CONFIRM**************/
+    const onConfirmDelete = (id) =>{
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className='custom-ui' >
+                  <h1>Confirmation de la suppression</h1>
+                  <p>Voulez-vous vraiment valider la suppression?</p> <br />
+                  <Button disableElevation variant="contained" style={{background: 'red'}}  
+                    onClick={() => {
+                        onDelete(id)
+                        onClose();
+                    }}
+                  >
+                    Oui
+                  </Button> 
+                  
+                  <Button disableElevation variant="outlined" onClick={onClose} style={{marginLeft: '2%'}}>Non</Button> 
+                </div>
+              );
+            }
+          });
+    }
+    const onConfirmUpdate = () =>{
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className='custom-ui' >
+                  <h1>Confirmation de la modification</h1>
+                  <p>Voulez-vous vraiment valider la modification?</p> <br />
+                  <Button disableElevation variant="contained" style={{background: '#00988B'}}  
+                    onClick={() => {
+                      modifierUtilisateur()
+                      onClose();
+                    }}
+                  >
+                    Oui
+                  </Button> 
+                  
+                  <Button disableElevation variant="outlined" onClick={onClose} style={{marginLeft: '2%'}}>Non</Button> 
+                </div>
+              );
+            }
+          });
+    }
+
     return (
       <div>
         <Grid container id="cont" spacing={10}>
@@ -142,7 +210,9 @@ export default function ListeUtilisateur()  {
                             <TableCell  component="th" scope="row">{row.adresse}</TableCell>
                             <TableCell  component="th" scope="row">{row.date_naissance}</TableCell>
 
-                            <TableCell  component="th" scope="row"> <Button onClick={ () => { onUpdate(row.id)}}>Modifier</Button> </TableCell>
+                            <TableCell  component="th" scope="row"> <EditIcon style={{ cursor: 'pointer'}} onClick={ () => { onUpdate(row.id)}}/></TableCell>
+                            <TableCell  component="th" scope="row"> <DeleteIcon style={{ cursor: 'pointer'}} onClick={ () => { onConfirmDelete(row.id)}}/></TableCell>
+
                           
                             </TableRow>
                         ))}
@@ -192,8 +262,8 @@ export default function ListeUtilisateur()  {
                             label="Sexe"
                             onChange={e => {setSexe(e.target.value)}}
                             >
-                            <MenuItem value={'H'}>homme</MenuItem>
-                            <MenuItem value={'F'}>femme</MenuItem>
+                            <MenuItem value={'homme'}>homme</MenuItem>
+                            <MenuItem value={'femme'}>femme</MenuItem>
 
                             </Select>
                     </FormControl>
@@ -208,19 +278,24 @@ export default function ListeUtilisateur()  {
                         label="Situation matrimonial"
                         onChange={e => {setSituation_matrimonial(e.target.value)}}
                     >
-                        <MenuItem value={'célibataire'}>célibataire</MenuItem>
+                        <MenuItem value={'Célibataire'}>célibataire</MenuItem>
                         <MenuItem value={'Marié(e)'}>marié(e)</MenuItem>
                         <MenuItem value={'Divorcé(e)'}>divorcé(e)</MenuItem>
                         <MenuItem value={'Veuf(ve)'}>veuf(ve)</MenuItem>
                     </Select>
                 </FormControl>
+                <div className='form'> <TextField onChange={e => {setTelephone(e.target.value)}} className="text-field"  id="standard-basic" label="Telephone"  variant="outlined"  value={telephone} /> </div>
+                <div className='form'> <TextField onChange={e => {setReference(e.target.value)}}  className="text-field"  id="standard-basic" label="Reference"  variant="outlined"  value={reference} /> <a href="#" onClick={ () => setReference(telephone)}>Créer mon propre portefeuille</a></div>
+
+
+
                       
 <br /> <br />
 
                   
-                    <Button variant="contained" style={{background: '#00988B'}} onClick={modifierUtilisateur}> Modifier </Button> <br />
-                    { alertUpdate===false && <AlertError message="Erreur - Veuillez vérifier tous les champs."/>}
-                        { alertUpdate===true && <AlertSuccess message="Succès -  Modification appliquée."/>}
+                    <Button variant="contained" style={{background: '#00988B'}} onClick={onConfirmUpdate}> Modifier </Button> <br />
+                    { alertUpdate===false && <AlertError message="Veuillez vérifier tous les champs."/>}
+                        { alertUpdate===true && <AlertSuccess message="Modification appliquée."/>}
                 </div> }
             </Grid>
         </Grid>

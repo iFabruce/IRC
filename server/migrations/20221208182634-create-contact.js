@@ -1,29 +1,24 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('rel_abonnement_utilisateurs', {
+    await queryInterface.createTable('Contacts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_abonnement: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      id_portefeuille: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      date_expiration: {
-        // allowNull: false,
-        type: Sequelize.DATEONLY
-      },
-      etat: {
-        // allowNull: false,
-        
+      nom_prenom: {
         type: Sequelize.STRING
+      },
+      email: {
+        type: Sequelize.STRING
+      },
+      telephone: {
+        type: Sequelize.STRING
+      },
+      message: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('rel_abonnement_utilisateurs');
+    await queryInterface.dropTable('Contacts');
   }
 };

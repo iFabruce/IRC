@@ -28,6 +28,8 @@ import Paiement from './views/frontoffice/Paiement';
 import ChoixMedicament from './views/frontoffice/ChoixMedicament';
 import ChoixPrestataire from './views/frontoffice/ChoixPrestataire';
 import Accueil from './views/frontoffice/Accueil';
+import LiaisonUtilisateur from './views/frontoffice/LiaisonUtilisateur';
+
 import App from './views/frontoffice/App';
 import ValidationCoDebit from './views/frontoffice/ValidationCoDebit';
 import FicheAchat from './views/frontoffice/FicheAchat';
@@ -69,6 +71,8 @@ root.render(
             <Route exact path="/listePrestataire" element={<ListePrestataire />}></Route>
             <Route exact path="/listeMedicament" element={<ListeMedicament />}></Route>
             <Route exact path="/listeUtilisateur" element={<ListeUtilisateur />}></Route>
+            <Route exact path="/liaisonUtilisateur" element={<LiaisonUtilisateur />}></Route>
+
 
             <Route path="abonnement" element={<><Header/><Abonnement/></>} />
             <Route path="logout" element={<><Login/></>} />

@@ -24,13 +24,11 @@ import PaidIcon from '@mui/icons-material/Paid';
 function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const logout = async (e) => {
-    e.preventDefault();
+  const logout = async () => {
     await axios.get(`http://localhost:5000/logout`)
     dispatch(setSession(null))
-    dispatch(setPanier(null))
+    dispatch(setPanier([]))
     navigate('/')
-    return false;
   }
 
   const [isNavExpanded, setIsNavExpanded] = useState(false)

@@ -18,6 +18,7 @@ export const utilisateurSlice = createSlice({
     setTotalPanier: (state, action) => {
       state.totalPanier = action.payload;
     }
+    
   }
 });
 

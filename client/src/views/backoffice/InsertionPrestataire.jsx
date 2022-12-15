@@ -63,7 +63,7 @@ export default function InsertionPrestataire()  {
                             style={{ width: 500, opacity: '.8', fontFamily: 'Poppins', padding: '5px' }}
                         />
                     </div>
-                    <div className='form'> <TextField onChange={e => {setTelephone(e.target.value)}} className="text-field" placeholder="0381234567" id="standard-basic" label="Nom" variant="outlined"  /> </div>
+                    <div className='form'> <TextField onChange={e => {setTelephone(e.target.value)}} className="text-field" placeholder="0381234567" id="standard-basic" label="Contact" variant="outlined"  /> </div>
                    
                    <div className='form'> <InputLabel>Heure d'ouverture</InputLabel> <TextField onChange={e => {setOuverture(e.target.value)}}  type="time" id="standard-basic"  variant="outlined"  /> </div>
                    <div className='form'> <InputLabel>Heure de fermeture</InputLabel> <TextField onChange={e => {setFermeture(e.target.value)}}  type="time" id="standard-basic"  variant="outlined"  /> </div> 

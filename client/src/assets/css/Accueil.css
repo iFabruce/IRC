@@ -1,7 +1,81 @@
+.section-contact{
+    min-height: 100vh;
+    margin-top: 5%;
+}
+.section-how{
+    min-height: 100vh;
+}
+.p-why{
+    margin-left: 20%;
+    margin-top: 10%;
+}
+.img-why{
+    width: 480px !important;
+    height: 260px !important;
+    margin-left: 20%;
+    margin-top: 10%;
+}
+.btn-section-contact{
+    margin-top: 3% !important;
+    margin-left: 10% !important;
+    text-transform: unset !important;
+    background: #0399BC !important;
+    font-family: Poopins !important;
+
+}
+.contact-field{
+    margin-left: 10% !important;
+    margin-top: 3% !important;
+}
+.contact-fieldlong{
+    margin-left: 10% !important;
+    margin-top: 3% !important;
+    width: 500px;
+}
+.section-process{
+    height: 100vh !important;
+    width: 100%;
+}
+.card-process{
+    margin-left: 20%;
+    padding-top: 5%;
+    /* padding-left: 2%; */
+    width: 300px;
+    height: 280px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 20px -2px rgba(9, 9, 9, 0.10)  !important;
+}
+.section-p{
+    padding: 10%;
+    /* margin-top: 15%; */
+    /* margin-left: 10%; */
+    /* letter-spacing: 0.2vw; */
+
+}
+.section-h3{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 5%;
+}
+.section-header{
+    letter-spacing: 0.4vw;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 5%;
+    color: #0399BC;
+}
+.img-process{
+    margin-left: 40%;
+    width: 60px;
+    height: 60px;
+}
+
 .item-left{
     margin-top: 5%;
-    padding-top: 10%;
-    padding-left: 12%;
+    padding-top: 5%;
+    padding-left: 10%;
 
 }
 .item-left h1{
@@ -18,11 +92,11 @@
 
 }
 .button{
-    font-family: Poppins;
+    font-family: Poopins !important;
     /* text-transform: uppercase !important; */
-    font-weight: 600 !important; 
-    letter-spacing: 0.2vw !important;
-    background-color:  linear-gradient(to bottom right, #5A55AA, #0399BC);
+    /* font-weight: 600 !important;  */
+    letter-spacing: 0.1vw !important;
+    background-color:  linear-gradient(to bottom right, #5A55AA, #0399BC) !important;
     height: 50px;
     margin-top: 3% !important;
 }
@@ -38,11 +112,11 @@
         /* background: gold; */
         overflow-x: hidden;
         height: 100vh !important;
-
+        width: 393px !important;
     }
   
     .item-left{
-        width: 90% !important;
+        width: 100% !important;
         /* background: red; */
         margin-top: 30% !important;
         /* padding: 10%; */
@@ -59,6 +133,40 @@
     .button{
         margin-top: 10% !important;
     }
-  
+
+    .section-header{
+        text-align: center;
+        font-size: 16px;
+        margin-top: 10%;
+    }
+    .card-process{
+        margin-left: 12%;
+        margin-top: 5%;
+    }
+    .section-why{
+        padding: 10%;
+    }
+    .p-why{
+        margin-top: 10%;
+        margin-left: 5%;
+    }
+    .img-why{
+        width: 240px !important;
+        height: 140px !important;
+        margin-left: 10%;
+        padding: 5%;
+
+    }
+    .section-contact{
+        padding: 5%;
+    }
+    .contact-field{
+        width: 300px !important;
+        margin-top: 10% !important;
+    }
+    .contact-fieldlong{
+        width: 300px;
+        margin-top: 10% !important;
+    }
  }
   

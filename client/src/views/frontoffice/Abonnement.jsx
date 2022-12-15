@@ -64,19 +64,18 @@ export default function Abonnement()  {
                                 <Card className="card">
                                     <CardContent>
                                         <h2  className="cardHeader">{abonnement.nom}</h2>
-                                        <h1   className="price">{abonnement.tarif} Ar</h1><br />
+                                        <h1   className="price">{(parseInt(abonnement.tarif)).toLocaleString()} Ar</h1><br />
                                         <p   className="details">{abonnement.description}</p>
                                     <div className="subscribe-btn"> <Button  variant="contained" onClick={()=> {console.log("clix"); subscribe(abonnement.id)}} >Se souscrire</Button></div>
                                 
                                     </CardContent>
                                 </Card>
-                       
-                      
-                        </Grid>
+                        </Grid> 
                   )                
                 }
-                { alert===false && <AlertError message="Erreur - Vous avez encore un abonnement valable"/>}
-                { alert===true && <AlertSuccess message="Succès - Votre abonnement a été effectué avec succès" />}
+                
+                { alert===false && <AlertError message="Vous avez encore un abonnement valable."/>}
+                { alert===true && <AlertSuccess message="Votre abonnement a été effectué avec succès" />}
               
             </Grid>
         </div>

@@ -53,7 +53,7 @@ export default function ValidationCoDebit() {
                             </div>
                             <div className="right">
                                 <p>20 Oct 2022</p> <br />
-                                <p style={{fontWeight:'600'}}>{element.montant} Ar</p> 
+                                <p style={{fontWeight:'600'}}>{(parseInt(element.montant)).toLocaleString()} Ar</p> 
                                 
                                     <Button className="btn-choice1" variant="contained" disableElevation style={{background: '#00B862'}} onClick={() => submit(element.id_achat,element.montant,true)}>Valider</Button>
                                     <Button className="btn-choice2" variant="contained" disableElevation style={{background: '#FFD500'}} onClick={() => submit(element.id_achat,element.montant,false)}>Ignorer</Button>

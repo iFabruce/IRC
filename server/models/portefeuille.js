@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Utilisateur}) {
       this.hasMany(Utilisateur, {foreignKey: 'id_portefeuille'})
+      
     }
   }
   Portefeuille.init({

@@ -33,15 +33,9 @@ export default function HeaderBackoffice() {
 
        
           <div
-            className={
-              isNavExpanded ? "navigationa-menu expanded" : "navigationa-menu"
-            }
-          > <a
-                  className="hamburger"
-                  onClick={() => {
-                    setIsNavExpanded(!isNavExpanded)
-                  }}
-                ><MenuOutlinedIcon/></a> 
+            className="navigationa-menu"
+          
+          > 
          
             <ul>
               
@@ -58,7 +52,7 @@ export default function HeaderBackoffice() {
                 <a href="/insertionMedicament"> <span className='icons'><HealingOutlinedIcon /></span> Insertion médicament</a>
               </li>
               <li>
-                <a href="/medicamentPrestataire"> <span className='icons'><HealingOutlinedIcon /></span> Ajout médicament à un prestataire</a>
+                <a href="/medicamentPrestataire"> <span className='icons'><HealingOutlinedIcon /></span> Assigner médicament à un prestataire</a>
               </li>
               <li>
                 <a href="/logout" id="deco"><span className='icons'><LogoutOutlinedIcon /></span> Se deconnecter </a>

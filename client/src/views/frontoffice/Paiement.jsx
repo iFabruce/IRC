@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Paiement(){
@@ -50,14 +51,22 @@ export default function Paiement(){
 
     const [alert, setAlert] = useState('')
     const [codebitAlert, setCodebitAlert] = useState('a')
+
+    const [isSubscribed, setIsSubscribed] = useState('')
+
     
     // panier.forEach(element => console.log("prix:"+element.prix))
     
     useEffect(() => {
+        verifySubscription()
         if(session === null) navigate('/')
         panier.forEach(i => console.log("prix:"+i.prix))
     }, [])
-
+    
+    const verifySubscription = async() => {
+        const {data} = await axios.get(`http://localhost:5000/utilisateur/isSubscribed/${userId}`)
+        setIsSubscribed(data)
+    }
 
     const export_pdf = async() => {
         localStorage.setItem('id_panier',Number(localStorage.getItem('id_panier')) + 1 )
@@ -92,7 +101,7 @@ export default function Paiement(){
         setCodebitAlert(data)
     }
     const cashout =  async(amount) => {
-       
+        
         console.log("USERA:"+userId)
         const {data} = await axios.post('http://localhost:5000/achat/debit',
         {
@@ -113,18 +122,33 @@ export default function Paiement(){
             customUI: ({ onClose }) => {
               return (
                 <div className='custom-ui' >
-                  <h1>Confirmer votre paiement.</h1>
-                  <p>Etes-vous sûr de vouloir procéder au paiement?</p>
-                  <Button disableElevation variant="contained"  
-                    onClick={() => {
-                      cashout(totalPanier);
-                      onClose();
-                    }}
-                  >
-                    Oui
-                  </Button> 
-                  
-                  <Button disableElevation variant="outlined" onClick={onClose}>Non</Button> 
+                    {isSubscribed === true &&
+                        <div>
+                            <h1>Confirmer votre paiement.</h1>
+                            <p>Etes-vous sûr de vouloir procéder au paiement?</p>
+                            <Button disableElevation variant="contained"  
+                                onClick={() => {
+
+                                cashout(totalPanier);
+                                onClose();
+                                }}
+                            >Oui</Button> 
+                            <Button disableElevation variant="outlined" onClick={onClose}>Non</Button>
+                        </div> 
+                    }
+                     {isSubscribed === false &&
+                        <div>
+                            <h1 style={{color: 'gold', fontWeight:'500'}}>Abonnement requis!</h1>
+                            <p>Veuillez souscrire à un abonnement pour pouvoir effectuer votre achat.</p><br />
+                            <Button disableElevation variant="contained"
+                                onClick={() => {
+                                    navigate('/abonnement')
+                                    onClose()
+                                }}
+                            >Vers abonnement</Button>  
+                            <Button disableElevation variant="outlined" onClick={onClose}>Annuler</Button>
+                        </div> 
+                    }
                 </div>
               );
             }
@@ -190,7 +214,7 @@ export default function Paiement(){
                     <AccordionDetails>
                     <h1>Details paiement</h1> <br /> <br />
                     <p>Total à payer:</p><br />
-                    <p id="totalPaiement">{totalPanier} Ar <span className="lightText">/ mois</span> </p> 
+                    <p id="totalPaiement">{(parseInt(totalPanier)).toLocaleString()} Ar <span className="lightText">/ mois</span> </p> 
                     <div id="btn"><Button  variant="contained" className="buttonPaiement" onClick = {onConfirm} > Confirmer votre paiement </Button></div> <br />
                     <a href="#" onClick={export_pdf}>Recevoir une facture</a> <br />
                     
@@ -239,7 +263,8 @@ export default function Paiement(){
                     <TextField
                       id=""
                       label=""
-                        type="number"
+                      type="number"
+                      InputProps={{ inputProps: { min: 1, max: 6 } }}
                         onChange= { e=> { extendEcheance(e.target.value)}}
                     /> <br /> 
                      <br />
@@ -258,7 +283,7 @@ export default function Paiement(){
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">{row.mois}</TableCell>
-                                <TableCell  component="th" scope="row" style={{ fontWeight:'bold'}}>{row.montant} Ar</TableCell>
+                                <TableCell  component="th" scope="row" style={{ fontWeight:'bold'}}>{(parseInt(row.montant)).toLocaleString()} Ar</TableCell>
                             </TableRow>
                         ))}
                             </TableBody>

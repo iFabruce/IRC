@@ -19,13 +19,38 @@ export default function InsertionUtilisateur()  {
     const [situation_matrimonial, setSituation_matrimonial] = useState('')
     const [login, setLogin] = useState('')
     const [mot_de_passe, setMot_de_passe] = useState('')
+    const [password_match, setPassword_match] = useState('')
 
+
+    const [isLinked, setIsLinked] = useState('')
 
     useEffect(() => {
         setAlert('')
     }, [])
+    const checkPassword = (password) =>{
+        if(password === mot_de_passe){
+            setPassword_match(true)
+        }else{
+            setPassword_match(false)
+        }
+
+    }
     const signup = async() =>{
-       console.log("go")
+       console.log("go-signup")
+       console.log("login:"+login)
+       console.log("mot_de_passe:"+mot_de_passe)
+       console.log("nom:"+nom)
+       console.log("prenom:"+prenom)
+       console.log("telephone:"+telephone)
+       console.log("reference:"+reference)
+       console.log("sexe:"+sexe)
+       console.log("date_naissance:"+date_naissance)
+       console.log("situation_matrimonial:"+situation_matrimonial)
+       console.log("adresse:"+adresse)
+
+
+
+
         const {data} = await axios.post('http://localhost:5000/utilisateur/signup',
         {
             login,
@@ -71,8 +96,8 @@ export default function InsertionUtilisateur()  {
                             label="Sexe"
                             onChange={e => {setSexe(e.target.value)}}
                             >
-                            <MenuItem value={'H'}>Homme</MenuItem>
-                            <MenuItem value={'F'}>Femme</MenuItem>
+                            <MenuItem value={'homme'}>homme</MenuItem>
+                            <MenuItem value={'femme'}>femme</MenuItem>
 
                             </Select>
                     </FormControl>
@@ -97,15 +122,18 @@ export default function InsertionUtilisateur()  {
                         <h4 style={{paddingBottom: '1%',borderBottom: '1px solid grey',color:'grey',opacity: '.8'}}>Informations du compte</h4> 
                         <div className='form'> <TextField onChange={e => {setLogin(e.target.value)}}  id="standard-basic" label="Identifiant (numéro CIN)" variant="outlined"  /> </div>
                         <div className='form'> <TextField onChange={e => {setMot_de_passe(e.target.value)}} type="password" id="standard-basic" label="Mot de passe" variant="outlined"  /></div> <br />
+                        <div className='form'> <TextField onChange={e => {checkPassword(e.target.value)}} type="password" id="standard-basic" label="Répétez le mot de passe" variant="outlined"  /> <br />   { password_match === false && <AlertError message="Le mot de passe ne corréspond pas..."/>}{ password_match === true && <AlertSuccess message="Le mot de passe coresspond."/>}</div> <br />
                        
                         <h4  style={{paddingBottom: '1%',borderBottom: '1px solid grey',color:'grey',opacity: '.8'}}>Portefeuille</h4> <br />
                         <p>Créer votre propre portefeuille ou se lier avec un autre utilisateur</p> 
                         <div className='form'> <TextField onChange={e => {setReference(e.target.value)}} value={reference} className="text-field"  id="standard-basic" label="Reference" variant="outlined"  /></div> <Button style={{textTransform: 'unset'}} onClick={ () => { console.log(telephone); setReference(telephone)}}>Créer mon propre portefeuille</Button> <br />
                    <br />
                         <Button variant="contained" style={{background: '#00988B'}} onClick={signup}> Ajouter </Button>
-                        { alert===false && <AlertError message="Erreur - Ce numéro CIN est déjà inscrit!"/>}
-                        { alert===true && <AlertSuccess message="Succès - Votre compté a été crée."/>}
-                        </div>
+                        { alert=== 'userExist' && <AlertError message="Ce numéro CIN est déjà inscrit..."/>}
+                        { alert=== 'success' && <AlertSuccess message="Votre compté a été crée avec succès."/>}
+                        </div> <br />
+                        { alert==='notExist' && <AlertError message=" Ce numero n'est lié à aucun utilisateur..Veuillez verifier le numero!"/>}
+
 
             </Grid>
         </Grid>

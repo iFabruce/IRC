@@ -25,9 +25,7 @@ export default function ProfilUtilisateur() {
   const [dateMax, setDateMax] = useState('')
   const [status, setStatus] = useState('tous')
 
-
   // const [token, setToken] = useState(cookies.get('jwt'))
-
   const navigate = useNavigate();
   
   const getHistoriqueAchat = async () => {
@@ -60,7 +58,7 @@ export default function ProfilUtilisateur() {
        <Grid container spacing={0} className='container'>
         <Grid item md={12}>
           <Grid item md={8} xs={12} id="left">
-            <h4 style={{fontWeight: 800,borderLeft: '3px solid #0399BC', padding: '2%',color: '#0399BC'}}>Mon profil</h4><br />
+            <h3 style={{fontWeight: 800,borderLeft: '3px solid #0399BC', padding: '2%',color: '#0399BC'}}>Mon profil</h3><br />
             <Typography style={{fontFamily: 'Poppins',fontWeight: 600}} variant="h6" color="initial">{user.nom} {user.prenom}</Typography><br /><br />
             <h6 style={{fontWeight: 600}}>Adresse</h6>
             <p>{user.adresse}</p><br />
@@ -68,9 +66,10 @@ export default function ProfilUtilisateur() {
             <p>{user.date_naissance}</p><br />
             <h6 style={{fontWeight: 600}}>Situation matrionial</h6>
             <p>{user.situation_matrimonial} </p><br />
+            <a href="#" onClick={() => navigate('/liaisonUtilisateur')}>Mes liaisons</a>
           </Grid>
           <Grid item md={4} xs={12} id="right">
-              <Grid item md={12} xs={12} className="box"> <p style={{fontWeight: 800,color: '#0399BC'}}> <AccountBalanceWalletOutlinedIcon />  {user.solde} AR </p><p style={{fontWeight: 400}}>Portefeuille</p> </Grid>
+              <Grid item md={12} xs={12} className="box"> <p style={{fontWeight: 800,color: '#0399BC'}}> <AccountBalanceWalletOutlinedIcon />  {(parseInt(user.solde)).toLocaleString()} AR </p><p style={{fontWeight: 400}}>Portefeuille</p> </Grid>
               <Grid item md={12} xs={12} className="box">  <p  style={{fontWeight: 800,color: '#5A55AA'}}><AddShoppingCartOutlinedIcon />  {user.abonnement} </p> <p style={{fontWeight: 400}}>Abonnement (Expire le {user.date_expiration})</p> </Grid>
           </Grid>
         </Grid>
@@ -106,7 +105,7 @@ export default function ProfilUtilisateur() {
                   >
                     <MenuItem value='tous'>Tous</MenuItem>
                     <MenuItem value='payé'>Payé</MenuItem>
-                    <MenuItem value='suspendu'>Suspendu</MenuItem>
+                    <MenuItem value='annulé'>Annulé</MenuItem>
                     <MenuItem value='en attente de validation'>en attente de validation</MenuItem>
                   </Select>
                 </FormControl>
@@ -137,7 +136,7 @@ export default function ProfilUtilisateur() {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">REF-{row.id_achat}</TableCell>
-                    <TableCell  component="th" scope="row">{row.total}</TableCell>
+                    <TableCell  component="th" scope="row">{(parseInt(row.total)).toLocaleString()}</TableCell>
                     <TableCell  component="th" scope="row">{row.status}</TableCell>
                     <TableCell  component="th" scope="row">{row.echeance} mois</TableCell>
                     <TableCell  component="th" scope="row">{row.date}</TableCell>

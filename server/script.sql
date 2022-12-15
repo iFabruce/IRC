@@ -15,13 +15,12 @@ CREATE OR REPLACE VIEW profil_utilisateurs AS (
             pf.solde  solde 
         FROM utilisateurs users
             FULL JOIN portefeuilles pf ON pf.id = users.id_portefeuille
-            FULL JOIN rel_abonnement_utilisateurs rau on rau.id_utilisateur = users.id
+            FULL JOIN rel_abonnement_utilisateurs rau on rau.id_portefeuille = users.id_portefeuille
             FULL JOIN abonnements abo ON abo.id = rau.id_abonnement
-   
 );
 
 ---Detail médicament---
-CREATE VIEW detail_medicaments AS (
+CREATE OR REPLACE VIEW  detail_medicaments AS (
      SELECT  ps.id id_prestataire,ps.nom nom_prestataire,md.id id_medicament,md.nom nom_medicament ,pm.prix prix
         FROM prix_medicaments as pm
         JOIN medicaments as md 
@@ -38,21 +37,21 @@ CREATE VIEW detail_medicaments AS (
 );
 
 ---DETAIL CODEBIT--
-CREATE VIEW detail_codebits AS (
+CREATE OR REPLACE VIEW  detail_codebits AS (
     SELECT 
         id_achat,
         us.nom nom,
         us.prenom prenom,
         us.telephone telephone,
         us.adresse adresse,
-        status,
+        cd.status status,
         montant,
         date
         FROM codebits cd
         JOIN utilisateurs as us ON cd.demandeur = us.id 
 );
 ---STAT MEDICAMENT--
-CREATE VIEW stat_medicaments AS (
+CREATE OR REPLACE VIEW  stat_medicaments AS (
     SELECT 
         da.id_medicament id_medicament,
         md.nom nom_medicament,

@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     adresse: DataTypes.STRING,
     situation_matrimonial: DataTypes.STRING,
     id_compte: DataTypes.INTEGER,
-    id_portefeuille: DataTypes.INTEGER
+    id_portefeuille: DataTypes.INTEGER,
+    status: DataTypes.STRING
   }, {
     sequelize,
     tableName: 'utilisateurs',

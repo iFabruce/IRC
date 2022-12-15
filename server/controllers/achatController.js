@@ -89,7 +89,7 @@ module.exports.export_pdf = async(req,res) => {
     })
     table += ` 
     </table>
-    <h4>Total: ${totalPanier} Ar</h4>
+    <h4>Total: ${(parseInt(totalPanier)).toLocaleString()} Ar</h4>
     </div>
 `
     var options = {
@@ -168,7 +168,7 @@ module.exports.validation_codebit = async(req,res) => {
         const utilisateur = await Utilisateur.findOne({ where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({where: {id: utilisateur.id_portefeuille}})
         const achatToValidate = await Achat.findOne({where:{id: id_achat}})
-        const codebitToValidate = await Codebit.findOne({where:{id: id_achat}})
+        const codebitToValidate = await Codebit.findOne({where:{id_achat}})
 
         if(decision){
             if(wallet.solde >= amount){
@@ -183,8 +183,8 @@ module.exports.validation_codebit = async(req,res) => {
                 return res.json("solde insuffisant")
             }
         }else{
-            achatToValidate.status = 'suspendu'
-            codebitToValidate.status = 'suspendu'
+            achatToValidate.status = 'annulé'
+            codebitToValidate.status = 'annulé'
             achatToValidate.save()
             codebitToValidate.save()
             return res.json("suspendu")
@@ -248,7 +248,7 @@ module.exports.findAndCountAll = async(req,res) => {
 }
 module.exports.debit = async(req,res) => {
     try {
-        const {panier, id_utilisateur, amount, echeance} = req.body
+        const {panier, id_utilisateur,amount,echeance} = req.body
         const utilisateur = await Utilisateur.findOne({where: {id: id_utilisateur}})
         const wallet = await Portefeuille.findOne({ where: {id: utilisateur.id_portefeuille} })
         if(wallet.solde >= amount){
@@ -256,7 +256,7 @@ module.exports.debit = async(req,res) => {
             wallet.save()
             const achat = await Achat.create({
                 id_utilisateur,
-                date: "2022-10-12",
+                date: date,
                 status: "payé",
                 echeance
             })

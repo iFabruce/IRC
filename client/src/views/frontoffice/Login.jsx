@@ -47,7 +47,7 @@ function Login() {
       else if(data.profil === 'backoffices'){
         // console.log("SESSION:"+localStorage.getItem('session'))
 
-        navigate('/insertionUtilisateur')
+        navigate('/statistique')
       }
       else{//Affichage message
         setMessage(data)
@@ -62,15 +62,15 @@ function Login() {
       <Grid container >
         <Grid item xs={12} md={6} >
           <Paper>
-            <div id="illustration">
+            <div id="illustration" >
               <Typography variant="h4" color="white" id="typo-header" >Simplifie l'accès à vos soins</Typography> 
-              <Typography variant="body1" color="white" id="typo">IRC vous permet de localiser facilement les préstataires de soins à proximité de vous, tout en incluant une facilitation de paiement pour les services.</Typography>
+              <Typography variant="body1" color="white" id="typo">IRC vous permet de localiser facilement les préstataires de soins à proximité de vous, tout en incluant une facilité de paiement sur les achats de médicaments.</Typography>
               </div>
           </Paper>
         </Grid>
         <Grid item  xs={12} md={6}>
          
-            <div id="logo"><img src={require('../../assets/images/LOGO-IRC-PRIMAIRE.png')} alt="" /></div>
+            <div id="logo" ><img src={require('../../assets/images/LOGO-IRC-PRIMAIRE.png')} alt="" /></div>
               <div id="select">  
               <FormControl style={{marginTop: '2%', width:'230px'}}>
                         <InputLabel >Profil</InputLabel>
