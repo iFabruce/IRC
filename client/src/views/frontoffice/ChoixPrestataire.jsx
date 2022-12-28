@@ -124,7 +124,7 @@ export default function ChoixPrestataire() {
     return (
         <div>
             
-            {/* <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={16} scrollWheelZoom={true} id="map">
+            <MapContainer center={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} zoom={16} scrollWheelZoom={true} id="map">
             <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -146,12 +146,12 @@ export default function ChoixPrestataire() {
                 <Marker position={[localStorage.getItem('latitude'), localStorage.getItem('longitude')]} icon={iconUser}>
                 <Popup>Votre position actuelle</Popup>
                 </Marker>
-            </MapContainer>  */}
+            </MapContainer> 
 
 
         
         
-        <h1>userID: {userId}</h1>
+        {/* <h1>userID: {userId}</h1>
         {prestataires && prestataires.map(px => 
             <ul key={px.id}>
                 <li>
@@ -159,7 +159,7 @@ export default function ChoixPrestataire() {
                     <a href="#" onClick={ () => versPaiement(px.id)}>Choisir</a>
                 </li>
             </ul>
-        )}
+        )} */}
 
         </div>
     )

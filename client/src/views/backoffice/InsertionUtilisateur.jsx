@@ -5,9 +5,11 @@ import React, { useState, useEffect} from 'react'
 import { Grid,Button,Paper,InputLabel,Select,FormControl,MenuItem, TextField } from '@mui/material';
 import '../../assets/css/InsertionUtilisateur.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function InsertionUtilisateur()  {
+    const navigate = useNavigate();
     const [alert, setAlert] = useState('')
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
@@ -65,8 +67,20 @@ export default function InsertionUtilisateur()  {
             adresse
         })
         console.log("signup:"+data)
+        if(data === false){
+            setLogin('')
+            setMot_de_passe('')
+            setNom('')
+            setPrenom('')
+            setTelephone('')
+            setReference('')
+            setSexe('')
+            setDate_naissance('')
+            setSituation_matrimonial('')
+            setAdresse('')
+        }
         setAlert(data)
-        console.log(alert)
+        navigate('/listeUtilisateur')
     }
     return (
       <div>
