@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "root",
-    "database": "irc",
-    "host": "127.0.0.1",
+    "username": "facnghwk",
+    "password": "IK3lNhh_3i4vHYT2W5Y-bi_q04M8lcx-",
+    "database": "facnghwk",
+    "host": "mahmud.db.elephantsql.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "facnghwk",
+    "password": "IK3lNhh_3i4vHYT2W5Y-bi_q04M8lcx-",
+    "database": "facnghwk",
+    "host": "mahmud.db.elephantsql.com",
+    "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "facnghwk",
+    "password": "IK3lNhh_3i4vHYT2W5Y-bi_q04M8lcx-",
+    "database": "facnghwk",
+    "host": "mahmud.db.elephantsql.com",
+    "dialect": "postgres"
   }
 }
