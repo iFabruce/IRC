@@ -5,8 +5,8 @@ app.use(cookieParser())
 app.use(express.json())
 const cors = require('cors');
 const origin = process.env.NODE_ENV === "development" 
-  ? "http://localhost:3000" 
-  : "http://localhost:3000"
+  ? "https://irc-o1g5.onrender.com/" 
+  : "https://irc-o1g5.onrender.com/"
 
 app.use(
   cors({
