@@ -49,7 +49,7 @@ export default function ListeUtilisateur()  {
 
     const getAllUtilisateurs = async(num_page) =>{
         console.log("go")
-        const {data} = await axios.get('http://localhost:5000/utilisateur/findAndCountAll/'+num_page)
+        const {data} = await axios.get('https://irc-backend.vercel.app/utilisateur/findAndCountAll/'+num_page)
         console.log("users:"+data.users.rows)
         setUtilisateurs(data.users.rows)
         var tclone = []
@@ -70,7 +70,7 @@ export default function ListeUtilisateur()  {
 
     // const onDelete = async (id) => {
     //     try{
-    //         const {data} = await axios.delete(`http://localhost:5000/utilisateur/delete/${id}`)
+    //         const {data} = await axios.delete(`https://irc-backend.vercel.app/utilisateur/delete/${id}`)
     //         getAllUtilisateurs()
     //         setAlertDelete(data)
     //     }
@@ -79,7 +79,7 @@ export default function ListeUtilisateur()  {
     //     }
     // }
     const onDelete = async(id) =>{
-         await axios.get(`http://localhost:5000/utilisateur/delete/${id}`)
+         await axios.get(`https://irc-backend.vercel.app/utilisateur/delete/${id}`)
         getAllUtilisateurs(0)
         // navigate('/listeUtilisateur')
         
@@ -90,7 +90,7 @@ export default function ListeUtilisateur()  {
         try{
             console.log('a')
             setId(id)
-            const {data} = await axios.get(`http://localhost:5000/utilisateur/findOne/${id}`)
+            const {data} = await axios.get(`https://irc-backend.vercel.app/utilisateur/findOne/${id}`)
             setUtilisateur(data)
             setNom(utilisateur.nom)
             setPrenom(utilisateur.prenom)
@@ -111,7 +111,7 @@ export default function ListeUtilisateur()  {
     }
     const modifierUtilisateur = async () => {
         
-        const {data} = await axios.post(`http://localhost:5000/utilisateur/update/${id}`,{
+        const {data} = await axios.post(`https://irc-backend.vercel.app/utilisateur/update/${id}`,{
             nom,
             prenom,
             adresse,

@@ -47,7 +47,7 @@ export default function ChoixMedicament() {
   useEffect(() => {
     if(session === null) navigate('/')
       const loadMedicaments = async () =>{
-          const {data} = await axios.get('http://localhost:5000/medicament/findAll')
+          const {data} = await axios.get('https://irc-backend.vercel.app/medicament/findAll')
           setMedicaments(data)
       } 
       loadMedicaments()
@@ -55,7 +55,7 @@ export default function ChoixMedicament() {
   }, [])
 
   // const getPriceMedicament = async (id_medicament) =>{
-  //   const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+  //   const {data} = await axios.post('https://irc-backend.vercel.app/medicament/getPrice',
   //     {
   //       id_medicament: id_medicament,
   //       id_prestataire: 46
@@ -72,7 +72,7 @@ export default function ChoixMedicament() {
 
   // const getPriceMedicament = async(id_medicament) => {
   //   try {
-  //       const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+  //       const {data} = await axios.post('https://irc-backend.vercel.app/medicament/getPrice',
   //         {
   //           id_medicament: id_medicament,
   //           id_prestataire: localStorage.getItem('id_prestataire')

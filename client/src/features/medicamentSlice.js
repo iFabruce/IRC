@@ -8,7 +8,7 @@ export const medicamentSlice = createSlice({
   },
   reducers: {
     getMedicaments: async(state, action) => {
-      const {data} = await axios.get(`http://localhost:5000/${action.payload}`);
+      const {data} = await axios.get(`https://irc-backend.vercel.app/${action.payload}`);
       console.log(data)
       state.data = [...data];
     }

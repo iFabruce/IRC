@@ -35,14 +35,14 @@ export default function MedicamentPrestataire() {
   
     useEffect(() => {
       const getAllPrestataire = async (idp) =>{
-        const {data} = await axios.get('http://localhost:5000/prestataire/findAll')
+        const {data} = await axios.get('https://irc-backend.vercel.app/prestataire/findAll')
         setPrestataires(data)
       } 
       getAllPrestataire()
 
     }, [])
     const deleteMedicament = async (id_prestataire, id_medicament) =>{
-      const {data} = await axios.post('http://localhost:5000/prestataire/deleteMedicament',{
+      const {data} = await axios.post('https://irc-backend.vercel.app/prestataire/deleteMedicament',{
        id_prestataire,id_medicament
      })
 
@@ -53,7 +53,7 @@ export default function MedicamentPrestataire() {
    } 
 
     const addOrChangeMedicament = async (id_prestataire, id_medicament,prix) =>{
-       await axios.post('http://localhost:5000/prestataire/addOrChangePriceMedicament',{
+       await axios.post('https://irc-backend.vercel.app/prestataire/addOrChangePriceMedicament',{
         id_prestataire,id_medicament,prix
       })
       getAddedMedicaments(id_prestataire)
@@ -61,13 +61,13 @@ export default function MedicamentPrestataire() {
     } 
 
     const getAddedMedicaments = async (idp) =>{
-      const {data} = await axios.get('http://localhost:5000/prestataire/getAddedMedicaments/'+idp)
+      const {data} = await axios.get('https://irc-backend.vercel.app/prestataire/getAddedMedicaments/'+idp)
       setMyMedocs(data)
       console.log("add update")
 
     } 
     const getNonAddedMedicaments = async (idp) =>{
-      const {data} = await axios.get('http://localhost:5000/prestataire/getNonAddedMedicaments/'+idp)
+      const {data} = await axios.get('https://irc-backend.vercel.app/prestataire/getNonAddedMedicaments/'+idp)
       setResteMedoc(data)
       console.log(resteMedoc)
     }

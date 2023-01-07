@@ -35,7 +35,7 @@ export const panierSlice = createSlice({
     setPriceItems: (state, action) => {
       var id_prestataire = action.payload.id_prestataire
       state.forEach( async(item) => {
-        const {data} = await axios.post('http://localhost:5000/medicament/getPrice',
+        const {data} = await axios.post('https://irc-backend.vercel.app/medicament/getPrice',
         {
           id_medicament: item.id_medicament,
           id_prestataire

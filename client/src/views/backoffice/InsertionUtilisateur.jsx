@@ -53,7 +53,7 @@ export default function InsertionUtilisateur()  {
 
 
 
-        const {data} = await axios.post('http://localhost:5000/utilisateur/signup',
+        const {data} = await axios.post('https://irc-backend.vercel.app/utilisateur/signup',
         {
             login,
             mot_de_passe,

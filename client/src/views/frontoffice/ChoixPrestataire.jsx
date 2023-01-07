@@ -41,7 +41,7 @@ export default function ChoixPrestataire() {
     
     const getPriceMedicament = async(id_medicament, id_prestataire) => {
         try {
-            const {data} = await axios.post('http://localhost:5000/medicament/getPrice',{id_medicament,id_prestataire})
+            const {data} = await axios.post('https://irc-backend.vercel.app/medicament/getPrice',{id_medicament,id_prestataire})
         } catch (error) {
             console.log(error)
         }
@@ -51,9 +51,9 @@ export default function ChoixPrestataire() {
         var total = 0
         var tab = JSON.parse(JSON.stringify(panier))
         console.log(tab);
-        var promises = tab.map((element)=> axios.post('http://localhost:5000/medicament/getPrice',{id_medicament: element.id_medicament, id_prestataire})); 
+        var promises = tab.map((element)=> axios.post('https://irc-backend.vercel.app/medicament/getPrice',{id_medicament: element.id_medicament, id_prestataire})); 
         // tab.forEach(async(element) => {
-        //     const data = await axios.post('http://localhost:5000/medicament/getPrice',{id_medicament: element.id_medicament, id_prestataire})
+        //     const data = await axios.post('https://irc-backend.vercel.app/medicament/getPrice',{id_medicament: element.id_medicament, id_prestataire})
         //    promises.push(data);
         // });
         console.log("tqb lengt",tab.length)
@@ -83,7 +83,7 @@ export default function ChoixPrestataire() {
 
         const getAvailablePrestataire = async() =>{
             try {
-                const {data} = await axios.post(`http://localhost:5000/prestataire/getAllAvailable`,panier)
+                const {data} = await axios.post(`https://irc-backend.vercel.app/prestataire/getAllAvailable`,panier)
                 console.log(data)
                 setPrestataires(data)
             } catch (error) {

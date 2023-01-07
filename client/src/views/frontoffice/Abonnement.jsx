@@ -33,7 +33,7 @@ export default function Abonnement()  {
     
     useEffect(() => {
         const getAllAbonnement  = async () => {
-            const  {data}  = await axios.get(`http://localhost:5000/abonnement/findAll`);
+            const  {data}  = await axios.get(`https://irc-backend.vercel.app/abonnement/findAll`);
             //console.log(data)
             setAbonnements(data)
         }
@@ -42,7 +42,7 @@ export default function Abonnement()  {
     }, [])
     
     const subscribe  = async (id_abonnement) => {
-        const  {data}  = await axios.post(`http://localhost:5000/subscribe`, {id_abonnement , token: localStorage.getItem('session')});
+        const  {data}  = await axios.post(`https://irc-backend.vercel.app/subscribe`, {id_abonnement , token: localStorage.getItem('session')});
         console.log(data)
         if(data){
             setAlert(true)

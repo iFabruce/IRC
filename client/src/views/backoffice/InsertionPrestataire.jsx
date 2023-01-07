@@ -26,7 +26,7 @@ export default function InsertionPrestataire()  {
     }, [])
     const newPrestataire = async() =>{
        console.log("go")
-        const {data} = await axios.post('http://localhost:5000/prestataire/create',
+        const {data} = await axios.post('https://irc-backend.vercel.app/prestataire/create',
         {
             nom,
             description,

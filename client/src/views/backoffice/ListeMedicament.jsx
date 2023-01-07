@@ -26,7 +26,7 @@ export default function ListeMedicament()  {
     const [total_page, setTotal_page] = useState([])
     
     const getAllMedicaments = async(num_page) =>{
-        const {data} = await axios.get('http://localhost:5000/medicament/findAndCountAll/'+num_page)
+        const {data} = await axios.get('https://irc-backend.vercel.app/medicament/findAndCountAll/'+num_page)
         setMedicaments(data.users.rows)
         var tclone = []
         for(var x=0;x<data.total;x++){
@@ -41,7 +41,7 @@ export default function ListeMedicament()  {
     }, [])
     const onDelete = async (id) => {
         try{
-            const {data} = await axios.delete(`http://localhost:5000/medicament/delete/${id}`)
+            const {data} = await axios.delete(`https://irc-backend.vercel.app/medicament/delete/${id}`)
             getAllMedicaments()
             setAlertDelete(data)
         }
@@ -54,7 +54,7 @@ export default function ListeMedicament()  {
             try{
 
                 setId(id)
-                const {data} = await axios.get(`http://localhost:5000/medicament/findOne/${id}`)
+                const {data} = await axios.get(`https://irc-backend.vercel.app/medicament/findOne/${id}`)
                 setMedicament(data)
                 setNom(medicament.nom)
                 setDescription(medicament.description)
@@ -70,7 +70,7 @@ export default function ListeMedicament()  {
     }
     const modifierMedicament = async () => {
         
-        const {data} = await axios.post(`http://localhost:5000/medicament/update/${id}`,{
+        const {data} = await axios.post(`https://irc-backend.vercel.app/medicament/update/${id}`,{
             nom,
             description,
             posologie,
