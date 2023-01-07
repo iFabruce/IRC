@@ -29,7 +29,7 @@ export default function ProfilUtilisateur() {
   const navigate = useNavigate();
   
   const getHistoriqueAchat = async () => {
-    const {data} = await axios.post(`https://irc-backend.vercel.app/achat/historique_achat`,
+    const {data} = await axios.post(`https://irc-o1g5.onrender.com/achat/historique_achat`,
     {
       userId,
       dateMin,  
@@ -40,10 +40,12 @@ export default function ProfilUtilisateur() {
 
   }
 
+https://irc-o1g5.onrender.com/
+
   useEffect( () => {
     if(session === null) navigate('/')
     const fetchData = async () => {
-      const {data} = await axios.get(`https://irc-backend.vercel.app/utilisateur/getUserProfile/${userId}`)
+      const {data} = await axios.get(`https://irc-o1g5.onrender.com/utilisateur/getUserProfile/${userId}`)
       console.log(data)
       setUser(data[0])
     }

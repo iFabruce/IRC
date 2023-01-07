@@ -31,7 +31,7 @@ export default function ListePrestataire()  {
     const [total_page, setTotal_page] = useState([])
     
     const getAllPrestataire = async(num_page) =>{
-        const {data} = await axios.get('https://irc-backend.vercel.app/prestataire/findAndCountAll/'+num_page)
+        const {data} = await axios.get('https://irc-o1g5.onrender.com/prestataire/findAndCountAll/'+num_page)
         setPrestataires(data.users.rows)
         var tclone = []
         for(var x=0;x<data.total;x++){
@@ -46,7 +46,7 @@ export default function ListePrestataire()  {
     }, [])
     const onDelete = async (id) => {
         try{
-            const {data} = await axios.delete(`https://irc-backend.vercel.app/prestataire/delete/${id}`)
+            const {data} = await axios.delete(`https://irc-o1g5.onrender.com/prestataire/delete/${id}`)
             getAllPrestataire()
             setAlertDelete(data)
         }
@@ -59,7 +59,7 @@ export default function ListePrestataire()  {
             try{
 
                 setId(id)
-                const {data} = await axios.get(`https://irc-backend.vercel.app/prestataire/findOne/${id}`)
+                const {data} = await axios.get(`https://irc-o1g5.onrender.com/prestataire/findOne/${id}`)
                 
                 setPrestataire(data)
                 setNom(prestataire.nom)
@@ -82,7 +82,7 @@ export default function ListePrestataire()  {
         console.log("long:"+prestataire.longitude)
         console.log("lat:"+prestataire.latitude)
         console.log("padd:"+prestataire.adresse+" adrresy:"+adresse)
-        const {data} = await axios.post(`https://irc-backend.vercel.app/prestataire/update/${id}`,{
+        const {data} = await axios.post(`https://irc-o1g5.onrender.com/prestataire/update/${id}`,{
             nom,
             description,
             ouverture,

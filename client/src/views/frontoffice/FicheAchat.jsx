@@ -12,11 +12,11 @@ const FicheAchat = () => {
 
     useEffect(() => {
         const getDetailAchat = async() =>{
-            const {data} = await axios.get('https://irc-backend.vercel.app/achat/getDetail_achat/'+localStorage.getItem('id_achat_detail'))
+            const {data} = await axios.get('https://irc-o1g5.onrender.com/achat/getDetail_achat/'+localStorage.getItem('id_achat_detail'))
             setDetailAchats(data)
         }
         const getInfoAchat = async() =>{
-            const {data} = await axios.get('https://irc-backend.vercel.app/achat/info_achat/'+localStorage.getItem('id_achat_detail'))
+            const {data} = await axios.get('https://irc-o1g5.onrender.com/achat/info_achat/'+localStorage.getItem('id_achat_detail'))
             setInfo_achat(data)
         }
         getDetailAchat()

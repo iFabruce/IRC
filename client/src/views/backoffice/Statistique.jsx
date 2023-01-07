@@ -56,7 +56,7 @@ export default function Statistique() {
   const loadData = async() =>{
     var labels = []
     var datasets = []
-    const {data} = await axios.post('https://irc-backend.vercel.app/medicament/stat', {type, order, limit})
+    const {data} = await axios.post('https://irc-o1g5.onrender.com/medicament/stat', {type, order, limit})
 
     var datasetsItem = {} 
     datasetsItem.label = "Quantité"

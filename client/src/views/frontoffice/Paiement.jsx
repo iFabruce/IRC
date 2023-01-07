@@ -64,13 +64,13 @@ export default function Paiement(){
     }, [])
     
     const verifySubscription = async() => {
-        const {data} = await axios.get(`https://irc-backend.vercel.app/utilisateur/isSubscribed/${userId}`)
+        const {data} = await axios.get(`https://irc-o1g5.onrender.com/utilisateur/isSubscribed/${userId}`)
         setIsSubscribed(data)
     }
 
     const export_pdf = async() => {
         localStorage.setItem('id_panier',Number(localStorage.getItem('id_panier')) + 1 )
-        await axios.post('https://irc-backend.vercel.app/achat/export_pdf',
+        await axios.post('https://irc-o1g5.onrender.com/achat/export_pdf',
         {
             panier,
             num_facture: localStorage.getItem('id_panier'),
@@ -90,7 +90,7 @@ export default function Paiement(){
 
     const codebiter =  async(amount) => {
         console.log("USERA:"+userId)
-        const {data} = await axios.post('https://irc-backend.vercel.app/achat/demande_codebit',
+        const {data} = await axios.post('https://irc-o1g5.onrender.com/achat/demande_codebit',
             {
                 id_demandeur: userId,
                 telephone_validateur: numeroCodebiteur,
@@ -103,7 +103,7 @@ export default function Paiement(){
     const cashout =  async(amount) => {
         
         console.log("USERA:"+userId)
-        const {data} = await axios.post('https://irc-backend.vercel.app/achat/debit',
+        const {data} = await axios.post('https://irc-o1g5.onrender.com/achat/debit',
         {
             panier,
             id_utilisateur: userId, 

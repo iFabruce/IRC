@@ -16,7 +16,7 @@ export default function ValidationCoDebit() {
     const [list, setList] = useState([])
     
     const loadData = async() => {
-        const {data} = await axios.get(`https://irc-backend.vercel.app/codebit/getAllWithDetails/${userId}`);
+        const {data} = await axios.get(`https://irc-o1g5.onrender.com/codebit/getAllWithDetails/${userId}`);
         setList(data)
     }
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function ValidationCoDebit() {
 
     const submit = async(id_achat,montant,decision) => {
         console.log("id_achat:"+id_achat);
-        const {data} = await axios.post(`https://irc-backend.vercel.app/achat/validation_codebit`,
+        const {data} = await axios.post(`https://irc-o1g5.onrender.com/achat/validation_codebit`,
         {
             id_utilisateur: userId,
             id_achat: id_achat,

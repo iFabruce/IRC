@@ -16,7 +16,7 @@ export default function LiaisonUtilisateur() {
     useEffect( () => {
         if(session === null) navigate('/')
         const fetchData = async () => {
-          const {data} = await axios.get(`https://irc-backend.vercel.app/utilisateur/getLinkedUsers/${userId}`)
+          const {data} = await axios.get(`https://irc-o1g5.onrender.com/utilisateur/getLinkedUsers/${userId}`)
           setUsers(data)
         }
         fetchData()

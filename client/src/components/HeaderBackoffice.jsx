@@ -17,7 +17,7 @@ import { Navigate } from "react-router-dom";
 export default function HeaderBackoffice() {
   const navigate = useNavigate();
   const logout = async () => {
-    await axios.get(`https://irc-backend.vercel.app/logout`)
+    await axios.get(`https://irc-o1g5.onrender.com/logout`)
     navigate('/logout')
   }
 

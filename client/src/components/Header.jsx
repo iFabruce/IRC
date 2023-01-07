@@ -25,7 +25,7 @@ function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const logout = async () => {
-    await axios.get(`https://irc-backend.vercel.app/logout`)
+    await axios.get(`https://irc-o1g5.onrender.com/logout`)
     dispatch(setSession(null))
     dispatch(setPanier([]))
     navigate('/')

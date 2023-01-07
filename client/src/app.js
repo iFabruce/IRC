@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const baseURL = process.env.NODE_ENV === "production"
-  ? "https://irc-backend.vercel.app/"
-  : "https://irc-backend.vercel.app/"
+  ? "https://irc-o1g5.onrender.com/"
+  : "https://irc-o1g5.onrender.com/"
 
 const app = axios.create({
     baseURL,

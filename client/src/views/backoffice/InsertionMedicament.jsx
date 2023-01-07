@@ -19,7 +19,7 @@ export default function InsertionMedicament()  {
     }, [])
     const newMedicament = async() =>{
        console.log("go")
-        const {data} = await axios.post('https://irc-backend.vercel.app/medicament/create',
+        const {data} = await axios.post('https://irc-o1g5.onrender.com/medicament/create',
         {
             nom,
             description,
