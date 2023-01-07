@@ -19,15 +19,15 @@ router.post('/backoffice/create', backofficeController.create)
 
 
 /*********CODEBIT**********/
-router.get('/codebit/getAllWithDetails', codebitController.getAllWithDetails)
+router.get('/codebit/getAllWithDetails/:id_utilisateur', codebitController.getAllWithDetails)
 /*********ACHAT**********/
 router.post('/achat/debit', achatController.debit)
 router.post('/achat/demande_codebit', achatController.demande_codebit)
 router.post('/achat/validation_codebit', achatController.validation_codebit)
 router.post('/achat/export_pdf', achatController.export_pdf)
 router.post('/achat/historique_achat', achatController.historique_achat)
-
-
+router.get('/achat/getDetail_achat/:id_achat', achatController.getDetail_achat)
+router.get('/achat/info_achat/:id_achat', achatController.info_achat)
 
 /*****PRESTATAIRE ROUTES*****/
 router.get('/prestataire/findOne/:id', prestataireController.findOne)
@@ -63,10 +63,13 @@ router.get('/utilisateur/findOne/:id', utilisateurController.findOne)
 router.get('/utilisateur/findAll', utilisateurController.findAll)
 router.get('/utilisateur/findAndCountAll/:page', utilisateurController.findAndCountAll)
 router.post('/utilisateur/update/:id', utilisateurController.update)
-router.delete('/utilisateur/delete/:id', utilisateurController.delete)
+router.get('/utilisateur/delete/:id', utilisateurController.delete)
 router.post('/utilisateur/signup', utilisateurController.signup)
 router.post('/utilisateur/getCurrentUserInfo', utilisateurController.getCurrentUserInfo)
 router.post('/utilisateur/cashout/:id', utilisateurController.cashout)
 router.get('/utilisateur/getUserProfile/:id', utilisateurController.getUserProfile)
+router.get('/utilisateur/isSubscribed/:id', utilisateurController.isSubscribed)
+router.get('/utilisateur/getLinkedUsers/:id', utilisateurController.getLinkedUsers)
+
 
 module.exports = router

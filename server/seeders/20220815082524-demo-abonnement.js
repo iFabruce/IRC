@@ -17,23 +17,23 @@ module.exports = {
     */
     await queryInterface.bulkInsert('abonnements', [{
       nom: 'SILVER',
-      tarif: 10000,
-      portefeuille: 80000,
-      description: 'Assitant h24 avec un agent hotline',
+      tarif: 3000,
+      portefeuille: 50000,
+      description: '50 000 Ar de crédit + Assitant h24 avec un agent hotline',
       createdAt: date,
       updatedAt: date
     },{
       nom: 'GOLD',
-      tarif: 20000,
+      tarif: 5000,
       portefeuille: 150000,
-      description: 'SILVER + accompagnement psycho-social: offres exclusives naissances,... + cotisations assurances vies',
+      description: '150 000 Ar de crédit+ SILVER + accompagnement psycho-social',
       createdAt: date,
       updatedAt: date
     },{
       nom: 'PREMIUM',
-      tarif: 50000,
+      tarif: 8000,
       portefeuille: 400000,
-      description: 'Notifications/invitations pour les appels de fonds avec remboursement et intérêts',
+      description: '400 000 Ar de crédit + notifications pour les appels de fonds',
       createdAt: date,
       updatedAt: date
     }], {});
