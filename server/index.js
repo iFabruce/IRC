@@ -17,6 +17,11 @@ app.use(
 const route = require('./routes/routes')
 app.use(route) 
 
+app.get('/test', (req, res) => {
+  console.log("success")
+});
+
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT,async () =>{
     console.log("loading...")
