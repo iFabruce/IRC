@@ -54,7 +54,7 @@ app.get('/comptes', async (req,res) =>{
 })
 
 
-app.listen(5000,async () =>{
+app.listen(9002,async () =>{
     console.log("loading...")
     await sequelize.authenticate()
     console.log("sequelize!")
