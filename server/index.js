@@ -5,8 +5,8 @@ app.use(cookieParser())
 app.use(express.json())
 const cors = require('cors');
 const origin = process.env.NODE_ENV === "development" 
-  ? "https://irc-smoky.vercel.app'" 
-  : "https://irc-smoky.vercel.app'"
+  ? "https://irc-smoky.vercel.app" 
+  : "https://irc-smoky.vercel.app"
 
 app.use(
   cors({
