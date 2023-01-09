@@ -1,7 +1,4 @@
 const {sequelize, Backoffice, Compte,} = require('../models')
-const { QueryTypes } = require('sequelize');
-const jwt = require('jsonwebtoken')
-const { query } = require('express')
 const bcrypt = require('bcrypt')
 
 module.exports.findOne = async(req,res) => {
@@ -24,7 +21,7 @@ module.exports.create = async(req,res) => {
         await Backoffice.create({nom,id_compte})
         res.json(true)
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
         res.json(false)
     }
 }
