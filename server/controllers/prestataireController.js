@@ -23,12 +23,11 @@ module.exports.deleteMedicament = async(req, res) => {
         res.json(true)
     }
     catch(error){
-        console.log(error.message)
-        res.json(error.message)
+        console.log(error)
+        res.json(false)
     }
 }
 
-//Récuperer la liste de médicaments qu'une pharmacie possède
 module.exports.getAddedMedicaments = async(req, res) => {
     try {    
         const qr= `SELECT * FROM detail_medicaments  where id_prestataire = ${req.params.id_prestataire} order by  nom_medicament asc`
@@ -36,12 +35,9 @@ module.exports.getAddedMedicaments = async(req, res) => {
         const results = await sequelize.query(qr, { type: QueryTypes.SELECT })
         res.json(results)
     }
-    catch(error){
-        return res.json(error.message)
-    }
+    catch{}
 }
 
-//Récuperer la liste de médicaments qu'une pharmacie ne possède pas encore
 module.exports.getNonAddedMedicaments = async(req, res) => {
     try {
         const qr= `SELECT * FROM medicaments where id not in (SELECT id_medicament from detail_medicaments where id_prestataire = ${req.params.id_prestataire} order by nom_medicament asc) `
@@ -51,19 +47,16 @@ module.exports.getNonAddedMedicaments = async(req, res) => {
     }
     catch{}
 }
-
-//Ajouter ou modifier le prix d'un médicament d'un prestataire
 module.exports.addOrChangePriceMedicament = async(req, res) => {
     try {
         const {id_medicament, id_prestataire, prix} = req.body
         await Prix_medicament.create({id_prestataire, id_medicament, prix, date})
         return res.json(true)
     } catch (error) {
-        return res.json(error.message)      
+        return res.json(false)      
     }
 }
 
-//Avoir toutes les prestataires disponibles en fonction du choix des médicaments
 module.exports.getAllAvailable = async(req, res) => {
     try {
         const medicaments = req.body
@@ -84,7 +77,7 @@ module.exports.getAllAvailable = async(req, res) => {
         const val = await sequelize.query(qr, { type: QueryTypes.SELECT })
         return res.json(val)
     } catch (error) {
-        return res.json(error.message)      
+        return res.json("error")      
     }
 }
 module.exports.create = async(req,res) => {
@@ -96,7 +89,7 @@ module.exports.create = async(req,res) => {
         return res.json(true)
     } catch (error) {
         console.log(error)
-        return res.json(error.message)      
+        return res.json(false)      
     }
 
 }
@@ -107,8 +100,8 @@ module.exports.findOne = async(req,res) => {
         })
         return res.json(prestataire)
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)      
+        console.log(error)
+        return res.json('errora')      
     }
 }
 module.exports.findAll = async(req,res) => {
@@ -116,7 +109,7 @@ module.exports.findAll = async(req,res) => {
         const prestataires = await Prestataire.findAll()
         return res.json(prestataires)
     } catch (error) {
-        return res.json(error.message)      
+        return res.json(error)      
     }
 }
 module.exports.findAndCountAll = async(req,res) => {
@@ -147,7 +140,7 @@ module.exports.update = async(req, res) => {
         return res.json(true)
     } catch (error) {
         console.log(error)
-        return res.json(error.message)      
+        return res.json(false)      
     }
     
 }
@@ -160,7 +153,7 @@ module.exports.delete = async(req, res) => {
         return res.json(true)
     } catch (error) {
         console.log(error)
-        return res.json(error.message)      
+        return res.json(false)      
     }
 }
 

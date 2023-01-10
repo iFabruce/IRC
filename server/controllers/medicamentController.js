@@ -1,7 +1,6 @@
 const {sequelize, Medicament} = require('../models')
 const { QueryTypes } = require('sequelize');
 
-//Affiche une statistique des médicaments le plus vendu
 module.exports.stat = async(req,res) => {
     try {
         const {type, order, limit} = req.body 
@@ -10,11 +9,9 @@ module.exports.stat = async(req,res) => {
         return res.json(val)  
     } catch (error) {
         console.log(error)
-        return res.json(error.message)      
+        return res.json(false)      
     }
 }
-
-//Obtenir le prix d'un médicament
 module.exports.getPrice = async(req,res) => {
     try {
         const {id_medicament, id_prestataire} = req.body
@@ -22,8 +19,8 @@ module.exports.getPrice = async(req,res) => {
         const val = await sequelize.query(qr, { type: QueryTypes.SELECT })
         return res.json(val[0].prix)
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)      
+        console.log(error)
+        return res.json(false)      
     }
 }
 module.exports.create = async(req,res) => {
@@ -35,8 +32,8 @@ module.exports.create = async(req,res) => {
         return res.json(true)
 
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)     
+        console.log(error)
+        return res.json(false)      
     }
 
 }
@@ -47,7 +44,7 @@ module.exports.findOne = async(req,res) => {
         })
         return res.json(med)
     } catch (error) {
-        return res.json(error.message)      
+        return res.json(error)      
     }
 }
 module.exports.findAndCountAll = async(req,res) => {
@@ -64,7 +61,7 @@ module.exports.findAll = async(req,res) => {
         const meds = await Medicament.findAll()
         return res.json(meds)
     } catch (error) {
-        return res.json(error.message)      
+        return res.json(error)      
     }
 }
 module.exports.update = async(req, res) => {
@@ -80,11 +77,11 @@ module.exports.update = async(req, res) => {
         await medicament.save()
         return res.json(true)
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)      
+        console.log(error)
+        return res.json(false)      
     }
+    
 }
-
 module.exports.delete = async(req, res) => {
     try {
         const med = await Medicament.findOne({
@@ -93,8 +90,8 @@ module.exports.delete = async(req, res) => {
         await med.destroy()
         return res.json(true)
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)      
+        console.log(error)
+        return res.json(false)      
     }
 }
 

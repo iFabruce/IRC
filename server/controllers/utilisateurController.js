@@ -3,10 +3,10 @@ const { QueryTypes } = require('sequelize');
 const jwt = require('jsonwebtoken')
 const { query } = require('express')
 const bcrypt = require('bcrypt');
+const rel_abonnement_utilisateur = require('../models/rel_abonnement_utilisateur');
 var date = new Date();
 date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0') ;
 
-//Récuperer toutes les utilisateurs liés à l'utilisateur en cours de session 
 module.exports.getLinkedUsers = async(req,res) => {
     try {
         const qr = `select * from utilisateurs where id_portefeuille IN (select id_portefeuille from utilisateurs where id=${req.params.id}) and id !=${req.params.id}` 
@@ -17,7 +17,6 @@ module.exports.getLinkedUsers = async(req,res) => {
     }
 }
 
-//Verifier si l'utilisateur possède un abonnement valable
 module.exports.isSubscribed = async(req,res) => {
     try {
         const user = await Utilisateur.findOne({where: {id: req.params.id}})
@@ -31,7 +30,6 @@ module.exports.isSubscribed = async(req,res) => {
         return res.json(error.message)
     }
 }
-
 module.exports.getUserProfile = async(req,res) => {
     try {
         const results= await sequelize.query(`select * from profil_utilisateurs where id=${req.params.id}`, { type: QueryTypes.SELECT })
@@ -41,21 +39,24 @@ module.exports.getUserProfile = async(req,res) => {
     }
 }
 
-//Avoir les infos d'un utilisateur
 module.exports.getCurrentUserInfo = async(req,res) => {
     try {
+        console.log("go")
         const {token} = req.body
+        console.log("TOKENA:"+token)
         if(token){
             jwt.verify(token, 'irc secret', async (err, decodedToken) => {
+                // user = await Utilisateur.findOne({
+                //     where: {id: decodedToken.id}
+                // })
                 return res.json(decodedToken.id)
             })
         }
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
     }
 }
-/****************PAIEMENT**************/
+/****************CASHOUT**************/
 module.exports.cashout = async(req,res) => {
     //Check user wallet if amount above card
     const {amount} = req.body
@@ -70,7 +71,7 @@ module.exports.cashout = async(req,res) => {
     return res.json(false)
 }
 
-/**************ABONNEMENT****************/
+/**************SUBSCRIPTION****************/
 module.exports.subscribe = async(req,res) => {
     try {
         const {token, id_abonnement} = req.body
@@ -139,7 +140,7 @@ module.exports.update = async(req, res) => {
         message = 'success'
         return res.json(message)
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         return res.json(error.message)      
     }
 }
@@ -156,6 +157,7 @@ module.exports.signup = async(req,res) => {
             const compte = await Compte.create({login, mot_de_passe}) 
             const id_compte = compte.id
             // Then attribute id of new 'comptes' to create new 'utilisateurs' 
+
             var id_portefeuille
             const userToLink  = await Utilisateur.findOne({ where: {telephone: reference} })
             if(!userToLink){
@@ -227,6 +229,7 @@ module.exports.delete = async(req, res) => {
         })
         user.status = 'inactif'
         user.save()
+        // await med.destroy()
         return res.json(true)
     } catch (error) {
         console.log(error)
@@ -234,6 +237,7 @@ module.exports.delete = async(req, res) => {
     }
 }
 
+/*********OTHER FUNCTIONS*********/
 
 
 

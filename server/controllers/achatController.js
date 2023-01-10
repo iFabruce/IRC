@@ -1,17 +1,62 @@
 const {sequelize, Achat, Detail_achat, Portefeuille, Utilisateur, Codebit, Prestataire} = require('../models')
 const { QueryTypes } = require('sequelize');
 var pdf = require('html-pdf');
+
 var date = new Date();
 date = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0')
 
 //Required package
+var pdf_create = require("pdf-creator-node");
 var fs = require("fs");
 
 // Read HTML Template
+var html = fs.readFileSync("./facture_template.html", "utf8");
+
 function base64_encode(file) {
     return "data:image/gif;base64,"+fs.readFileSync(file, 'base64');
 }
 var base64str = base64_encode('logo.png');
+
+module.exports.pdf_creator = async(req,res) => {
+    const {panier, id} = req.body
+    var options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "10mm",
+        header: {
+            height: "45mm",
+            contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+        },
+        footer: {
+            height: "28mm",
+            contents: {
+                first: 'Cover page',
+                2: 'Second page', // Any page number is working. 1-based index
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                last: 'Last Page'
+            }
+        }
+    };
+
+    var document = {
+    html: html,
+    data: {
+        panier,
+        id
+    },
+    path: "./downloads/output.pdf",
+    type: "",
+    };
+
+    pdf_create
+    .create(document, options)
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+}
 
 module.exports.export_pdf = async(req,res) => {
     const {panier, num_facture, id_utilisateur, totalPanier, id_prestataire} = req.body
@@ -64,15 +109,18 @@ module.exports.export_pdf = async(req,res) => {
             return true
         }
     });
+    
 }
 
 module.exports.getDetail_achat = async(req,res) => {
     try {
+        console.log("params:"+req.params.id_achat)
         const data = await sequelize.query(`select * from vue_detail_achats where id_achat = ${req.params.id_achat}`, { type: QueryTypes.SELECT })
+        console.log("detail:"+data)
         return res.json(data)
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
+        return res.json("error")
     }
 }
 module.exports.info_achat = async(req,res) => {
@@ -81,8 +129,8 @@ module.exports.info_achat = async(req,res) => {
         const data = await sequelize.query(query, { type: QueryTypes.SELECT })
         return res.json(data[0])
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
+        return false
     }
 }
 module.exports.historique_achat = async(req,res) => {
@@ -102,13 +150,17 @@ module.exports.historique_achat = async(req,res) => {
         if(status !== 'tous'){
             query += ` and status = '${status}'`
         }
+      
+        console.log("query:"+query)
         const data = await sequelize.query(query, { type: QueryTypes.SELECT })
         return res.json(data)
+
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
+        return false
     }
 }
+
 
 module.exports.validation_codebit = async(req,res) => {
     try {
@@ -138,22 +190,20 @@ module.exports.validation_codebit = async(req,res) => {
             return res.json("suspendu")
         }
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
+        return res.json("error")
     }
 }
 module.exports.demande_codebit = async(req,res) => {
     try {
         const {id_demandeur, telephone_validateur, panier , montant,echeance} = req.body
         const demandeur = await Utilisateur.findOne({where: {id: id_demandeur}})
-        const validateur= await sequelize.query(`
-            select * 
-                from utilisateurs 
-                where 
-                    id_portefeuille!=${demandeur.id_portefeuille} 
-                    and 
-                    telephone='${telephone_validateur}'`
-            , { type: QueryTypes.SELECT })
+        const validateur= await sequelize.query(`select * from utilisateurs where id_portefeuille!=${demandeur.id_portefeuille} and telephone='${telephone_validateur}'`, { type: QueryTypes.SELECT })
+        // const wallet = await Portefeuille.findOne({id: demandeur.id , id_portefeuille: validateur.id_portefeuille})
+        // if(wallet.solde >= amount){
+        //     wallet.solde = wallet.solde-amount
+        //     wallet.save()
+        console.log("VALIDATEUR:"+validateur.length)
         if(validateur.length > 0){
             const achat = await Achat.create({
                 id_utilisateur: id_demandeur,
@@ -183,23 +233,18 @@ module.exports.demande_codebit = async(req,res) => {
         }
         // }  
     } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
+        console.log(error)
+        return res.json(false)
     }
 }
 module.exports.findAndCountAll = async(req,res) => {
-    try {
-        var page = req.params.page
-        if(page<=0) page = 0
-        const achats = await Achat.findAndCountAll({
-            limit:2,
-            offset: page * 2
-        })
-        return res.json({achats, total: Math.ceil(achats.count / 2)})
-    } catch (error) {
-        console.log(error.message)
-        return res.json(error.message)
-    }
+    var page = req.params.page
+    if(page<=0) page = 0
+    const achats = await Achat.findAndCountAll({
+        limit:2,
+        offset: page * 2
+    })
+    return res.json({achats, total: Math.ceil(achats.count / 2)})
 }
 module.exports.debit = async(req,res) => {
     try {
@@ -228,23 +273,17 @@ module.exports.debit = async(req,res) => {
             return res.json(false)
         }
     } catch (error) {
-        return res.json(error.message)
+        return res.json("error")
     }
 }
 module.exports.findOne = async(req,res) => {
-    try {
-        const achat = await Achat.findOne({
-            where: { id: req.params.id}
-        })
-        return res.json(achat)
-    } catch (error) {
-        return res.json(error.message)
-    }
+    const achat = await Achat.findOne({
+        where: { id: req.params.id}
+    })
+    return res.json(achat)
 }
 module.exports.findAll = async(req,res) => {
-    try {
-        return res.json(await Achat.findAll())
-    } catch (error) {
-        return res.json(error.message)
-    }
+    const achats = await Achat.findAll()
+    return res.json(achats)
 }
+
